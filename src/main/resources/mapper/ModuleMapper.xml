@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ModuleMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.Module">
+    <id column="tsmoduleid" jdbcType="INTEGER" property="tsmoduleid" />
+    <result column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
+    <result column="tsame" jdbcType="VARCHAR" property="tsame" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tsmoduleid, tsproductid, tsame
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tsmodule
+    where tsmoduleid = #{tsmoduleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tsmodule
+    where tsmoduleid = #{tsmoduleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Module">
+    insert into tsmodule (tsmoduleid, tsproductid, tsame
+      )
+    values (#{tsmoduleid,jdbcType=INTEGER}, #{tsproductid,jdbcType=INTEGER}, #{tsame,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Module">
+    insert into tsmodule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tsmoduleid != null">
+        tsmoduleid,
+      </if>
+      <if test="tsproductid != null">
+        tsproductid,
+      </if>
+      <if test="tsame != null">
+        tsame,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tsmoduleid != null">
+        #{tsmoduleid,jdbcType=INTEGER},
+      </if>
+      <if test="tsproductid != null">
+        #{tsproductid,jdbcType=INTEGER},
+      </if>
+      <if test="tsame != null">
+        #{tsame,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Module">
+    update tsmodule
+    <set>
+      <if test="tsproductid != null">
+        tsproductid = #{tsproductid,jdbcType=INTEGER},
+      </if>
+      <if test="tsame != null">
+        tsame = #{tsame,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tsmoduleid = #{tsmoduleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Module">
+    update tsmodule
+    set tsproductid = #{tsproductid,jdbcType=INTEGER},
+      tsame = #{tsame,jdbcType=VARCHAR}
+    where tsmoduleid = #{tsmoduleid,jdbcType=INTEGER}
+  </update>
+</mapper>

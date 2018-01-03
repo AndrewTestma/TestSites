@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.Product">
+    <id column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
+    <result column="tsname" jdbcType="VARCHAR" property="tsname" />
+    <result column="tsurl" jdbcType="VARCHAR" property="tsurl" />
+    <result column="tsdburl" jdbcType="VARCHAR" property="tsdburl" />
+    <result column="tsdbname" jdbcType="VARCHAR" property="tsdbname" />
+    <result column="tspassword" jdbcType="VARCHAR" property="tspassword" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tsproductid, tsname, tsurl, tsdburl, tsdbname, tspassword
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tsproduct
+    where tsproductid = #{tsproductid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tsproduct
+    where tsproductid = #{tsproductid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Product">
+    insert into tsproduct (tsproductid, tsname, tsurl, 
+      tsdburl, tsdbname, tspassword
+      )
+    values (#{tsproductid,jdbcType=INTEGER}, #{tsname,jdbcType=VARCHAR}, #{tsurl,jdbcType=VARCHAR}, 
+      #{tsdburl,jdbcType=VARCHAR}, #{tsdbname,jdbcType=VARCHAR}, #{tspassword,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Product">
+    insert into tsproduct
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tsproductid != null">
+        tsproductid,
+      </if>
+      <if test="tsname != null">
+        tsname,
+      </if>
+      <if test="tsurl != null">
+        tsurl,
+      </if>
+      <if test="tsdburl != null">
+        tsdburl,
+      </if>
+      <if test="tsdbname != null">
+        tsdbname,
+      </if>
+      <if test="tspassword != null">
+        tspassword,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tsproductid != null">
+        #{tsproductid,jdbcType=INTEGER},
+      </if>
+      <if test="tsname != null">
+        #{tsname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsurl != null">
+        #{tsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tsdburl != null">
+        #{tsdburl,jdbcType=VARCHAR},
+      </if>
+      <if test="tsdbname != null">
+        #{tsdbname,jdbcType=VARCHAR},
+      </if>
+      <if test="tspassword != null">
+        #{tspassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Product">
+    update tsproduct
+    <set>
+      <if test="tsname != null">
+        tsname = #{tsname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsurl != null">
+        tsurl = #{tsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tsdburl != null">
+        tsdburl = #{tsdburl,jdbcType=VARCHAR},
+      </if>
+      <if test="tsdbname != null">
+        tsdbname = #{tsdbname,jdbcType=VARCHAR},
+      </if>
+      <if test="tspassword != null">
+        tspassword = #{tspassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tsproductid = #{tsproductid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Product">
+    update tsproduct
+    set tsname = #{tsname,jdbcType=VARCHAR},
+      tsurl = #{tsurl,jdbcType=VARCHAR},
+      tsdburl = #{tsdburl,jdbcType=VARCHAR},
+      tsdbname = #{tsdbname,jdbcType=VARCHAR},
+      tspassword = #{tspassword,jdbcType=VARCHAR}
+    where tsproductid = #{tsproductid,jdbcType=INTEGER}
+  </update>
+</mapper>

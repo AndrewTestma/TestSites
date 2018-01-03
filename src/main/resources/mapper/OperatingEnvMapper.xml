@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.OperatingEnvMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.OperatingEnv">
+    <id column="tsoperatingenvid" jdbcType="INTEGER" property="tsoperatingenvid" />
+    <result column="tsname" jdbcType="VARCHAR" property="tsname" />
+    <result column="tsurl" jdbcType="VARCHAR" property="tsurl" />
+    <result column="tsdriver" jdbcType="VARCHAR" property="tsdriver" />
+    <result column="tsdirverpath" jdbcType="VARCHAR" property="tsdirverpath" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tsoperatingenvid, tsname, tsurl, tsdriver, tsdirverpath
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tsoperatingenv
+    where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tsoperatingenv
+    where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.OperatingEnv">
+    insert into tsoperatingenv (tsoperatingenvid, tsname, tsurl, 
+      tsdriver, tsdirverpath)
+    values (#{tsoperatingenvid,jdbcType=INTEGER}, #{tsname,jdbcType=VARCHAR}, #{tsurl,jdbcType=VARCHAR}, 
+      #{tsdriver,jdbcType=VARCHAR}, #{tsdirverpath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.OperatingEnv">
+    insert into tsoperatingenv
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tsoperatingenvid != null">
+        tsoperatingenvid,
+      </if>
+      <if test="tsname != null">
+        tsname,
+      </if>
+      <if test="tsurl != null">
+        tsurl,
+      </if>
+      <if test="tsdriver != null">
+        tsdriver,
+      </if>
+      <if test="tsdirverpath != null">
+        tsdirverpath,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tsoperatingenvid != null">
+        #{tsoperatingenvid,jdbcType=INTEGER},
+      </if>
+      <if test="tsname != null">
+        #{tsname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsurl != null">
+        #{tsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tsdriver != null">
+        #{tsdriver,jdbcType=VARCHAR},
+      </if>
+      <if test="tsdirverpath != null">
+        #{tsdirverpath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.OperatingEnv">
+    update tsoperatingenv
+    <set>
+      <if test="tsname != null">
+        tsname = #{tsname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsurl != null">
+        tsurl = #{tsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tsdriver != null">
+        tsdriver = #{tsdriver,jdbcType=VARCHAR},
+      </if>
+      <if test="tsdirverpath != null">
+        tsdirverpath = #{tsdirverpath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.OperatingEnv">
+    update tsoperatingenv
+    set tsname = #{tsname,jdbcType=VARCHAR},
+      tsurl = #{tsurl,jdbcType=VARCHAR},
+      tsdriver = #{tsdriver,jdbcType=VARCHAR},
+      tsdirverpath = #{tsdirverpath,jdbcType=VARCHAR}
+    where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.AutostepsMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.Autosteps">
+    <id column="tsautostepsid" jdbcType="INTEGER" property="tsautostepsid" />
+    <result column="tsname" jdbcType="VARCHAR" property="tsname" />
+    <result column="tssearchid" jdbcType="VARCHAR" property="tssearchid" />
+    <result column="tssearchcontent" jdbcType="VARCHAR" property="tssearchcontent" />
+    <result column="tsexecutionid" jdbcType="VARCHAR" property="tsexecutionid" />
+    <result column="tsiframe" jdbcType="VARCHAR" property="tsiframe" />
+    <result column="tswaittime" jdbcType="INTEGER" property="tswaittime" />
+    <result column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
+    <result column="tsmodulename" jdbcType="VARCHAR" property="tsmodulename" />
+    <result column="tspublic" jdbcType="TINYINT" property="tspublic" />
+    <result column="tsremarks" jdbcType="VARCHAR" property="tsremarks" />
+    <result column="tscreatetime" jdbcType="TIMESTAMP" property="tscreatetime" />
+    <result column="tscreator" jdbcType="VARCHAR" property="tscreator" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tsautostepsid, tsname, tssearchid, tssearchcontent, tsexecutionid, tsiframe, tswaittime, 
+    tsproductid, tsmodulename, tspublic, tsremarks, tscreatetime, tscreator
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tsautosteps
+    where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tsautosteps
+    where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Autosteps">
+    insert into tsautosteps (tsname, tssearchid,
+      tssearchcontent, tsexecutionid, tsiframe, 
+      tswaittime, tspublic, tsremarks, tscreator)
+    values ( #{tsname,jdbcType=VARCHAR}, #{tssearchid,jdbcType=VARCHAR},
+      #{tssearchcontent,jdbcType=VARCHAR}, #{tsexecutionid,jdbcType=VARCHAR}, #{tsiframe,jdbcType=VARCHAR}, 
+      #{tswaittime,jdbcType=INTEGER}, #{tspublic,jdbcType=TINYINT},
+      #{tsremarks,jdbcType=VARCHAR},#{tscreator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Autosteps">
+    insert into tsautosteps
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tsautostepsid != null">
+        tsautostepsid,
+      </if>
+      <if test="tsname != null">
+        tsname,
+      </if>
+      <if test="tssearchid != null">
+        tssearchid,
+      </if>
+      <if test="tssearchcontent != null">
+        tssearchcontent,
+      </if>
+      <if test="tsexecutionid != null">
+        tsexecutionid,
+      </if>
+      <if test="tsiframe != null">
+        tsiframe,
+      </if>
+      <if test="tswaittime != null">
+        tswaittime,
+      </if>
+      <if test="tsproductid != null">
+        tsproductid,
+      </if>
+      <if test="tsmodulename != null">
+        tsmodulename,
+      </if>
+      <if test="tspublic != null">
+        tspublic,
+      </if>
+      <if test="tsremarks != null">
+        tsremarks,
+      </if>
+      <if test="tscreatetime != null">
+        tscreatetime,
+      </if>
+      <if test="tscreator != null">
+        tscreator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tsautostepsid != null">
+        #{tsautostepsid,jdbcType=INTEGER},
+      </if>
+      <if test="tsname != null">
+        #{tsname,jdbcType=VARCHAR},
+      </if>
+      <if test="tssearchid != null">
+        #{tssearchid,jdbcType=VARCHAR},
+      </if>
+      <if test="tssearchcontent != null">
+        #{tssearchcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tsexecutionid != null">
+        #{tsexecutionid,jdbcType=VARCHAR},
+      </if>
+      <if test="tsiframe != null">
+        #{tsiframe,jdbcType=VARCHAR},
+      </if>
+      <if test="tswaittime != null">
+        #{tswaittime,jdbcType=INTEGER},
+      </if>
+      <if test="tsproductid != null">
+        #{tsproductid,jdbcType=INTEGER},
+      </if>
+      <if test="tsmodulename != null">
+        #{tsmodulename,jdbcType=VARCHAR},
+      </if>
+      <if test="tspublic != null">
+        #{tspublic,jdbcType=TINYINT},
+      </if>
+      <if test="tsremarks != null">
+        #{tsremarks,jdbcType=VARCHAR},
+      </if>
+      <if test="tscreatetime != null">
+        #{tscreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tscreator != null">
+        #{tscreator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Autosteps">
+    update tsautosteps
+    <set>
+      <if test="tsname != null">
+        tsname = #{tsname,jdbcType=VARCHAR},
+      </if>
+      <if test="tssearchid != null">
+        tssearchid = #{tssearchid,jdbcType=VARCHAR},
+      </if>
+      <if test="tssearchcontent != null">
+        tssearchcontent = #{tssearchcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tsexecutionid != null">
+        tsexecutionid = #{tsexecutionid,jdbcType=VARCHAR},
+      </if>
+      <if test="tsiframe != null">
+        tsiframe = #{tsiframe,jdbcType=VARCHAR},
+      </if>
+      <if test="tswaittime != null">
+        tswaittime = #{tswaittime,jdbcType=INTEGER},
+      </if>
+      <if test="tsproductid != null">
+        tsproductid = #{tsproductid,jdbcType=INTEGER},
+      </if>
+      <if test="tsmodulename != null">
+        tsmodulename = #{tsmodulename,jdbcType=VARCHAR},
+      </if>
+      <if test="tspublic != null">
+        tspublic = #{tspublic,jdbcType=TINYINT},
+      </if>
+      <if test="tsremarks != null">
+        tsremarks = #{tsremarks,jdbcType=VARCHAR},
+      </if>
+      <if test="tscreatetime != null">
+        tscreatetime = #{tscreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tscreator != null">
+        tscreator = #{tscreator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Autosteps">
+    update tsautosteps
+    set tsname = #{tsname,jdbcType=VARCHAR},
+      tssearchid = #{tssearchid,jdbcType=VARCHAR},
+      tssearchcontent = #{tssearchcontent,jdbcType=VARCHAR},
+      tsexecutionid = #{tsexecutionid,jdbcType=VARCHAR},
+      tsiframe = #{tsiframe,jdbcType=VARCHAR},
+      tswaittime = #{tswaittime,jdbcType=INTEGER},
+      tsproductid = #{tsproductid,jdbcType=INTEGER},
+      tsmodulename = #{tsmodulename,jdbcType=VARCHAR},
+      tspublic = #{tspublic,jdbcType=TINYINT},
+      tsremarks = #{tsremarks,jdbcType=VARCHAR},
+      tscreatetime = #{tscreatetime,jdbcType=TIMESTAMP},
+      tscreator = #{tscreator,jdbcType=VARCHAR}
+    where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
+  </update>
+</mapper>
