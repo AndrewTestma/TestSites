@@ -13,6 +13,8 @@ public class Autosteps {
 
     private String tsexecutionid;
 
+    private String tsexecutioncontent;
+
     private String tsiframe;
 
     private Integer tswaittime;
@@ -67,6 +69,14 @@ public class Autosteps {
 
     public void setTsexecutionid(String tsexecutionid) {
         this.tsexecutionid = tsexecutionid;
+    }
+
+    public String getTsexecutioncontent() {
+        return tsexecutioncontent;
+    }
+
+    public void setTsexecutioncontent(String tsexecutioncontent) {
+        this.tsexecutioncontent = tsexecutioncontent;
     }
 
     public String getTsiframe() {

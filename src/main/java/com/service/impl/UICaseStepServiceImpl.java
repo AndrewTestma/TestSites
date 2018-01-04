@@ -1,4 +1,4 @@
-package com.impl;
+package com.service.impl;
 
 import com.dao.UICaseStepMapper;
 import com.pojo.UICaseStep;
@@ -14,11 +14,10 @@ import javax.annotation.Resource;
  */
 @Service("UICaseStepService")
 public class UICaseStepServiceImpl implements UICaseStepService {
-
     @Resource(name = "UICaseStepMapper")
     private UICaseStepMapper uiCaseStepMapper;
     @Override
-    public UICaseStep selectByPrimaryKey(int tsnum) {
-        return null;
+    public UICaseStep selectByPrimaryKey(Integer tsnum) {
+        return uiCaseStepMapper.selectByPrimaryKey(tsnum);
     }
 }

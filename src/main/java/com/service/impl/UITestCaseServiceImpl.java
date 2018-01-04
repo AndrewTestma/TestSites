@@ -1,9 +1,8 @@
-package com.impl;
+package com.service.impl;
 
 import com.dao.UITestCaseMapper;
 import com.pojo.UITestCase;
 import com.service.UITestCaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +15,7 @@ import java.util.List;
  */
 @Service("UITestCaseService")
 public class UITestCaseServiceImpl implements UITestCaseService {
-    @Autowired
+    @Resource(name = "UITestCaseMapper")
     private UITestCaseMapper uiTestCaseMapper;
     @Override
     public int deleteByPrimaryKey(Integer tsuitestcaseid) {

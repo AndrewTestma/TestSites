@@ -18,7 +18,7 @@ public class DriverManager {
     /**
      * @Description:设置driver
      * */
-    public static WebDriver driver;
+    public static   WebDriver driver=null;
     public static WebDriver setDriver(String string)
     {
         switch (string)
@@ -39,7 +39,7 @@ public class DriverManager {
                 driver=new FirefoxDriver(firefoxProfile);
                 break;
             case "ChromeDriver":
-                System.setProperty("webdriver.chrome.driver", "/src/main/resources/driver/Chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "driver/Chromedriver.exe");
 				/*ChromeOptions options = new ChromeOptions();
 				options.setBinary(this.driver_path);*/
                 driver=new ChromeDriver();

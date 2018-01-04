@@ -45,6 +45,7 @@ create table if not exists tsautosteps(
 	tssearchid varchar(100) not null,
 	tssearchcontent varchar(100) not null,
 	tsexecutionid varchar(100) not null,	
+	tsexecutioncontent varchar(100) default null,
 	tsiframe varchar(100) default null,
 	tswaittime integer(4) default null,
 	tsproductid integer(3) default null,

@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("UICaseStepMapper")
 public interface UICaseStepMapper {
-    UICaseStep  selectByPrimaryKey(String tsnum);
+    UICaseStep  selectByPrimaryKey(Integer tsnum);
 }

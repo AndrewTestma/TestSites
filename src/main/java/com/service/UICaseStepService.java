@@ -8,5 +8,5 @@ import com.pojo.UICaseStep;
  * @Date 2018/1/3 0003
  */
 public interface UICaseStepService {
-    UICaseStep selectByPrimaryKey(int tsuitestcaseid);
+    UICaseStep selectByPrimaryKey(Integer tsuitestcaseid);
 }

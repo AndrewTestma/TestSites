@@ -1,4 +1,4 @@
-package com.impl;
+package com.service.impl;
 
 import com.dao.AutostepsMapper;
 import com.pojo.Autosteps;
@@ -34,6 +34,11 @@ public class AutostepsServiceImpl implements AutostepsService {
     @Override
     public Autosteps selectByPrimaryKey(Integer tsautostepsid) {
         return autostepsMapper.selectByPrimaryKey(tsautostepsid);
+    }
+
+    @Override
+    public Autosteps selectByName(String tsname) {
+        return autostepsMapper.selectByName(tsname);
     }
 
     @Override

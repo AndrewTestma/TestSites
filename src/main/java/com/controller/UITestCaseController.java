@@ -1,20 +1,24 @@
 package com.controller;
 
+import com.pojo.Autosteps;
 import com.pojo.UITestCase;
-import com.service.UICaseStepService;
+import com.service.AutostepsService;
 import com.service.UITestCaseService;
+import com.utils.BaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.testng.TestNG;
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 /**
  * @Author:Andrew
  * @Description:
@@ -24,9 +28,12 @@ import java.util.List;
 @RequestMapping("/ui")
 public class UITestCaseController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
-
+    public static Map<String,List<Autosteps>> list=new HashMap<>();
     @Resource(name="UITestCaseService")
     private UITestCaseService uiTestCaseService;
+
+    @Resource(name = "AutostepsService")
+    private AutostepsService autostepsService;
 
     /**
      * @Description:获取测试用例列表
@@ -59,14 +66,42 @@ public class UITestCaseController {
     /**
      * @Description:调试用例
      * */
-
+    @RequestMapping(value = "/debugging",method = RequestMethod.POST)
+    public ModelAndView debugging(@RequestParam("btnid") String tsuitestcaseid){
+        logger.info("测试用例ID-----"+tsuitestcaseid);
+        frontCase(tsuitestcaseid);
+        TestNG testNG=new TestNG();
+        testNG.setTestClasses(new Class[]{new BaseTest().getClass()});
+        testNG.run();
+        return new ModelAndView("redirect:/ui/list");
+    }
     /**
-     * @Description:递归获取前置条件
+     * @Description：获取测试用例的操作步骤
+     * @param tsuitestcaseid:测试用例ID
+     * @return
      * */
-    public List<String> frontCase(String  tsuitestcaseid){
-     /*   int id=Integer.valueOf(tsuitestcaseid);
-        List<String> list=new ArrayList<String>();
-        uiCaseStepService.selectByPrimaryKey(id);*/
-        return null;
+    public void frontCase(String  tsuitestcaseid){
+        Integer id=Integer.valueOf(tsuitestcaseid);
+        UITestCase uiTestCase=uiTestCaseService.selectByPrimaryKey(id);
+        List<Autosteps> autosteps=autoStep(uiTestCase);
+        list.put(uiTestCase.getTsnum(), autosteps);
+        if(!uiTestCase.getTsfrontcase().equals("")) {
+            String id1=String.valueOf(uiTestCase.getTsuitestcaseid());
+            frontCase(id1);
+        }
+    }
+    /**
+     * @Description:获取操作步骤
+     * @param uiTestCase:测试用例对象
+     * */
+    public List<Autosteps> autoStep(UITestCase uiTestCase){
+        List<Autosteps> autosteps=new ArrayList<>();
+        String[] strings=uiTestCase.getTsautostepsname().split(",");
+        Autosteps autosteps1;
+        for(int i=0;i<strings.length;i++){
+            autosteps1=autostepsService.selectByName(strings[i]);
+            autosteps.add(autosteps1);
+        }
+        return autosteps;
     }
 }

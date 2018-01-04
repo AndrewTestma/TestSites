@@ -52,7 +52,7 @@
                             <td>${uitestcase.tsdebug}</td>
                             <td>${uitestcase.tsregress}</td>
                             <td>${uitestcase.tssmoke}</td>
-                            <td><a href="#" name="${uitestcase.tsuitestcaseid}" class="btn" type="button">调试</a></td>
+                            <td><a href="#"  class="btn" type="button" onclick="debugging(${uitestcase.tsuitestcaseid})">调试</a></td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -171,5 +171,21 @@
         </div>
     </div>--%>
 </div>
+<script>
+    function debugging(btnid) {
+        $.ajax({
+            type:"post",
+            url:"/ui/debugging",
+            data:"btnid="+btnid,
+            dataType:"text",
+            success:function () {
+                alert("调试成功");
+            },
+            error:function () {
+                alert("调试失败");
+            }
+        })
+    }
+</script>
 </body>
 </html>

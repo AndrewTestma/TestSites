@@ -7,6 +7,7 @@
     <result column="tssearchid" jdbcType="VARCHAR" property="tssearchid" />
     <result column="tssearchcontent" jdbcType="VARCHAR" property="tssearchcontent" />
     <result column="tsexecutionid" jdbcType="VARCHAR" property="tsexecutionid" />
+    <result column="tsexecutioncontent" jdbcType="VARCHAR" property="tsexecutioncontent" />
     <result column="tsiframe" jdbcType="VARCHAR" property="tsiframe" />
     <result column="tswaittime" jdbcType="INTEGER" property="tswaittime" />
     <result column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
@@ -26,17 +27,23 @@
     from tsautosteps
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tsautosteps
+    where tsname = #{tsname,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsautosteps
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.pojo.Autosteps">
     insert into tsautosteps (tsname, tssearchid,
-      tssearchcontent, tsexecutionid, tsiframe, 
+      tssearchcontent, tsexecutionid, tsexecutioncontent, tsiframe,
       tswaittime, tspublic, tsremarks, tscreator)
-    values ( #{tsname,jdbcType=VARCHAR}, #{tssearchid,jdbcType=VARCHAR},
-      #{tssearchcontent,jdbcType=VARCHAR}, #{tsexecutionid,jdbcType=VARCHAR}, #{tsiframe,jdbcType=VARCHAR}, 
-      #{tswaittime,jdbcType=INTEGER}, #{tspublic,jdbcType=TINYINT},
+    values ( #{tsname,jdbcType=VARCHAR}, #{tssearchid,jdbcType=VARCHAR},#{tssearchcontent,jdbcType=VARCHAR},
+      #{tsexecutionid,jdbcType=VARCHAR},#{tsexecutioncontent,jdbcType=VARCHAR},
+      #{tsiframe,jdbcType=VARCHAR}, #{tswaittime,jdbcType=INTEGER}, #{tspublic,jdbcType=TINYINT},
       #{tsremarks,jdbcType=VARCHAR},#{tscreator,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.Autosteps">

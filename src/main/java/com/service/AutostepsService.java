@@ -16,6 +16,8 @@ public interface AutostepsService {
 
     Autosteps selectByPrimaryKey(Integer tsautostepsid);
 
+    Autosteps selectByName(String tsname);
+
     int updateByPrimaryKeySelective(Autosteps record);
 
     int updateByPrimaryKey(Autosteps record);

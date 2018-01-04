@@ -154,6 +154,13 @@
                         </div>
                         <div class="form-group">
                             <!-- Text input-->
+                            <label class="control-label col-xs-3" for="tsexecutioncontent">执行内容</label>
+                            <div class="col-xs-6">
+                                <input placeholder="placeholder" name="tsexecutioncontent" id="tsexecutioncontent" class="form-control input-xlarge" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- Text input-->
                             <label class="control-label col-xs-3" for="tsiframe">iframe嵌套</label>
                             <div class="col-xs-6">
                                 <input placeholder="placeholder" name="tsiframe" id="tsiframe" class="form-control input-xlarge" type="text">
