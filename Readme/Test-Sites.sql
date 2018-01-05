@@ -94,6 +94,8 @@ create table if not exists tsuser(
 	tspermissionname varchar(100) default null,
 	primary key(tsuserid)
 )engine=innodb;
+INSERT INTO tsuser (tsloginname, tsusername, tspassword, tsemail, tsidentity, tspermissionname) 
+VALUES ('andrew', 'mjw', '123456', '425780724@qq.com', 1, '');
 -- tspermissions
 create table if not exists tspermissions(
 	tspermissionsid integer(3) auto_increment,
