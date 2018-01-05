@@ -83,3 +83,26 @@ create table if not exists tsoperatingenv(
   tsdirverpath varchar(100) not null,
   primary key(tsoperatingenvid)
 ) engine=innodb;
+-- tsuser
+create table if not exists tsuser(
+	tsuserid integer(3) auto_increment,
+	tsloginname  varchar(100) not null,
+	tsusername  varchar(100) not null,
+	tspassword varchar(100) not null,
+	tsemail varchar(100) not null,
+	tsidentity integer(3) not null,
+	tspermissionname varchar(100) default null,
+	primary key(tsuserid)
+)engine=innodb;
+-- tspermissions
+create table if not exists tspermissions(
+	tspermissionsid integer(3) auto_increment,
+	tsname varchar(100) not null,
+	tsproduct tinyint(0),
+	tstestcase tinyint(0),
+	tsscenes tinyint(0),
+	tsreserved1 tinyint(0),
+	tsreserved2 tinyint(0),
+	tsreserved3 tinyint(0),
+	primary key(tspermissionsid)
+)engine=innodb;
