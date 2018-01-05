@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.User">
+    <id column="tsuserid" jdbcType="INTEGER" property="tsuserid" />
+    <result column="tsloginname" jdbcType="VARCHAR" property="tsloginname" />
+    <result column="tsusername" jdbcType="VARCHAR" property="tsusername" />
+    <result column="tspassword" jdbcType="VARCHAR" property="tspassword" />
+    <result column="tsemail" jdbcType="VARCHAR" property="tsemail" />
+    <result column="tsidentity" jdbcType="INTEGER" property="tsidentity" />
+    <result column="tspermissionname" jdbcType="VARCHAR" property="tspermissionname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tsuserid, tsloginname, tsusername, tspassword, tsemail, tsidentity, tspermissionname
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tsuser
+    where tsuserid = #{tsuserid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tsuser
+    where tsloginname = #{tsloginname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tsuser
+    where tsuserid = #{tsuserid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.User">
+    insert into tsuser (tsuserid, tsloginname, tsusername, 
+      tspassword, tsemail, tsidentity, 
+      tspermissionname)
+    values (#{tsuserid,jdbcType=INTEGER}, #{tsloginname,jdbcType=VARCHAR}, #{tsusername,jdbcType=VARCHAR}, 
+      #{tspassword,jdbcType=VARCHAR}, #{tsemail,jdbcType=VARCHAR}, #{tsidentity,jdbcType=INTEGER}, 
+      #{tspermissionname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.User">
+    insert into tsuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tsuserid != null">
+        tsuserid,
+      </if>
+      <if test="tsloginname != null">
+        tsloginname,
+      </if>
+      <if test="tsusername != null">
+        tsusername,
+      </if>
+      <if test="tspassword != null">
+        tspassword,
+      </if>
+      <if test="tsemail != null">
+        tsemail,
+      </if>
+      <if test="tsidentity != null">
+        tsidentity,
+      </if>
+      <if test="tspermissionname != null">
+        tspermissionname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tsuserid != null">
+        #{tsuserid,jdbcType=INTEGER},
+      </if>
+      <if test="tsloginname != null">
+        #{tsloginname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsusername != null">
+        #{tsusername,jdbcType=VARCHAR},
+      </if>
+      <if test="tspassword != null">
+        #{tspassword,jdbcType=VARCHAR},
+      </if>
+      <if test="tsemail != null">
+        #{tsemail,jdbcType=VARCHAR},
+      </if>
+      <if test="tsidentity != null">
+        #{tsidentity,jdbcType=INTEGER},
+      </if>
+      <if test="tspermissionname != null">
+        #{tspermissionname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.User">
+    update tsuser
+    <set>
+      <if test="tsloginname != null">
+        tsloginname = #{tsloginname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsusername != null">
+        tsusername = #{tsusername,jdbcType=VARCHAR},
+      </if>
+      <if test="tspassword != null">
+        tspassword = #{tspassword,jdbcType=VARCHAR},
+      </if>
+      <if test="tsemail != null">
+        tsemail = #{tsemail,jdbcType=VARCHAR},
+      </if>
+      <if test="tsidentity != null">
+        tsidentity = #{tsidentity,jdbcType=INTEGER},
+      </if>
+      <if test="tspermissionname != null">
+        tspermissionname = #{tspermissionname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tsuserid = #{tsuserid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.User">
+    update tsuser
+    set tsloginname = #{tsloginname,jdbcType=VARCHAR},
+      tsusername = #{tsusername,jdbcType=VARCHAR},
+      tspassword = #{tspassword,jdbcType=VARCHAR},
+      tsemail = #{tsemail,jdbcType=VARCHAR},
+      tsidentity = #{tsidentity,jdbcType=INTEGER},
+      tspermissionname = #{tspermissionname,jdbcType=VARCHAR}
+    where tsuserid = #{tsuserid,jdbcType=INTEGER}
+  </update>
+</mapper>
