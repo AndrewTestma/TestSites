@@ -29,6 +29,7 @@ import java.util.Map;
 public class UITestCaseController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     public static Map<String,List<Autosteps>> list=new HashMap<>();
+    public static UITestCase uiTestCase=null;
     @Resource(name="UITestCaseService")
     private UITestCaseService uiTestCaseService;
 
@@ -82,7 +83,7 @@ public class UITestCaseController {
      * */
     public void frontCase(String  tsuitestcaseid){
         Integer id=Integer.valueOf(tsuitestcaseid);
-        UITestCase uiTestCase=uiTestCaseService.selectByPrimaryKey(id);
+        uiTestCase=uiTestCaseService.selectByPrimaryKey(id);
         List<Autosteps> autosteps=autoStep(uiTestCase);
         list.put(uiTestCase.getTsnum(), autosteps);
         if(!uiTestCase.getTsfrontcase().equals("")) {
