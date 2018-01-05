@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.pojo.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository("UserMapper")
@@ -13,7 +14,8 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Integer tsuserid);
 
-    User selectByLoginName(String tsloginname);
+    User selectByLoginName(@Param("tsloginname") String tsloginname,@Param("tspassword")String tspassword);
+
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);

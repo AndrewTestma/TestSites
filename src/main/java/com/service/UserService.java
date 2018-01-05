@@ -16,7 +16,7 @@ public interface UserService {
 
     User selectByPrimaryKey(Integer tsuserid);
 
-    User selectByLoginName(String tsloginname);
+    User selectByLoginName(String tsloginname,String tspassword);
 
     int updateByPrimaryKeySelective(User record);
 

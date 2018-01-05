@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * @Description:
  * @Date 2018/1/5 0005
  */
-@Service
+@Service("UserService")
 public class UserServiceImpl implements UserService {
     @Resource(name="UserMapper")
     private UserMapper userMapper;
@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectByLoginName(String tsloginname) {
-        return userMapper.selectByLoginName(tsloginname);
+    public User selectByLoginName(String tsloginname,String tspassword) {
+        return userMapper.selectByLoginName(tsloginname,tspassword);
     }
 
     @Override

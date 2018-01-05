@@ -2,6 +2,7 @@ package com.utils;
 
 import com.controller.UITestCaseController;
 import com.pojo.Autosteps;
+import com.pojo.UITestCase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,6 +30,7 @@ public class BaseTest {
     public static WebDriver driver=null;
     public Logger logger= LoggerFactory.getLogger(this.getClass());
     public static Map<String,List<Autosteps>> autosteps=new HashMap<>();
+    public static UITestCase uiTestCase=null;
     @BeforeTest
     public void setup(){
         logger.info("开始测试");
@@ -39,6 +41,7 @@ public class BaseTest {
     @Test
     public void test(){
         WebElement webElement=null;
+        logger.info("执行测试步骤");
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
                 for(Autosteps autosteps1:entry.getValue()){
                     if(autosteps1.getTssearchid().equals("by.id")){
@@ -50,11 +53,15 @@ public class BaseTest {
                         webElement.sendKeys(autosteps1.getTsexecutioncontent());
                     }
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
+        }
+        logger.info("执行验证");
+        if(uiTestCase.getTsverificationid().equals("")){
+
         }
     }
     @AfterClass
