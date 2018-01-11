@@ -1,8 +1,7 @@
 CREATE DATABASE IF NOT EXISTS Test-Sites DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
-
 -- tsproduct
 CREATE TABLE IF NOT EXISTS tsproduct(
-	tsproductid INTEGER(3) AUTO_INCREMENT,
+	tsproductid INTEGER(11) AUTO_INCREMENT,
 	tsname VARCHAR(100) NOT NULL,
 	tsurl varchar(100) NOT NULL,
 	tsdburl varchar(100) not null,
@@ -12,67 +11,10 @@ CREATE TABLE IF NOT EXISTS tsproduct(
 ) ENGINE=InnoDB;
 -- tsmodule
 create table if not exists tsmodule(
-  tsmoduleid integer(3) auto_increment,
-  tsproductid integer(3) not null,
+  tsmoduleid integer(11) auto_increment,
+  tsproductid integer(11) not null,
   tsame varchar(100) not null,
   primary key (tsmoduleid)
-) engine=innodb;
--- tsUItestcase
-create table if not exists tsuitestcase(
-  tsuitestcaseid integer(3) auto_increment,
-  tsnum varchar(100) not null,
-  tsproductid integer(3) not null,
-  tsmodulename varchar(100) not null,
-  tsautostepsname varchar(100) not null,
-  tsfrontcase varchar(100) default null,
-  tsexpected varchar(100) not null,
-  tsverificationid varchar(100) not null,
-  tsverificationcontent varchar(100)not null,
-  tsdebug TINYINT(0),
-  tsgrade integer(3) default 5,
-  tscreatetime timestamp default current_timestamp,
-  tsregress tinyint(0),
-  tssmoke tinyint(0),
-  tscreator varchar(100) not null,
-  primary key (tsuitestcaseid)
-  -- foreign key(tsUItestcaseproductid)references ts_product(tsproductid),
-  -- foreign key(tsUItestcasemoduleid)references ts_module(tsmoduleid)
-) engine=innodb;
--- tsautosteps
-create table if not exists tsautosteps(
-	tsautostepsid integer(3) auto_increment,
-	tsname varchar(100) not null,
-	tssearchid varchar(100) not null,
-	tssearchcontent varchar(100) not null,
-	tsexecutionid varchar(100) not null,	
-	tsexecutioncontent varchar(100) default null,
-	tsiframe varchar(100) default null,
-	tswaittime integer(4) default null,
-	tsproductid integer(3) default null,
-	tsmodulename varchar(100) default null,
-	tspublic tinyint(0),
-	tsremarks varchar(100) default null,
-	tscreatetime timestamp default current_timestamp,
-	tscreator varchar(100) not null,
-	primary key (tsautostepsid)
-) engine=innodb;
--- tsverification
-create table if not exists tsverification (
-	tsverificationid integer(3) auto_increment,
-	tsvalue varchar(100) not null,
-	primary key (tsverificationid)
-) engine=innodb;
--- tssearch
-create table if not exists tssearch (
-	tssearchid integer(3) auto_increment,
-	tsvalue varchar(100) not null,
-	primary key (tssearchid)
-) engine=innodb;
--- tsexecution
-create table if not exists tsexecution (
-	tsexecutionid integer(3) auto_increment,
-	tsvalue varchar(100) not null,
-	primary key (tsexecutionid)
 ) engine=innodb;
 -- tsoperatingenv
 create table if not exists tsoperatingenv(
@@ -83,28 +25,76 @@ create table if not exists tsoperatingenv(
   tsdirverpath varchar(100) not null,
   primary key(tsoperatingenvid)
 ) engine=innodb;
--- tsuser
-create table if not exists tsuser(
-	tsuserid integer(3) auto_increment,
-	tsloginname  varchar(100) not null,
-	tsusername  varchar(100) not null,
-	tspassword varchar(100) not null,
-	tsemail varchar(100) not null,
-	tsidentity integer(3) not null,
-	tspermissionname varchar(100) default null,
-	primary key(tsuserid)
-)engine=innodb;
-INSERT INTO tsuser (tsloginname, tsusername, tspassword, tsemail, tsidentity, tspermissionname) 
-VALUES ('andrew', 'mjw', '123456', '425780724@qq.com', 1, '');
--- tspermissions
-create table if not exists tspermissions(
-	tspermissionsid integer(3) auto_increment,
+-- tsbusiness
+create table if not exists tsbusiness(
+	tsbusinessid integer(11) auto_increment,
 	tsname varchar(100) not null,
-	tsproduct tinyint(0),
-	tstestcase tinyint(0),
-	tsscenes tinyint(0),
-	tsreserved1 tinyint(0),
-	tsreserved2 tinyint(0),
-	tsreserved3 tinyint(0),
-	primary key(tspermissionsid)
+	tsproductid integer(11) not null,
+	tssmoke integer(11) default 0,
+	tsregress integer(11) default 0,
+	tsorder integer(11) default 5,
+	primary key(tsbusinessid)
+)engine=innodb;
+-- tsbusinesscase
+create table if not exists tsbusinesscase(
+	tsbusinesscaseid integer(11) auto_increment,
+	tsbusinessid integer(11) not null,
+	tsuitestcaseid integer(11) not null,
+	tsorder integer(11) default 0,
+	primary key(tsbusinesscaseid) 
+)engine=innodb;
+-- tsuitestcase
+create table if not exists tsuitestcase(
+  tsuitestcaseid integer(11) auto_increment,
+  tsname varchar(100) unique not null,
+  tsproductid integer(11) not null,
+  tsmodulename varchar(100) not null, 
+  tsgrade integer(11) default 5,
+  tsresultid integer(11) not null,
+  tscommon integer(11) default 0,
+  tscreatetime timestamp default current_timestamp,    
+  tscreator varchar(100) not null,
+  primary key (tsuitestcaseid)
+  -- foreign key(tsUItestcaseproductid)references ts_product(tsproductid),
+  -- foreign key(tsUItestcasemoduleid)references ts_module(tsmoduleid)
+) engine=innodb;
+-- tsautosteps
+create table if not exists tsautosteps(
+	tsautostepsid integer(11) auto_increment,
+	tsname varchar(100) unique not null,
+	tsproductid integer(11) not null,
+	tsmoduleid integer(11) not null,	
+	tsselecttype varchar(100) not null,
+	tsselectcontent varchar(100) not null,
+	tsactiontype varchar(100) not null,	
+	tsactioncontent varchar(100) default null,
+	tsframepath varchar(100) default null,
+	tswait integer(4) default null,
+	tsverificationtype varchar(100) not null,
+	tsverificationcontent varchar(2048) not null,
+	tscommon integer(11) default null,
+	tsremarks varchar(100) default null,
+	tscreatetime timestamp default current_timestamp,
+	tscreator varchar(100) not null,
+	primary key (tsautostepsid)
+) engine=innodb;
+-- tscasesteps
+create table if not exists tscasesteps(
+	tscasestepsid integer(11) auto_increment,
+	tsuitestcaseid integer(11) not null,
+	tsautostepsid integer(11) not null,
+	tsorder integer(11) default 0,
+	primary key(tsbusinesscaseid) 
+)engine=innodb;
+-- tsresult
+create table if not exists tsresult(
+	tsresultid integer(11) auto_increment,
+	tstotaltime integer(11) default null,
+	tstotalsteps integer(11) default null,
+	tsrunsteps integer(11) default null,
+	tsresult integer(11) default null,
+	tscount integer(11) default null,
+	tsexecutive varchar(100) default null,
+	tsexecutiontime timestamp default current_timestamp,
+	primary key(tsresultid)
 )engine=innodb;
