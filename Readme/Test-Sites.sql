@@ -84,7 +84,7 @@ create table if not exists tscasesteps(
 	tsuitestcaseid integer(11) not null,
 	tsautostepsid integer(11) not null,
 	tsorder integer(11) default 0,
-	primary key(tsbusinesscaseid) 
+	primary key(tscasestepsid) 
 )engine=innodb;
 -- tsresult
 create table if not exists tsresult(
