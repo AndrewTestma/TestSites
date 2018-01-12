@@ -1,8 +1,6 @@
 package com.utils;
 
 import com.controller.UITestCaseController;
-import com.pojo.Autosteps;
-import com.pojo.UITestCase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +25,7 @@ import java.util.Map;
  * @Date 2017/12/26 0026
  */
 public class BaseTest {
-    public static WebDriver driver=null;
+   /* public static WebDriver driver=null;
     public Logger logger= LoggerFactory.getLogger(this.getClass());
     public static Map<String,List<Autosteps>> autosteps=new HashMap<>();
     public static UITestCase uiTestCase=null;
@@ -92,15 +90,15 @@ public class BaseTest {
                 break;
             case "ChromeDriver":
                 System.setProperty("webdriver.chrome.driver", "driver/Chromedriver.exe");
-				/*ChromeOptions options = new ChromeOptions();
-				options.setBinary(this.driver_path); */
+				*//*ChromeOptions options = new ChromeOptions();
+				options.setBinary(this.driver_path); *//*
                 this.driver=new ChromeDriver();
                 break;
             case "InternetExplorerDriver":
                 System.setProperty("webdriver.ie.driver","" );
-				/*DesiredCapabilities dc = DesiredCapabilities.internetExplorer();
+				*//*DesiredCapabilities dc = DesiredCapabilities.internetExplorer();
 				dc.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-				dc.setCapability("ignoreProtectedModeSettings", true);*/
+				dc.setCapability("ignoreProtectedModeSettings", true);*//*
                 this.driver=new InternetExplorerDriver();
                 break;
             case "HtmlUnitDriver":
@@ -112,5 +110,5 @@ public class BaseTest {
         }
         return driver;
     }
-
+*/
 }

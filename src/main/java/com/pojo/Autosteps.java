@@ -7,23 +7,27 @@ public class Autosteps {
 
     private String tsname;
 
-    private String tssearchid;
-
-    private String tssearchcontent;
-
-    private String tsexecutionid;
-
-    private String tsexecutioncontent;
-
-    private String tsiframe;
-
-    private Integer tswaittime;
-
     private Integer tsproductid;
 
-    private String tsmodulename;
+    private Integer tsmoduleid;
 
-    private Byte tspublic;
+    private String tsselecttype;
+
+    private String tsselectcontent;
+
+    private String tsactiontype;
+
+    private String tsactioncontent;
+
+    private String tsframepath;
+
+    private Integer tswait;
+
+    private String tsverificationtype;
+
+    private String tsverificationcontent;
+
+    private Integer tscommon;
 
     private String tsremarks;
 
@@ -47,54 +51,6 @@ public class Autosteps {
         this.tsname = tsname;
     }
 
-    public String getTssearchid() {
-        return tssearchid;
-    }
-
-    public void setTssearchid(String tssearchid) {
-        this.tssearchid = tssearchid;
-    }
-
-    public String getTssearchcontent() {
-        return tssearchcontent;
-    }
-
-    public void setTssearchcontent(String tssearchcontent) {
-        this.tssearchcontent = tssearchcontent;
-    }
-
-    public String getTsexecutionid() {
-        return tsexecutionid;
-    }
-
-    public void setTsexecutionid(String tsexecutionid) {
-        this.tsexecutionid = tsexecutionid;
-    }
-
-    public String getTsexecutioncontent() {
-        return tsexecutioncontent;
-    }
-
-    public void setTsexecutioncontent(String tsexecutioncontent) {
-        this.tsexecutioncontent = tsexecutioncontent;
-    }
-
-    public String getTsiframe() {
-        return tsiframe;
-    }
-
-    public void setTsiframe(String tsiframe) {
-        this.tsiframe = tsiframe;
-    }
-
-    public Integer getTswaittime() {
-        return tswaittime;
-    }
-
-    public void setTswaittime(Integer tswaittime) {
-        this.tswaittime = tswaittime;
-    }
-
     public Integer getTsproductid() {
         return tsproductid;
     }
@@ -103,20 +59,84 @@ public class Autosteps {
         this.tsproductid = tsproductid;
     }
 
-    public String getTsmodulename() {
-        return tsmodulename;
+    public Integer getTsmoduleid() {
+        return tsmoduleid;
     }
 
-    public void setTsmodulename(String tsmodulename) {
-        this.tsmodulename = tsmodulename;
+    public void setTsmoduleid(Integer tsmoduleid) {
+        this.tsmoduleid = tsmoduleid;
     }
 
-    public Byte getTspublic() {
-        return tspublic;
+    public String getTsselecttype() {
+        return tsselecttype;
     }
 
-    public void setTspublic(Byte tspublic) {
-        this.tspublic = tspublic;
+    public void setTsselecttype(String tsselecttype) {
+        this.tsselecttype = tsselecttype;
+    }
+
+    public String getTsselectcontent() {
+        return tsselectcontent;
+    }
+
+    public void setTsselectcontent(String tsselectcontent) {
+        this.tsselectcontent = tsselectcontent;
+    }
+
+    public String getTsactiontype() {
+        return tsactiontype;
+    }
+
+    public void setTsactiontype(String tsactiontype) {
+        this.tsactiontype = tsactiontype;
+    }
+
+    public String getTsactioncontent() {
+        return tsactioncontent;
+    }
+
+    public void setTsactioncontent(String tsactioncontent) {
+        this.tsactioncontent = tsactioncontent;
+    }
+
+    public String getTsframepath() {
+        return tsframepath;
+    }
+
+    public void setTsframepath(String tsframepath) {
+        this.tsframepath = tsframepath;
+    }
+
+    public Integer getTswait() {
+        return tswait;
+    }
+
+    public void setTswait(Integer tswait) {
+        this.tswait = tswait;
+    }
+
+    public String getTsverificationtype() {
+        return tsverificationtype;
+    }
+
+    public void setTsverificationtype(String tsverificationtype) {
+        this.tsverificationtype = tsverificationtype;
+    }
+
+    public String getTsverificationcontent() {
+        return tsverificationcontent;
+    }
+
+    public void setTsverificationcontent(String tsverificationcontent) {
+        this.tsverificationcontent = tsverificationcontent;
+    }
+
+    public Integer getTscommon() {
+        return tscommon;
+    }
+
+    public void setTscommon(Integer tscommon) {
+        this.tscommon = tscommon;
     }
 
     public String getTsremarks() {

@@ -38,6 +38,7 @@
             <a href="${basePath}/manage/index">
                 <img src="${basePath}/resources/images/logo.png"/>
             </a>
+            <span id="system_title">自动化测试平台</span>
         </li>
         <li class="pull-right">
             <ul class="hi-menu">
@@ -63,12 +64,12 @@
                     </a>
                     <ul class="dropdown-menu dm-icon pull-right">
                         <li class="skin-switch hidden-xs">
-                            请选择系统切换
+                            请选择产品切换
                         </li>
                         <li class="divider hidden-xs"></li>
-                        <c:forEach var="upmsSystem" items="${upmsSystems}">
+                        <c:forEach var="product" items="${requestScope.get('list')}" varStatus="status">
                             <li>
-                                <a class="waves-effect switch-systems" href="javascript:;" systemid="${upmsSystem.systemId}" systemname="${upmsSystem.name}" systemtitle="${upmsSystem.title}"><i class="${upmsSystem.icon}"></i> ${upmsSystem.title}</a>
+                                <a class="waves-effect switch-systems" onclick="addsession()" href="javascript:;" systemid="1"  systemname="${product.tsname}" systemtitle="${product.tsname}"><i class="${upmsSystem.icon}"></i> ${product.tsname}</a>
                             </li>
                         </c:forEach>
                     </ul>
@@ -110,29 +111,35 @@
             <li>
                 <a class="waves-effect" href="javascript:Tab.addTab('首页', 'home');"><i class="zmdi zmdi-home"></i> 首页</a>
             </li>
-            <li class="sub-menu system_menus system_1 0" >
-                <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-accounts-list"></i> 产品管理</a>
-                <ul>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('产品信息', '');">产品信息</a></li>
-                </ul>
-            </li>
-            <li class="sub-menu system_menus system_1 3" >
+            <li class="sub-menu system_menus system_1 3">
                 <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-accounts"></i> 用例管理</a>
                 <ul>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('UI测试用例', '');">UI测试用例</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('接口测试用例', '');">接口测试用例</a></li>
                 </ul>
             </li>
-            <li class="sub-menu system_menus system_1 6" >
+            <li class="sub-menu system_menus system_1 3" >
                 <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-lock-outline"></i> 场景管理</a>
                 <ul>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('业务管理', '');">产品信息</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('业务管理', '');">业务管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('回归测试', '');">回归测试</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('冒烟测试', '');">冒烟测试</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="sub-menu system_menus system_1 3">
                 <a class="waves-effect" href="javascript:Tab.addTab('用户管理', 'home');"><i class="zmdi zmdi-home"></i> 用户管理</a>
+                <ul>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('权限设置', '');">权限设置</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('用户信息', '');">用户信息</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu system_menus system_1 3" >
+                <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-accounts-list"></i> 设置</a>
+                <ul>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('产品信息', '${basePath}/product/index');">产品设置</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('模块信息', '${basePath}/product/index');">产品设置</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('运行设置', '');">运行设置</a></li>
+                </ul>
             </li>
             <li>
                 <div class="upms-version">&copy; </div>
@@ -163,7 +170,13 @@
     </section>
 </section>
 <footer id="footer"></footer>
-<script>var BASE_PATH = '${basePath}';</script>
+<script>
+    var BASE_PATH = '${basePath}';
+    function addsession(){
+        //添加session 方法
+        $.ajax({});
+    }
+</script>
 <script src="${basePath}/resources/plugins/jquery.1.12.4.min.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
 <script src="${basePath}/resources/plugins/waves-0.7.5/waves.min.js"></script>

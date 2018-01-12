@@ -5,31 +5,19 @@ import java.util.Date;
 public class UITestCase {
     private Integer tsuitestcaseid;
 
-    private String tsnum;
+    private String tsname;
 
     private Integer tsproductid;
 
     private String tsmodulename;
 
-    private String tsautostepsname;
-
-    private String tsfrontcase;
-
-    private String tsexpected;
-
-    private String tsverificationid;
-
-    private String tsverificationcontent;
-
-    private Byte tsdebug;
-
     private Integer tsgrade;
 
+    private Integer tsresultid;
+
+    private Integer tscommon;
+
     private Date tscreatetime;
-
-    private Byte tsregress;
-
-    private Byte tssmoke;
 
     private String tscreator;
 
@@ -41,12 +29,12 @@ public class UITestCase {
         this.tsuitestcaseid = tsuitestcaseid;
     }
 
-    public String getTsnum() {
-        return tsnum;
+    public String getTsname() {
+        return tsname;
     }
 
-    public void setTsnum(String tsnum) {
-        this.tsnum = tsnum;
+    public void setTsname(String tsname) {
+        this.tsname = tsname;
     }
 
     public Integer getTsproductid() {
@@ -65,60 +53,28 @@ public class UITestCase {
         this.tsmodulename = tsmodulename;
     }
 
-    public String getTsautostepsname() {
-        return tsautostepsname;
-    }
-
-    public void setTsautostepsname(String tsautostepsname) {
-        this.tsautostepsname = tsautostepsname;
-    }
-
-    public String getTsfrontcase() {
-        return tsfrontcase;
-    }
-
-    public void setTsfrontcase(String tsfrontcase) {
-        this.tsfrontcase = tsfrontcase;
-    }
-
-    public String getTsexpected() {
-        return tsexpected;
-    }
-
-    public void setTsexpected(String tsexpected) {
-        this.tsexpected = tsexpected;
-    }
-
-    public String getTsverificationid() {
-        return tsverificationid;
-    }
-
-    public void setTsverificationid(String tsverificationid) {
-        this.tsverificationid = tsverificationid;
-    }
-
-    public String getTsverificationcontent() {
-        return tsverificationcontent;
-    }
-
-    public void setTsverificationcontent(String tsverificationcontent) {
-        this.tsverificationcontent = tsverificationcontent;
-    }
-
-    public Byte getTsdebug() {
-        return tsdebug;
-    }
-
-    public void setTsdebug(Byte tsdebug) {
-        this.tsdebug = tsdebug;
-    }
-
     public Integer getTsgrade() {
         return tsgrade;
     }
 
     public void setTsgrade(Integer tsgrade) {
         this.tsgrade = tsgrade;
+    }
+
+    public Integer getTsresultid() {
+        return tsresultid;
+    }
+
+    public void setTsresultid(Integer tsresultid) {
+        this.tsresultid = tsresultid;
+    }
+
+    public Integer getTscommon() {
+        return tscommon;
+    }
+
+    public void setTscommon(Integer tscommon) {
+        this.tscommon = tscommon;
     }
 
     public Date getTscreatetime() {
@@ -129,48 +85,11 @@ public class UITestCase {
         this.tscreatetime = tscreatetime;
     }
 
-    public Byte getTsregress() {
-        return tsregress;
-    }
-
-    public void setTsregress(Byte tsregress) {
-        this.tsregress = tsregress;
-    }
-
-    public Byte getTssmoke() {
-        return tssmoke;
-    }
-
-    public void setTssmoke(Byte tssmoke) {
-        this.tssmoke = tssmoke;
-    }
-
     public String getTscreator() {
         return tscreator;
     }
 
     public void setTscreator(String tscreator) {
         this.tscreator = tscreator;
-    }
-
-    @Override
-    public String toString() {
-        return "UITestCase{" +
-                "tsuitestcaseid=" + tsuitestcaseid +
-                ", tsnum='" + tsnum + '\'' +
-                ", tsproductid=" + tsproductid +
-                ", tsmodulename='" + tsmodulename + '\'' +
-                ", tsautostepsname='" + tsautostepsname + '\'' +
-                ", tsfrontcase='" + tsfrontcase + '\'' +
-                ", tsexpected='" + tsexpected + '\'' +
-                ", tsverificationid='" + tsverificationid + '\'' +
-                ", tsverificationcontent='" + tsverificationcontent + '\'' +
-                ", tsdebug=" + tsdebug +
-                ", tsgrade=" + tsgrade +
-                ", tscreatetime=" + tscreatetime +
-                ", tsregress=" + tsregress +
-                ", tssmoke=" + tssmoke +
-                ", tscreator='" + tscreator + '\'' +
-                '}';
     }
 }

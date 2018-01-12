@@ -11,6 +11,8 @@ public class Product {
 
     private String tsdbname;
 
+    private String tsusername;
+
     private String tspassword;
 
     public Integer getTsproductid() {
@@ -51,6 +53,14 @@ public class Product {
 
     public void setTsdbname(String tsdbname) {
         this.tsdbname = tsdbname;
+    }
+
+    public String getTsusername() {
+        return tsusername;
+    }
+
+    public void setTsusername(String tsusername) {
+        this.tsusername = tsusername;
     }
 
     public String getTspassword() {

@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS tsproduct(
 	tsurl varchar(100) NOT NULL,
 	tsdburl varchar(100) not null,
 	tsdbname varchar(100) not null,
+	tsusername varchar(100) not null,
 	tspassword varchar(100) not null,
 	PRIMARY KEY (tsproductid)
 ) ENGINE=InnoDB;

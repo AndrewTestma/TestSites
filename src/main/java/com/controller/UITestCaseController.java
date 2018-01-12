@@ -1,9 +1,5 @@
 package com.controller;
 
-import com.pojo.Autosteps;
-import com.pojo.UITestCase;
-import com.service.AutostepsService;
-import com.service.UITestCaseService;
 import com.utils.BaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +23,7 @@ import java.util.Map;
 @Controller("UITestCaseController")
 @RequestMapping("/ui")
 public class UITestCaseController {
-    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    /*private Logger logger= LoggerFactory.getLogger(this.getClass());
     public static Map<String,List<Autosteps>> list=new HashMap<>();
     public static UITestCase uiTestCase=null;
     @Resource(name="UITestCaseService")
@@ -36,25 +32,25 @@ public class UITestCaseController {
     @Resource(name = "AutostepsService")
     private AutostepsService autostepsService;
 
-    /**
+    *//**
      * @Description:获取测试用例列表
-     * */
+     * *//*
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     private String list(Model model){
         List<UITestCase> list=uiTestCaseService.selectByPrimaryKeyAll(0,10);
         model.addAttribute("list",list);
         return "uitestcase/list";
     }
-    /**
+    *//**
      * @Description:用例添加页面
-     * */
+     * *//*
     @RequestMapping(value = "/addpage",method = RequestMethod.GET)
     public String addpage(){
         return "uitestcase/addpage";
     }
-    /**
+    *//**
      * @Description:添加用例方法
-     * */
+     * *//*
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ModelAndView add(UITestCase uiTestCase){
         logger.debug(uiTestCase.toString());
@@ -64,9 +60,9 @@ public class UITestCaseController {
         }
         return new ModelAndView("redirect:/ui/list");
     }
-    /**
+    *//**
      * @Description:调试用例
-     * */
+     * *//*
     @RequestMapping(value = "/debugging",method = RequestMethod.POST)
     public ModelAndView debugging(@RequestParam("btnid") String tsuitestcaseid){
         logger.info("测试用例ID-----"+tsuitestcaseid);
@@ -76,11 +72,11 @@ public class UITestCaseController {
         testNG.run();
         return new ModelAndView("redirect:/ui/list");
     }
-    /**
+    *//**
      * @Description：获取测试用例的操作步骤
      * @param tsuitestcaseid:测试用例ID
      * @return
-     * */
+     * *//*
     public void frontCase(String  tsuitestcaseid){
         Integer id=Integer.valueOf(tsuitestcaseid);
         uiTestCase=uiTestCaseService.selectByPrimaryKey(id);
@@ -91,10 +87,10 @@ public class UITestCaseController {
             frontCase(id1);
         }
     }
-    /**
+    *//**
      * @Description:获取操作步骤
      * @param uiTestCase:测试用例对象
-     * */
+     * *//*
     public List<Autosteps> autoStep(UITestCase uiTestCase){
         List<Autosteps> autosteps=new ArrayList<>();
         String[] strings=uiTestCase.getTsautostepsname().split(",");
@@ -104,5 +100,5 @@ public class UITestCaseController {
             autosteps.add(autosteps1);
         }
         return autosteps;
-    }
+    }*/
 }

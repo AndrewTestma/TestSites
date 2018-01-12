@@ -124,5 +124,6 @@
     <orderEntry type="library" name="Maven: org.apache.ant:ant-launcher:1.7.0" level="project" />
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.48" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.15" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.23" level="application_server_libraries" />
   </component>
 </module>

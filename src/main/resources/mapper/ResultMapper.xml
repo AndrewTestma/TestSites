@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ResultMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.Result">
+    <id column="tsresultid" jdbcType="INTEGER" property="tsresultid" />
+    <result column="tstotaltime" jdbcType="INTEGER" property="tstotaltime" />
+    <result column="tstotalsteps" jdbcType="INTEGER" property="tstotalsteps" />
+    <result column="tsrunsteps" jdbcType="INTEGER" property="tsrunsteps" />
+    <result column="tsresult" jdbcType="INTEGER" property="tsresult" />
+    <result column="tscount" jdbcType="INTEGER" property="tscount" />
+    <result column="tsexecutive" jdbcType="VARCHAR" property="tsexecutive" />
+    <result column="tsexecutiontime" jdbcType="TIMESTAMP" property="tsexecutiontime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tsresultid, tstotaltime, tstotalsteps, tsrunsteps, tsresult, tscount, tsexecutive, 
+    tsexecutiontime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tsresult
+    where tsresultid = #{tsresultid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tsresult
+    where tsresultid = #{tsresultid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Result">
+    insert into tsresult (tsresultid, tstotaltime, tstotalsteps, 
+      tsrunsteps, tsresult, tscount, 
+      tsexecutive, tsexecutiontime)
+    values (#{tsresultid,jdbcType=INTEGER}, #{tstotaltime,jdbcType=INTEGER}, #{tstotalsteps,jdbcType=INTEGER}, 
+      #{tsrunsteps,jdbcType=INTEGER}, #{tsresult,jdbcType=INTEGER}, #{tscount,jdbcType=INTEGER}, 
+      #{tsexecutive,jdbcType=VARCHAR}, #{tsexecutiontime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Result">
+    insert into tsresult
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tsresultid != null">
+        tsresultid,
+      </if>
+      <if test="tstotaltime != null">
+        tstotaltime,
+      </if>
+      <if test="tstotalsteps != null">
+        tstotalsteps,
+      </if>
+      <if test="tsrunsteps != null">
+        tsrunsteps,
+      </if>
+      <if test="tsresult != null">
+        tsresult,
+      </if>
+      <if test="tscount != null">
+        tscount,
+      </if>
+      <if test="tsexecutive != null">
+        tsexecutive,
+      </if>
+      <if test="tsexecutiontime != null">
+        tsexecutiontime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tsresultid != null">
+        #{tsresultid,jdbcType=INTEGER},
+      </if>
+      <if test="tstotaltime != null">
+        #{tstotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="tstotalsteps != null">
+        #{tstotalsteps,jdbcType=INTEGER},
+      </if>
+      <if test="tsrunsteps != null">
+        #{tsrunsteps,jdbcType=INTEGER},
+      </if>
+      <if test="tsresult != null">
+        #{tsresult,jdbcType=INTEGER},
+      </if>
+      <if test="tscount != null">
+        #{tscount,jdbcType=INTEGER},
+      </if>
+      <if test="tsexecutive != null">
+        #{tsexecutive,jdbcType=VARCHAR},
+      </if>
+      <if test="tsexecutiontime != null">
+        #{tsexecutiontime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Result">
+    update tsresult
+    <set>
+      <if test="tstotaltime != null">
+        tstotaltime = #{tstotaltime,jdbcType=INTEGER},
+      </if>
+      <if test="tstotalsteps != null">
+        tstotalsteps = #{tstotalsteps,jdbcType=INTEGER},
+      </if>
+      <if test="tsrunsteps != null">
+        tsrunsteps = #{tsrunsteps,jdbcType=INTEGER},
+      </if>
+      <if test="tsresult != null">
+        tsresult = #{tsresult,jdbcType=INTEGER},
+      </if>
+      <if test="tscount != null">
+        tscount = #{tscount,jdbcType=INTEGER},
+      </if>
+      <if test="tsexecutive != null">
+        tsexecutive = #{tsexecutive,jdbcType=VARCHAR},
+      </if>
+      <if test="tsexecutiontime != null">
+        tsexecutiontime = #{tsexecutiontime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where tsresultid = #{tsresultid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Result">
+    update tsresult
+    set tstotaltime = #{tstotaltime,jdbcType=INTEGER},
+      tstotalsteps = #{tstotalsteps,jdbcType=INTEGER},
+      tsrunsteps = #{tsrunsteps,jdbcType=INTEGER},
+      tsresult = #{tsresult,jdbcType=INTEGER},
+      tscount = #{tscount,jdbcType=INTEGER},
+      tsexecutive = #{tsexecutive,jdbcType=VARCHAR},
+      tsexecutiontime = #{tsexecutiontime,jdbcType=TIMESTAMP}
+    where tsresultid = #{tsresultid,jdbcType=INTEGER}
+  </update>
+</mapper>

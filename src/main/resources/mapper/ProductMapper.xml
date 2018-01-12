@@ -7,10 +7,11 @@
     <result column="tsurl" jdbcType="VARCHAR" property="tsurl" />
     <result column="tsdburl" jdbcType="VARCHAR" property="tsdburl" />
     <result column="tsdbname" jdbcType="VARCHAR" property="tsdbname" />
+    <result column="tsusername" jdbcType="VARCHAR" property="tsusername" />
     <result column="tspassword" jdbcType="VARCHAR" property="tspassword" />
   </resultMap>
   <sql id="Base_Column_List">
-    tsproductid, tsname, tsurl, tsdburl, tsdbname, tspassword
+    tsproductid, tsname, tsurl, tsdburl, tsdbname, tsusername, tspassword
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -18,17 +19,25 @@
     from tsproduct
     where tsproductid = #{tsproductid,jdbcType=INTEGER}
   </select>
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tsproduct
+    ORDER BY
+    tsproductid
+    LIMIT #{offset}, #{limit}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsproduct
     where tsproductid = #{tsproductid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.pojo.Product">
-    insert into tsproduct (tsproductid, tsname, tsurl, 
-      tsdburl, tsdbname, tspassword
-      )
-    values (#{tsproductid,jdbcType=INTEGER}, #{tsname,jdbcType=VARCHAR}, #{tsurl,jdbcType=VARCHAR}, 
-      #{tsdburl,jdbcType=VARCHAR}, #{tsdbname,jdbcType=VARCHAR}, #{tspassword,jdbcType=VARCHAR}
-      )
+    insert into tsproduct (tsname, tsurl,
+      tsdburl, tsdbname, tsusername, 
+      tspassword)
+    values (#{tsname,jdbcType=VARCHAR}, #{tsurl,jdbcType=VARCHAR},
+      #{tsdburl,jdbcType=VARCHAR}, #{tsdbname,jdbcType=VARCHAR}, #{tsusername,jdbcType=VARCHAR}, 
+      #{tspassword,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.Product">
     insert into tsproduct
@@ -47,6 +56,9 @@
       </if>
       <if test="tsdbname != null">
         tsdbname,
+      </if>
+      <if test="tsusername != null">
+        tsusername,
       </if>
       <if test="tspassword != null">
         tspassword,
@@ -68,6 +80,9 @@
       <if test="tsdbname != null">
         #{tsdbname,jdbcType=VARCHAR},
       </if>
+      <if test="tsusername != null">
+        #{tsusername,jdbcType=VARCHAR},
+      </if>
       <if test="tspassword != null">
         #{tspassword,jdbcType=VARCHAR},
       </if>
@@ -88,6 +103,9 @@
       <if test="tsdbname != null">
         tsdbname = #{tsdbname,jdbcType=VARCHAR},
       </if>
+      <if test="tsusername != null">
+        tsusername = #{tsusername,jdbcType=VARCHAR},
+      </if>
       <if test="tspassword != null">
         tspassword = #{tspassword,jdbcType=VARCHAR},
       </if>
@@ -100,6 +118,7 @@
       tsurl = #{tsurl,jdbcType=VARCHAR},
       tsdburl = #{tsdburl,jdbcType=VARCHAR},
       tsdbname = #{tsdbname,jdbcType=VARCHAR},
+      tsusername = #{tsusername,jdbcType=VARCHAR},
       tspassword = #{tspassword,jdbcType=VARCHAR}
     where tsproductid = #{tsproductid,jdbcType=INTEGER}
   </update>

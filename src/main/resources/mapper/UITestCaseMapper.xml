@@ -3,25 +3,18 @@
 <mapper namespace="com.dao.UITestCaseMapper">
   <resultMap id="BaseResultMap" type="com.pojo.UITestCase">
     <id column="tsuitestcaseid" jdbcType="INTEGER" property="tsuitestcaseid" />
-    <result column="tsnum" jdbcType="VARCHAR" property="tsnum" />
+    <result column="tsname" jdbcType="VARCHAR" property="tsname" />
     <result column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
     <result column="tsmodulename" jdbcType="VARCHAR" property="tsmodulename" />
-    <result column="tsautostepsname" jdbcType="VARCHAR" property="tsautostepsname" />
-    <result column="tsfrontcase" jdbcType="VARCHAR" property="tsfrontcase" />
-    <result column="tsexpected" jdbcType="VARCHAR" property="tsexpected" />
-    <result column="tsverificationid" jdbcType="INTEGER" property="tsverificationid" />
-    <result column="tsverificationcontent" jdbcType="VARCHAR" property="tsverificationcontent" />
-    <result column="tsdebug" jdbcType="TINYINT" property="tsdebug" />
     <result column="tsgrade" jdbcType="INTEGER" property="tsgrade" />
+    <result column="tsresultid" jdbcType="INTEGER" property="tsresultid" />
+    <result column="tscommon" jdbcType="INTEGER" property="tscommon" />
     <result column="tscreatetime" jdbcType="TIMESTAMP" property="tscreatetime" />
-    <result column="tsregress" jdbcType="TINYINT" property="tsregress" />
-    <result column="tssmoke" jdbcType="TINYINT" property="tssmoke" />
     <result column="tscreator" jdbcType="VARCHAR" property="tscreator" />
   </resultMap>
   <sql id="Base_Column_List">
-    tsuitestcaseid, tsnum, tsproductid, tsmodulename, tsautostepsname, tsfrontcase, tsexpected, 
-    tsverificationid, tsverificationcontent, tsdebug, tsgrade, tscreatetime, tsregress, 
-    tssmoke, tscreator
+    tsuitestcaseid, tsname, tsproductid, tsmodulename, tsgrade, tsresultid, tscommon, 
+    tscreatetime, tscreator
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -29,26 +22,18 @@
     from tsuitestcase
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
   </select>
-  <select id="selectByPrimaryKeyAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tsuitestcase
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsuitestcase
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.pojo.UITestCase">
-    insert into tsuitestcase (tsnum, tsproductid,
-      tsmodulename, tsautostepsname, tsfrontcase,
-      tsexpected, tsverificationid, tsverificationcontent,
-      tsdebug, tsgrade,tsregress, tssmoke, tscreator
+    insert into tsuitestcase (tsuitestcaseid, tsname, tsproductid, 
+      tsmodulename, tsgrade, tsresultid, 
+      tscommon, tscreatetime, tscreator
       )
-    values (#{tsnum,jdbcType=VARCHAR}, #{tsproductid,jdbcType=INTEGER},
-      #{tsmodulename,jdbcType=VARCHAR}, #{tsautostepsname,jdbcType=VARCHAR}, #{tsfrontcase,jdbcType=VARCHAR}, 
-      #{tsexpected,jdbcType=VARCHAR}, #{tsverificationid,jdbcType=INTEGER}, #{tsverificationcontent,jdbcType=VARCHAR}, 
-      #{tsdebug,jdbcType=TINYINT}, #{tsgrade,jdbcType=INTEGER}, #{tsregress,jdbcType=TINYINT},
-      #{tssmoke,jdbcType=TINYINT}, #{tscreator,jdbcType=VARCHAR}
+    values (#{tsuitestcaseid,jdbcType=INTEGER}, #{tsname,jdbcType=VARCHAR}, #{tsproductid,jdbcType=INTEGER}, 
+      #{tsmodulename,jdbcType=VARCHAR}, #{tsgrade,jdbcType=INTEGER}, #{tsresultid,jdbcType=INTEGER}, 
+      #{tscommon,jdbcType=INTEGER}, #{tscreatetime,jdbcType=TIMESTAMP}, #{tscreator,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.UITestCase">
@@ -57,8 +42,8 @@
       <if test="tsuitestcaseid != null">
         tsuitestcaseid,
       </if>
-      <if test="tsnum != null">
-        tsnum,
+      <if test="tsname != null">
+        tsname,
       </if>
       <if test="tsproductid != null">
         tsproductid,
@@ -66,35 +51,17 @@
       <if test="tsmodulename != null">
         tsmodulename,
       </if>
-      <if test="tsautostepsname != null">
-        tsautostepsname,
-      </if>
-      <if test="tsfrontcase != null">
-        tsfrontcase,
-      </if>
-      <if test="tsexpected != null">
-        tsexpected,
-      </if>
-      <if test="tsverificationid != null">
-        tsverificationid,
-      </if>
-      <if test="tsverificationcontent != null">
-        tsverificationcontent,
-      </if>
-      <if test="tsdebug != null">
-        tsdebug,
-      </if>
       <if test="tsgrade != null">
         tsgrade,
       </if>
+      <if test="tsresultid != null">
+        tsresultid,
+      </if>
+      <if test="tscommon != null">
+        tscommon,
+      </if>
       <if test="tscreatetime != null">
         tscreatetime,
-      </if>
-      <if test="tsregress != null">
-        tsregress,
-      </if>
-      <if test="tssmoke != null">
-        tssmoke,
       </if>
       <if test="tscreator != null">
         tscreator,
@@ -104,8 +71,8 @@
       <if test="tsuitestcaseid != null">
         #{tsuitestcaseid,jdbcType=INTEGER},
       </if>
-      <if test="tsnum != null">
-        #{tsnum,jdbcType=VARCHAR},
+      <if test="tsname != null">
+        #{tsname,jdbcType=VARCHAR},
       </if>
       <if test="tsproductid != null">
         #{tsproductid,jdbcType=INTEGER},
@@ -113,35 +80,17 @@
       <if test="tsmodulename != null">
         #{tsmodulename,jdbcType=VARCHAR},
       </if>
-      <if test="tsautostepsname != null">
-        #{tsautostepsname,jdbcType=VARCHAR},
-      </if>
-      <if test="tsfrontcase != null">
-        #{tsfrontcase,jdbcType=VARCHAR},
-      </if>
-      <if test="tsexpected != null">
-        #{tsexpected,jdbcType=VARCHAR},
-      </if>
-      <if test="tsverificationid != null">
-        #{tsverificationid,jdbcType=INTEGER},
-      </if>
-      <if test="tsverificationcontent != null">
-        #{tsverificationcontent,jdbcType=VARCHAR},
-      </if>
-      <if test="tsdebug != null">
-        #{tsdebug,jdbcType=TINYINT},
-      </if>
       <if test="tsgrade != null">
         #{tsgrade,jdbcType=INTEGER},
       </if>
+      <if test="tsresultid != null">
+        #{tsresultid,jdbcType=INTEGER},
+      </if>
+      <if test="tscommon != null">
+        #{tscommon,jdbcType=INTEGER},
+      </if>
       <if test="tscreatetime != null">
         #{tscreatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tsregress != null">
-        #{tsregress,jdbcType=TINYINT},
-      </if>
-      <if test="tssmoke != null">
-        #{tssmoke,jdbcType=TINYINT},
       </if>
       <if test="tscreator != null">
         #{tscreator,jdbcType=VARCHAR},
@@ -151,8 +100,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.pojo.UITestCase">
     update tsuitestcase
     <set>
-      <if test="tsnum != null">
-        tsnum = #{tsnum,jdbcType=VARCHAR},
+      <if test="tsname != null">
+        tsname = #{tsname,jdbcType=VARCHAR},
       </if>
       <if test="tsproductid != null">
         tsproductid = #{tsproductid,jdbcType=INTEGER},
@@ -160,35 +109,17 @@
       <if test="tsmodulename != null">
         tsmodulename = #{tsmodulename,jdbcType=VARCHAR},
       </if>
-      <if test="tsautostepsname != null">
-        tsautostepsname = #{tsautostepsname,jdbcType=VARCHAR},
-      </if>
-      <if test="tsfrontcase != null">
-        tsfrontcase = #{tsfrontcase,jdbcType=VARCHAR},
-      </if>
-      <if test="tsexpected != null">
-        tsexpected = #{tsexpected,jdbcType=VARCHAR},
-      </if>
-      <if test="tsverificationid != null">
-        tsverificationid = #{tsverificationid,jdbcType=INTEGER},
-      </if>
-      <if test="tsverificationcontent != null">
-        tsverificationcontent = #{tsverificationcontent,jdbcType=VARCHAR},
-      </if>
-      <if test="tsdebug != null">
-        tsdebug = #{tsdebug,jdbcType=TINYINT},
-      </if>
       <if test="tsgrade != null">
         tsgrade = #{tsgrade,jdbcType=INTEGER},
       </if>
+      <if test="tsresultid != null">
+        tsresultid = #{tsresultid,jdbcType=INTEGER},
+      </if>
+      <if test="tscommon != null">
+        tscommon = #{tscommon,jdbcType=INTEGER},
+      </if>
       <if test="tscreatetime != null">
         tscreatetime = #{tscreatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tsregress != null">
-        tsregress = #{tsregress,jdbcType=TINYINT},
-      </if>
-      <if test="tssmoke != null">
-        tssmoke = #{tssmoke,jdbcType=TINYINT},
       </if>
       <if test="tscreator != null">
         tscreator = #{tscreator,jdbcType=VARCHAR},
@@ -198,19 +129,13 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pojo.UITestCase">
     update tsuitestcase
-    set tsnum = #{tsnum,jdbcType=VARCHAR},
+    set tsname = #{tsname,jdbcType=VARCHAR},
       tsproductid = #{tsproductid,jdbcType=INTEGER},
       tsmodulename = #{tsmodulename,jdbcType=VARCHAR},
-      tsautostepsname = #{tsautostepsname,jdbcType=VARCHAR},
-      tsfrontcase = #{tsfrontcase,jdbcType=VARCHAR},
-      tsexpected = #{tsexpected,jdbcType=VARCHAR},
-      tsverificationid = #{tsverificationid,jdbcType=INTEGER},
-      tsverificationcontent = #{tsverificationcontent,jdbcType=VARCHAR},
-      tsdebug = #{tsdebug,jdbcType=TINYINT},
       tsgrade = #{tsgrade,jdbcType=INTEGER},
+      tsresultid = #{tsresultid,jdbcType=INTEGER},
+      tscommon = #{tscommon,jdbcType=INTEGER},
       tscreatetime = #{tscreatetime,jdbcType=TIMESTAMP},
-      tsregress = #{tsregress,jdbcType=TINYINT},
-      tssmoke = #{tssmoke,jdbcType=TINYINT},
       tscreator = #{tscreator,jdbcType=VARCHAR}
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
   </update>

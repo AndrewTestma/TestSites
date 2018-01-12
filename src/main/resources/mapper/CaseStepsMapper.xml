@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.CaseStepsMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.CaseSteps">
+    <id column="tscasestepsid" jdbcType="INTEGER" property="tscasestepsid" />
+    <result column="tsuitestcaseid" jdbcType="INTEGER" property="tsuitestcaseid" />
+    <result column="tsautostepsid" jdbcType="INTEGER" property="tsautostepsid" />
+    <result column="tsorder" jdbcType="INTEGER" property="tsorder" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tscasestepsid, tsuitestcaseid, tsautostepsid, tsorder
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tscasesteps
+    where tscasestepsid = #{tscasestepsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tscasesteps
+    where tscasestepsid = #{tscasestepsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.CaseSteps">
+    insert into tscasesteps (tscasestepsid, tsuitestcaseid, tsautostepsid, 
+      tsorder)
+    values (#{tscasestepsid,jdbcType=INTEGER}, #{tsuitestcaseid,jdbcType=INTEGER}, #{tsautostepsid,jdbcType=INTEGER}, 
+      #{tsorder,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.CaseSteps">
+    insert into tscasesteps
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tscasestepsid != null">
+        tscasestepsid,
+      </if>
+      <if test="tsuitestcaseid != null">
+        tsuitestcaseid,
+      </if>
+      <if test="tsautostepsid != null">
+        tsautostepsid,
+      </if>
+      <if test="tsorder != null">
+        tsorder,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tscasestepsid != null">
+        #{tscasestepsid,jdbcType=INTEGER},
+      </if>
+      <if test="tsuitestcaseid != null">
+        #{tsuitestcaseid,jdbcType=INTEGER},
+      </if>
+      <if test="tsautostepsid != null">
+        #{tsautostepsid,jdbcType=INTEGER},
+      </if>
+      <if test="tsorder != null">
+        #{tsorder,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.CaseSteps">
+    update tscasesteps
+    <set>
+      <if test="tsuitestcaseid != null">
+        tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER},
+      </if>
+      <if test="tsautostepsid != null">
+        tsautostepsid = #{tsautostepsid,jdbcType=INTEGER},
+      </if>
+      <if test="tsorder != null">
+        tsorder = #{tsorder,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tscasestepsid = #{tscasestepsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.CaseSteps">
+    update tscasesteps
+    set tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER},
+      tsautostepsid = #{tsautostepsid,jdbcType=INTEGER},
+      tsorder = #{tsorder,jdbcType=INTEGER}
+    where tscasestepsid = #{tscasestepsid,jdbcType=INTEGER}
+  </update>
+</mapper>

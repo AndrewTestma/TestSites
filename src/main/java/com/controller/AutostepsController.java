@@ -1,8 +1,5 @@
 package com.controller;
 
-import com.pojo.Autosteps;
-import com.service.AutostepsService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,7 +17,7 @@ import javax.annotation.Resource;
 @Controller("AutostepsController")
 @RequestMapping("/autosteps")
 public class AutostepsController {
-    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    /*private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "AutostepsService")
     private AutostepsService autostepsService;
 
@@ -37,5 +34,5 @@ public class AutostepsController {
         }
         logger.info("---------------"+i);
         return i>0?"success":"error";
-    }
+    }*/
 }

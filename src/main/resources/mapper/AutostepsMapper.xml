@@ -4,22 +4,25 @@
   <resultMap id="BaseResultMap" type="com.pojo.Autosteps">
     <id column="tsautostepsid" jdbcType="INTEGER" property="tsautostepsid" />
     <result column="tsname" jdbcType="VARCHAR" property="tsname" />
-    <result column="tssearchid" jdbcType="VARCHAR" property="tssearchid" />
-    <result column="tssearchcontent" jdbcType="VARCHAR" property="tssearchcontent" />
-    <result column="tsexecutionid" jdbcType="VARCHAR" property="tsexecutionid" />
-    <result column="tsexecutioncontent" jdbcType="VARCHAR" property="tsexecutioncontent" />
-    <result column="tsiframe" jdbcType="VARCHAR" property="tsiframe" />
-    <result column="tswaittime" jdbcType="INTEGER" property="tswaittime" />
     <result column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
-    <result column="tsmodulename" jdbcType="VARCHAR" property="tsmodulename" />
-    <result column="tspublic" jdbcType="TINYINT" property="tspublic" />
+    <result column="tsmoduleid" jdbcType="INTEGER" property="tsmoduleid" />
+    <result column="tsselecttype" jdbcType="VARCHAR" property="tsselecttype" />
+    <result column="tsselectcontent" jdbcType="VARCHAR" property="tsselectcontent" />
+    <result column="tsactiontype" jdbcType="VARCHAR" property="tsactiontype" />
+    <result column="tsactioncontent" jdbcType="VARCHAR" property="tsactioncontent" />
+    <result column="tsframepath" jdbcType="VARCHAR" property="tsframepath" />
+    <result column="tswait" jdbcType="INTEGER" property="tswait" />
+    <result column="tsverificationtype" jdbcType="VARCHAR" property="tsverificationtype" />
+    <result column="tsverificationcontent" jdbcType="VARCHAR" property="tsverificationcontent" />
+    <result column="tscommon" jdbcType="INTEGER" property="tscommon" />
     <result column="tsremarks" jdbcType="VARCHAR" property="tsremarks" />
     <result column="tscreatetime" jdbcType="TIMESTAMP" property="tscreatetime" />
     <result column="tscreator" jdbcType="VARCHAR" property="tscreator" />
   </resultMap>
   <sql id="Base_Column_List">
-    tsautostepsid, tsname, tssearchid, tssearchcontent, tsexecutionid, tsiframe, tswaittime, 
-    tsproductid, tsmodulename, tspublic, tsremarks, tscreatetime, tscreator
+    tsautostepsid, tsname, tsproductid, tsmoduleid, tsselecttype, tsselectcontent, tsactiontype, 
+    tsactioncontent, tsframepath, tswait, tsverificationtype, tsverificationcontent, 
+    tscommon, tsremarks, tscreatetime, tscreator
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,24 +30,23 @@
     from tsautosteps
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </select>
-  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tsautosteps
-    where tsname = #{tsname,jdbcType=VARCHAR}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsautosteps
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.pojo.Autosteps">
-    insert into tsautosteps (tsname, tssearchid,
-      tssearchcontent, tsexecutionid, tsexecutioncontent, tsiframe,
-      tswaittime, tspublic, tsremarks, tscreator)
-    values ( #{tsname,jdbcType=VARCHAR}, #{tssearchid,jdbcType=VARCHAR},#{tssearchcontent,jdbcType=VARCHAR},
-      #{tsexecutionid,jdbcType=VARCHAR},#{tsexecutioncontent,jdbcType=VARCHAR},
-      #{tsiframe,jdbcType=VARCHAR}, #{tswaittime,jdbcType=INTEGER}, #{tspublic,jdbcType=TINYINT},
-      #{tsremarks,jdbcType=VARCHAR},#{tscreator,jdbcType=VARCHAR})
+    insert into tsautosteps (tsautostepsid, tsname, tsproductid, 
+      tsmoduleid, tsselecttype, tsselectcontent, 
+      tsactiontype, tsactioncontent, tsframepath, 
+      tswait, tsverificationtype, tsverificationcontent, 
+      tscommon, tsremarks, tscreatetime, 
+      tscreator)
+    values (#{tsautostepsid,jdbcType=INTEGER}, #{tsname,jdbcType=VARCHAR}, #{tsproductid,jdbcType=INTEGER}, 
+      #{tsmoduleid,jdbcType=INTEGER}, #{tsselecttype,jdbcType=VARCHAR}, #{tsselectcontent,jdbcType=VARCHAR}, 
+      #{tsactiontype,jdbcType=VARCHAR}, #{tsactioncontent,jdbcType=VARCHAR}, #{tsframepath,jdbcType=VARCHAR}, 
+      #{tswait,jdbcType=INTEGER}, #{tsverificationtype,jdbcType=VARCHAR}, #{tsverificationcontent,jdbcType=VARCHAR}, 
+      #{tscommon,jdbcType=INTEGER}, #{tsremarks,jdbcType=VARCHAR}, #{tscreatetime,jdbcType=TIMESTAMP}, 
+      #{tscreator,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.Autosteps">
     insert into tsautosteps
@@ -55,29 +57,38 @@
       <if test="tsname != null">
         tsname,
       </if>
-      <if test="tssearchid != null">
-        tssearchid,
-      </if>
-      <if test="tssearchcontent != null">
-        tssearchcontent,
-      </if>
-      <if test="tsexecutionid != null">
-        tsexecutionid,
-      </if>
-      <if test="tsiframe != null">
-        tsiframe,
-      </if>
-      <if test="tswaittime != null">
-        tswaittime,
-      </if>
       <if test="tsproductid != null">
         tsproductid,
       </if>
-      <if test="tsmodulename != null">
-        tsmodulename,
+      <if test="tsmoduleid != null">
+        tsmoduleid,
       </if>
-      <if test="tspublic != null">
-        tspublic,
+      <if test="tsselecttype != null">
+        tsselecttype,
+      </if>
+      <if test="tsselectcontent != null">
+        tsselectcontent,
+      </if>
+      <if test="tsactiontype != null">
+        tsactiontype,
+      </if>
+      <if test="tsactioncontent != null">
+        tsactioncontent,
+      </if>
+      <if test="tsframepath != null">
+        tsframepath,
+      </if>
+      <if test="tswait != null">
+        tswait,
+      </if>
+      <if test="tsverificationtype != null">
+        tsverificationtype,
+      </if>
+      <if test="tsverificationcontent != null">
+        tsverificationcontent,
+      </if>
+      <if test="tscommon != null">
+        tscommon,
       </if>
       <if test="tsremarks != null">
         tsremarks,
@@ -96,29 +107,38 @@
       <if test="tsname != null">
         #{tsname,jdbcType=VARCHAR},
       </if>
-      <if test="tssearchid != null">
-        #{tssearchid,jdbcType=VARCHAR},
-      </if>
-      <if test="tssearchcontent != null">
-        #{tssearchcontent,jdbcType=VARCHAR},
-      </if>
-      <if test="tsexecutionid != null">
-        #{tsexecutionid,jdbcType=VARCHAR},
-      </if>
-      <if test="tsiframe != null">
-        #{tsiframe,jdbcType=VARCHAR},
-      </if>
-      <if test="tswaittime != null">
-        #{tswaittime,jdbcType=INTEGER},
-      </if>
       <if test="tsproductid != null">
         #{tsproductid,jdbcType=INTEGER},
       </if>
-      <if test="tsmodulename != null">
-        #{tsmodulename,jdbcType=VARCHAR},
+      <if test="tsmoduleid != null">
+        #{tsmoduleid,jdbcType=INTEGER},
       </if>
-      <if test="tspublic != null">
-        #{tspublic,jdbcType=TINYINT},
+      <if test="tsselecttype != null">
+        #{tsselecttype,jdbcType=VARCHAR},
+      </if>
+      <if test="tsselectcontent != null">
+        #{tsselectcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tsactiontype != null">
+        #{tsactiontype,jdbcType=VARCHAR},
+      </if>
+      <if test="tsactioncontent != null">
+        #{tsactioncontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tsframepath != null">
+        #{tsframepath,jdbcType=VARCHAR},
+      </if>
+      <if test="tswait != null">
+        #{tswait,jdbcType=INTEGER},
+      </if>
+      <if test="tsverificationtype != null">
+        #{tsverificationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="tsverificationcontent != null">
+        #{tsverificationcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tscommon != null">
+        #{tscommon,jdbcType=INTEGER},
       </if>
       <if test="tsremarks != null">
         #{tsremarks,jdbcType=VARCHAR},
@@ -137,29 +157,38 @@
       <if test="tsname != null">
         tsname = #{tsname,jdbcType=VARCHAR},
       </if>
-      <if test="tssearchid != null">
-        tssearchid = #{tssearchid,jdbcType=VARCHAR},
-      </if>
-      <if test="tssearchcontent != null">
-        tssearchcontent = #{tssearchcontent,jdbcType=VARCHAR},
-      </if>
-      <if test="tsexecutionid != null">
-        tsexecutionid = #{tsexecutionid,jdbcType=VARCHAR},
-      </if>
-      <if test="tsiframe != null">
-        tsiframe = #{tsiframe,jdbcType=VARCHAR},
-      </if>
-      <if test="tswaittime != null">
-        tswaittime = #{tswaittime,jdbcType=INTEGER},
-      </if>
       <if test="tsproductid != null">
         tsproductid = #{tsproductid,jdbcType=INTEGER},
       </if>
-      <if test="tsmodulename != null">
-        tsmodulename = #{tsmodulename,jdbcType=VARCHAR},
+      <if test="tsmoduleid != null">
+        tsmoduleid = #{tsmoduleid,jdbcType=INTEGER},
       </if>
-      <if test="tspublic != null">
-        tspublic = #{tspublic,jdbcType=TINYINT},
+      <if test="tsselecttype != null">
+        tsselecttype = #{tsselecttype,jdbcType=VARCHAR},
+      </if>
+      <if test="tsselectcontent != null">
+        tsselectcontent = #{tsselectcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tsactiontype != null">
+        tsactiontype = #{tsactiontype,jdbcType=VARCHAR},
+      </if>
+      <if test="tsactioncontent != null">
+        tsactioncontent = #{tsactioncontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tsframepath != null">
+        tsframepath = #{tsframepath,jdbcType=VARCHAR},
+      </if>
+      <if test="tswait != null">
+        tswait = #{tswait,jdbcType=INTEGER},
+      </if>
+      <if test="tsverificationtype != null">
+        tsverificationtype = #{tsverificationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="tsverificationcontent != null">
+        tsverificationcontent = #{tsverificationcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tscommon != null">
+        tscommon = #{tscommon,jdbcType=INTEGER},
       </if>
       <if test="tsremarks != null">
         tsremarks = #{tsremarks,jdbcType=VARCHAR},
@@ -176,14 +205,17 @@
   <update id="updateByPrimaryKey" parameterType="com.pojo.Autosteps">
     update tsautosteps
     set tsname = #{tsname,jdbcType=VARCHAR},
-      tssearchid = #{tssearchid,jdbcType=VARCHAR},
-      tssearchcontent = #{tssearchcontent,jdbcType=VARCHAR},
-      tsexecutionid = #{tsexecutionid,jdbcType=VARCHAR},
-      tsiframe = #{tsiframe,jdbcType=VARCHAR},
-      tswaittime = #{tswaittime,jdbcType=INTEGER},
       tsproductid = #{tsproductid,jdbcType=INTEGER},
-      tsmodulename = #{tsmodulename,jdbcType=VARCHAR},
-      tspublic = #{tspublic,jdbcType=TINYINT},
+      tsmoduleid = #{tsmoduleid,jdbcType=INTEGER},
+      tsselecttype = #{tsselecttype,jdbcType=VARCHAR},
+      tsselectcontent = #{tsselectcontent,jdbcType=VARCHAR},
+      tsactiontype = #{tsactiontype,jdbcType=VARCHAR},
+      tsactioncontent = #{tsactioncontent,jdbcType=VARCHAR},
+      tsframepath = #{tsframepath,jdbcType=VARCHAR},
+      tswait = #{tswait,jdbcType=INTEGER},
+      tsverificationtype = #{tsverificationtype,jdbcType=VARCHAR},
+      tsverificationcontent = #{tsverificationcontent,jdbcType=VARCHAR},
+      tscommon = #{tscommon,jdbcType=INTEGER},
       tsremarks = #{tsremarks,jdbcType=VARCHAR},
       tscreatetime = #{tscreatetime,jdbcType=TIMESTAMP},
       tscreator = #{tscreator,jdbcType=VARCHAR}
