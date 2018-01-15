@@ -15,6 +15,14 @@
     from tsmodule
     where tsmoduleid = #{tsmoduleid,jdbcType=INTEGER}
   </select>
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tsmodule
+    ORDER BY
+    tsmoduleid
+    LIMIT #{offset}, #{limit}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsmodule
     where tsmoduleid = #{tsmoduleid,jdbcType=INTEGER}

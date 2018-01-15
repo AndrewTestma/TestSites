@@ -1,12 +1,16 @@
-package com.dao;
+package com.service;
 
 import com.pojo.Module;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository("ModuleMapper")
-public interface ModuleMapper {
+
+/**
+ * @Author:Andrew
+ * @Description:模块服务接口
+ * @Date 2018/1/15 0015
+ */
+public interface ModuleService {
     int deleteByPrimaryKey(Integer tsmoduleid);
 
     int insert(Module record);
