@@ -32,7 +32,7 @@
                 }
             },
             success: function(result) {
-                if (result== 1) {
+                if (result == 1) {
                     redirectAction.close();
                     $module.bootstrapTable('refresh');
                 }
@@ -56,7 +56,7 @@
     }
     var $module=$('#module');
     $(function () {
-        $table.bootstrapTable({
+        $module.bootstrapTable({
             url: '/module/list',
             height: getHeight(),
             striped: true,
@@ -79,7 +79,7 @@
             toolbar: '#toolbar',
             columns: [
                 {field: 'tsmoduleid', title: '编号', sortable: true, align: 'center'},
-                {field: 'tsname', title: '模块名称'},
+                {field: 'tsame', title: '模块名称'},
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id=row.tsmoduleid;
                     var returnValue = '<a class="update" href="javascript:;"  onclick="updateAction('+id+')" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'

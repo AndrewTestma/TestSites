@@ -69,7 +69,7 @@
                         <li class="divider hidden-xs"></li>
                         <c:forEach var="product" items="${requestScope.get('list')}" varStatus="status">
                             <li>
-                                <a class="waves-effect switch-systems" onclick="addsession()" href="javascript:;" systemid="1"  systemname="${product.tsname}" systemtitle="${product.tsname}"><i class="${upmsSystem.icon}"></i> ${product.tsname}</a>
+                                <a class="waves-effect switch-systems" onclick="addsession('${product.tsproductid}')" href="javascript:;" systemid="1"  systemname="${product.tsproductid}" systemtitle="${product.tsname}"><i class="${upmsSystem.icon}"></i> ${product.tsname}</a>
                             </li>
                         </c:forEach>
                     </ul>
@@ -171,9 +171,17 @@
 <footer id="footer"></footer>
 <script>
     var BASE_PATH = '${basePath}';
-    function addsession(){
+    function addsession(product){
         //添加session 方法
-        $.ajax({});
+        $.ajax({
+            type:"post",
+            url:"/product/save",
+            data:{"product":product},
+            success:function (data) {
+            },
+            error:function (data) {
+            }
+        });
     }
 </script>
 <script src="${basePath}/resources/plugins/jquery.1.12.4.min.js"></script>

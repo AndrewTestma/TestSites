@@ -45,7 +45,7 @@
             data: $('#createForm').serialize(),
             beforeSend: function() {
                 if ($('#tsname').val() == '') {
-                    $('#name').focus();
+                    $('#tsname').focus();
                     return false;
                 }
                 if ($('#tsurl').val() == '') {
@@ -53,26 +53,9 @@
                     return false;
                 }
             },
-            success: function(result) {
-                if (result== 1) {
-                    createDialog.close();
-                    $table.bootstrapTable('refresh');
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $.confirm({
-                    theme: 'dark',
-                    animation: 'rotateX',
-                    closeAnimation: 'rotateX',
-                    title: false,
-                    content: textStatus,
-                    buttons: {
-                        confirm: {
-                            text: '确认',
-                            btnClass: 'waves-effect waves-button waves-light'
-                        }
-                    }
-                });
+            success: function() {
+                createDialog.close();
+                $table.bootstrapTable('refresh');
             }
         });
     }
