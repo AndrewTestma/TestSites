@@ -1,5 +1,7 @@
 package com.controller;
 
+import com.pojo.UITestCase;
+import com.service.UITestCaseService;
 import com.utils.BaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.testng.TestNG;
 import javax.annotation.Resource;
@@ -24,7 +27,8 @@ import java.util.Map;
 @RequestMapping("/ui")
 public class UITestCaseController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
-
+    @Resource(name = "UITestCaseService")
+    private UITestCaseService uiTestCaseService;
 
     /**
      * @Description:ui测试用例主页
@@ -32,6 +36,26 @@ public class UITestCaseController {
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(){
         return "/manage/uitestcase/index";
+    }
+
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @ResponseBody
+    public Object list(
+            @RequestParam(required = false, defaultValue = "0", value = "offset") int offset,
+            @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
+            @RequestParam(required = false, defaultValue = "", value = "search") String search,
+            @RequestParam(required = false, value = "sort") String sort,
+            @RequestParam(required = false, value = "order") String order){
+        List<UITestCase> rows=uiTestCaseService.selectList(offset,limit);
+        long total=rows.size();
+        Map<String,Object> result=new HashMap<>();
+        result.put("data",rows);
+        result.put("total",total);
+        return result;
+    }
+    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    public int create(UITestCase uiTestCase){
+        return uiTestCaseService.insert(uiTestCase);
     }
    /* *//**
      * @Description:获取测试用例列表
