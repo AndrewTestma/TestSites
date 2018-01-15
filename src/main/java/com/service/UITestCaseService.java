@@ -1,13 +1,16 @@
-package com.dao;
+package com.service;
 
 import com.pojo.UITestCase;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("UITestCaseMapper")
-public interface UITestCaseMapper {
+/**
+ * @Author:Andrew
+ * @Description:UI测试用例服务接口
+ * @Date 2018/1/15 0015
+ */
+public interface UITestCaseService {
+
     int deleteByPrimaryKey(Integer tsuitestcaseid);
 
     int insert(UITestCase record);
@@ -16,7 +19,7 @@ public interface UITestCaseMapper {
 
     UITestCase selectByPrimaryKey(Integer tsuitestcaseid);
 
-    List<UITestCase> selectList(@Param("offset")int offset, @Param("limit")int limit);
+    List<UITestCase> selectList(int offset, int limit);
 
     int updateByPrimaryKeySelective(UITestCase record);
 

@@ -3,6 +3,7 @@ package com.service.impl;
 import com.dao.ModuleMapper;
 import com.pojo.Module;
 import com.service.ModuleService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @Description:模块服务接口实现
  * @Date 2018/1/15 0015
  */
+@Service("ModuleService")
 public class ModuleServiceImpl implements ModuleService {
     @Resource(name = "ModuleMapper")
     private ModuleMapper moduleMapper;

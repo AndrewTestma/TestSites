@@ -23,16 +23,17 @@ import java.util.Map;
 @Controller("UITestCaseController")
 @RequestMapping("/ui")
 public class UITestCaseController {
-    /*private Logger logger= LoggerFactory.getLogger(this.getClass());
-    public static Map<String,List<Autosteps>> list=new HashMap<>();
-    public static UITestCase uiTestCase=null;
-    @Resource(name="UITestCaseService")
-    private UITestCaseService uiTestCaseService;
+    private Logger logger= LoggerFactory.getLogger(this.getClass());
 
-    @Resource(name = "AutostepsService")
-    private AutostepsService autostepsService;
 
-    *//**
+    /**
+     * @Description:ui测试用例主页
+     * */
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    public String index(){
+        return "/manage/uitestcase/index";
+    }
+   /* *//**
      * @Description:获取测试用例列表
      * *//*
     @RequestMapping(value = "/list",method = RequestMethod.GET)
