@@ -48,7 +48,6 @@ public class ProductController {
     }
     @RequestMapping(value = "/create",method = RequestMethod.GET)
     public String create(){
-
         return "/manage/product/create";
     }
     @RequestMapping(value = "/create",method = RequestMethod.POST)

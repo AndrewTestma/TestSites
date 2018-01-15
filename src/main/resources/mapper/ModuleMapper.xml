@@ -28,9 +28,9 @@
     where tsmoduleid = #{tsmoduleid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.pojo.Module">
-    insert into tsmodule (tsmoduleid, tsproductid, tsame
+    insert into tsmodule (tsproductid, tsame
       )
-    values (#{tsmoduleid,jdbcType=INTEGER}, #{tsproductid,jdbcType=INTEGER}, #{tsame,jdbcType=VARCHAR}
+    values (#{tsproductid,jdbcType=INTEGER}, #{tsame,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.Module">

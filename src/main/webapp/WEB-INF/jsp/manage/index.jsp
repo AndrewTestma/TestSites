@@ -137,7 +137,6 @@
                 <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-accounts-list"></i> 设置</a>
                 <ul>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('产品信息', '${basePath}/product/index');">产品设置</a></li>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('模块信息', '${basePath}/product/index');">产品设置</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('运行设置', '');">运行设置</a></li>
                 </ul>
             </li>

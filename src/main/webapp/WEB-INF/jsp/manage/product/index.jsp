@@ -51,6 +51,10 @@
             columns: [
                 {field: 'tsproductid', title: '编号', sortable: true, align: 'center'},
                 {field: 'tsname', title: '产品名称'},
+                {field: 'action', title: '模块信息', align: 'center', formatter: function (value, row, index) {
+                    var returnModule = ' <a class="waves-effect waves-button" href="javascript:;" onclick="redirectAction()"> 显示详情</a>';
+                    return returnModule;
+                }, events: 'actionEvents', clickToSelect: false},
                 {field: 'tsurl', title: '测试地址'},
                 {field: 'tsdburl', title: '数据库地址'},
                 {field: 'tsdbname', title: '数据库名称'},
@@ -69,8 +73,19 @@
     function createAction() {
         createDialog = $.dialog({
             animationSpeed: 300,
-            title: '新增角色',
+            title: '新增产品',
             content: 'url:/product/create',
+            onContentReady: function () {
+                initMaterialInput();
+            }
+        });
+    }
+    var redirectDialog;
+    function redirectAction() {
+        redirectDialog = $.dialog({
+            animationSpeed: 300,
+            title: '模块信息',
+            content: 'url:/module/index',
             onContentReady: function () {
                 initMaterialInput();
             }
