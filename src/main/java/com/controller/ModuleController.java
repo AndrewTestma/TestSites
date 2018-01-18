@@ -3,7 +3,6 @@ package com.controller;
 import com.pojo.Module;
 import com.service.ModuleService;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,5 +66,16 @@ public class ModuleController {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         module.setTsproductid(Integer.valueOf((String) request.getSession().getAttribute("product")));
         return moduleService.insert(module);
+    }
+    /**
+     * @Description:将模块存入session
+     * */
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    @ResponseBody
+    public String save(String module){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session=request.getSession();
+        session.setAttribute("module",module);
+        return (String) session.getAttribute("module");
     }
 }

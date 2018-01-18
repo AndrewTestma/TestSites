@@ -63,7 +63,6 @@ public class ProductController {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         session.setAttribute("product",product);
-        logger.debug(product);
         return (String) session.getAttribute("product");
     }
 }

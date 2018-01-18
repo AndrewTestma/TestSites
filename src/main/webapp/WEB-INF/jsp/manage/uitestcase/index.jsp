@@ -30,6 +30,7 @@
     var moduleSelect=$('#moduleSelect');
     var $tctable = $('#tctable');
     // bootstrap select初始化
+    $('#moduleSelect').append("<option>请选择</option>");
     $(function() {
         $.ajax({
             type:"get",
@@ -44,6 +45,20 @@
                  $('#moduleSelect').selectpicker('render');*/
             }
         });
+        //bootstrap select 选择值后触发事件
+        $("#moduleSelect").on('changed.bs.select',function (e) {
+            $.ajax({
+                type:"post",
+                url:"/module/save",
+                data:{"module":$("#moduleSelect").selectpicker('val')},
+                success:function (data) {
+                    alert(data);
+                },
+                error:function (data) {
+
+                }
+            })
+        })
         // bootstrap table初始化
         $tctable.bootstrapTable({
             url: '/ui/list',
