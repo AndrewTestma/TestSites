@@ -45,13 +45,18 @@ public class UITestCaseController {
             @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
             @RequestParam(required = false, defaultValue = "", value = "search") String search,
             @RequestParam(required = false, value = "sort") String sort,
-            @RequestParam(required = false, value = "order") String order){
+            @RequestParam(required = false, value = "order") String order,
+            @RequestParam(required = false,value = "")String module){
         List<UITestCase> rows=uiTestCaseService.selectList(offset,limit);
         long total=rows.size();
         Map<String,Object> result=new HashMap<>();
         result.put("data",rows);
         result.put("total",total);
         return result;
+    }
+    @RequestMapping(value = "/create",method = RequestMethod.GET)
+    public String create(){
+        return "/manage/uitestcase/create";
     }
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public int create(UITestCase uiTestCase){
