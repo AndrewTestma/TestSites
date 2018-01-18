@@ -2,6 +2,10 @@ package com.controller;
 
 import com.pojo.Module;
 import com.service.ModuleService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +28,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/module")
 public class ModuleController {
+    private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "ModuleService")
     private ModuleService moduleService;
     @RequestMapping(value = "/index",method = RequestMethod.GET)
@@ -44,6 +49,13 @@ public class ModuleController {
         result.put("data",list);
         result.put("total",total);
         return result;
+    }
+    @RequestMapping(value = "/selectlist",method = RequestMethod.GET)
+    @ResponseBody
+    public JSONArray selectList(){
+               List<Module> list=moduleService.selectList(0,100);
+               JSONArray jsonArray=JSONArray.fromObject(list);
+               return jsonArray;
     }
     @RequestMapping(value = "/create",method = RequestMethod.GET)
     public String create(){

@@ -20,14 +20,30 @@
     <div id="toolbar">
         <a class="waves-effect waves-button" href="javascript:;" onclick=""><i class="zmdi zmdi-plus"></i> 添加用例</a>
     </div>
-    <table id="tctable"></table>
+    <div>
+        <table id="tctable"></table>
+        <select id="moduleSelect" class="selectpicker" data-live-search="true"/>
+    </div>
 </div>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
-
-
 <script>
+    var moduleSelect=$('#moduleSelect');
     var $tctable = $('#tctable');
+    // bootstrap select初始化
     $(function() {
+        $.ajax({
+            type:"get",
+            url:"/module/selectlist",
+            dataType: "json",
+            success:function (resMsg) {
+                var resultJson = eval(resMsg);
+                $.each(resultJson,function (i,module) {
+                    $('#moduleSelect').append("<option value=" + module.tsmoduleid + ">" + module.tsame + "</option>");
+                })
+                /*   $('#moduleSelect').selectpicker('refresh');
+                 $('#moduleSelect').selectpicker('render');*/
+            }
+        });
         // bootstrap table初始化
         $tctable.bootstrapTable({
             url: '/ui/list',
@@ -76,20 +92,6 @@
             ]
         });
     });
-    function debugging(btnid) {
-        $.ajax({
-            type:"post",
-            url:"/ui/debugging",
-            data:"btnid="+btnid,
-            dataType:"text",
-            success:function () {
-                alert("调试成功");
-            },
-            error:function () {
-                alert("调试失败");
-            }
-        })
-    }
 </script>
 </body>
 </html>
