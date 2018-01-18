@@ -18,7 +18,7 @@
 <body>
 <div id="main">
     <div id="toolbar">
-        <a class="waves-effect waves-button" href="javascript:;" onclick=""><i class="zmdi zmdi-plus"></i> 添加用例</a>
+        <a class="waves-effect waves-button" href="javascript:;" onclick="testcaseAction()"><i class="zmdi zmdi-plus"></i> 添加用例</a>
     </div>
     <div>
         <table id="tctable"></table>
@@ -52,10 +52,8 @@
                 url:"/module/save",
                 data:{"module":$("#moduleSelect").selectpicker('val')},
                 success:function (data) {
-                    alert(data);
                 },
                 error:function (data) {
-
                 }
             })
         })
@@ -107,6 +105,17 @@
             ]
         });
     });
+    var testcaseDialog;
+    function testcaseAction() {
+        testcaseDialog = $.dialog({
+            animationSpeed: 300,
+            title: '新增用例',
+            content: 'url:/ui/create',
+            onContentReady: function () {
+                initMaterialInput();
+            }
+        });
+    }
 </script>
 </body>
 </html>
