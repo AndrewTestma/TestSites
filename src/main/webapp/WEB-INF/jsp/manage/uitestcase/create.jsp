@@ -14,57 +14,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>UI测试用例</title>
     <jsp:include page="/resources/inc/head.jsp" flush="true"/>
+    <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 </head>
 <body>
-<div id="main">
-        <form class="form-horizontal" role="form">
-            <fieldset>
-                <legend>测试用例</legend>
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="tsname">用例名称</label>
-                        <input id="tsname" type="text" class="form-control" name="tsname" maxlength="50">
+    <div class="container">
+        <form class="form-horizontal" method="post" id="testcaseForm">
+        <div id="wizard"  class="swMain">
+            <ul>
+                <li><a href="#step-1">
+                    <label class="stepNumber">1</label>
+                    <span class="stepDesc">
+             测试用例<br />
+          </span>
+                </a></li>
+                <li><a href="#step-2">
+                    <label class="stepNumber">2</label>
+                    <span class="stepDesc">
+             操作步骤<br />
+          </span>
+                </a></li>
+            </ul>
+            <div id="step-1">
+                <fieldset>
+                    <legend>测试用例</legend>
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <label for="tsname">用例名称</label>
+                            <input id="tsname" type="text" class="form-control" name="tsname" maxlength="50">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-10">
-                        <select id="tsgrade" class="form-control selectpicker" title="测试等级">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <select id="tsgrade" name="tsgrade" class="form-control selectpicker" title="测试等级">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-10">
-                        <select id="moduleSelect1" class="form-control selectpicker"></select>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <select id="moduleSelect1" class="form-control selectpicker"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="tscommon">公共用例</label>
-                        <input id="tscommon" type="text" class="form-control" name="tscommon" maxlength="50">
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <label for="tscommon">公共用例</label>
+                            <input id="tscommon" type="text" class="form-control" name="tscommon" maxlength="50">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="tscreator" >创建人</label>
-                        <input id="tscreator" type="text" class="form-control" name="tscreator" maxlength="50">
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <label for="tscreator" >创建人</label>
+                            <input id="tscreator" type="text" class="form-control" name="tscreator" maxlength="50">
+                        </div>
                     </div>
-                </div>
-            </fieldset>
-            <div class="form-group text-right dialog-buttons">
-                <a class="waves-effect waves-button" href="javascript:;" onclick="">保存</a>
-                <a class="waves-effect waves-button" href="javascript:;" onclick="">取消</a>
-            </div>
-        </form>
-</div>
-<jsp:include page="/resources/inc/footer.jsp" flush="true"/>
+                </fieldset>
+        </div>
+            <div id="step-2">
 
+            </div>
+        </div>
+</form>
+    </div>
 </body>
 <script>
+    //初始化步骤
+    $(document).ready(function() {
+        // Initialize Smart Wizard
+        $('#wizard').smartWizard({
+            onFinish:function () {
+                addObejct();
+            }
+        });
+    });
     //动态加载模块
     $('#moduleSelect1').append("<option>选择模块</option>");
     $(function() {
@@ -78,7 +103,7 @@
             success: function (resMsg) {
                 var resultJson = eval(resMsg);
                 $.each(resultJson, function (i, module) {
-                    $('#moduleSelect1').append("<option value=" + module.tsmoduleid + ">" + module.tsame + "</option>");
+                    $('#moduleSelect1').append("<option value=" + module.tsame + ">" + module.tsame + "</option>");
                 })
                 $('#moduleSelect1').selectpicker('refresh');
                 $('#moduleSelect1').selectpicker('render');
@@ -97,5 +122,24 @@
             }
         })
     })
+    //点击finish按钮触发
+    function addObejct() {
+        $.ajax({
+            type: 'post',
+            url: '/ui/add',
+            data: $('#testcaseForm').serialize(),
+            beforeSend: function() {
+                if ($('#tsname').val() == '') {
+                    $('#tsname').focus();
+                    return false;
+                }
+            },
+            success: function() {
+               window.location.href="/ui/index";
+            },
+            error:function () {
+            }
+        });
+    }
 </script>
 </html>

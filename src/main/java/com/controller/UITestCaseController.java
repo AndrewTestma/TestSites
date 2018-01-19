@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.testng.TestNG;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,8 +62,13 @@ public class UITestCaseController {
     public String create(){
         return "/manage/uitestcase/create";
     }
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @ResponseBody
     public int create(UITestCase uiTestCase){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession();
+        uiTestCase.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
+        uiTestCase.setTsmodulename((String)session.getAttribute("module"));
         return uiTestCaseService.insert(uiTestCase);
     }
    /* *//**

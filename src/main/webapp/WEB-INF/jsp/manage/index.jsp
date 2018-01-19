@@ -184,7 +184,7 @@
         });
     }
 </script>
-<script src="${basePath}/resources/plugins/jquery.1.12.4.min.js"></script>
+<script src="${basePath}/resources/plugins/jquery-1.12.4.min.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
 <script src="${basePath}/resources/plugins/waves-0.7.5/waves.min.js"></script>
 <script src="${basePath}/resources/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>

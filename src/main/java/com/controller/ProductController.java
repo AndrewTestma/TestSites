@@ -53,7 +53,8 @@ public class ProductController {
     public String create(){
         return "/manage/product/create";
     }
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @ResponseBody
     public int create(Product product){
        return productService.insert(product);
     }

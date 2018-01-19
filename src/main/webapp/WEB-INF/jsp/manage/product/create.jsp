@@ -41,7 +41,7 @@
     function createSubmit() {
         $.ajax({
             type: 'post',
-            url: '/product/create',
+            url: '/product/add',
             data: $('#createForm').serialize(),
             beforeSend: function() {
                 if ($('#tsname').val() == '') {
