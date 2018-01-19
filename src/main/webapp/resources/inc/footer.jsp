@@ -8,6 +8,8 @@
 <c:set var="basePath" value="${pageContext.request.contextPath}"/>
 <script src="${basePath}/resources/plugins/jquery.1.12.4.min.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+<script src="${basePath}/resources/plugins/bootstrap-select-1.12.4/js/bootstrap-select.min.js"></script>
+<script src="${basePath}/resources/plugins/dist/js/jquery-wizard.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-table-1.11.0/bootstrap-table.min.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-table-1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="${basePath}/resources/plugins/waves-0.7.5/waves.min.js"></script>
