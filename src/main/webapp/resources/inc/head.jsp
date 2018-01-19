@@ -9,7 +9,8 @@
 <link href="${basePath}/resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="${basePath}/resources/plugins/material-design-iconic-font-2.2.0/css/material-design-iconic-font.min.css" rel="stylesheet"/>
 <link href="${basePath}/resources/plugins/bootstrap-select-1.12.4/css/bootstrap-select.min.css" rel="stylesheet"/>
-<link href="${basePath}/resources/plugins/dist/css/wizard.css" rel="stylesheet"/>
+<link href="${basePath}/resources/plugins/bwizard/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+<link href="${basePath}/resources/plugins/bwizard/css/bwizard.min.css" rel="stylesheet"/>
 <link href="${basePath}/resources/plugins/bootstrap-table-1.11.0/bootstrap-table.min.css" rel="stylesheet"/>
 <link href="${basePath}/resources/plugins/waves-0.7.5/waves.min.css" rel="stylesheet"/>
 <link href="${basePath}/resources/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet"/>
