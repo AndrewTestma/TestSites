@@ -18,7 +18,7 @@
 <body>
 <div id="main">
     <div id="toolbar">
-        <a class="waves-effect waves-button" href="javascript:;" onclick="testcaseAction()"><i class="zmdi zmdi-plus"></i> 添加用例</a>
+        <a class="waves-effect waves-button" href="/ui/create" <%--onclick="testcaseAction()"--%>><i class="zmdi zmdi-plus"></i> 添加用例</a>
     </div>
     <div>
         <table id="tctable"></table>
@@ -45,18 +45,6 @@
                  $('#moduleSelect').selectpicker('render');*/
             }
         });
-        //bootstrap select 选择值后触发事件
-        $("#moduleSelect").on('changed.bs.select',function (e) {
-            $.ajax({
-                type:"post",
-                url:"/module/save",
-                data:{"module":$("#moduleSelect").selectpicker('val')},
-                success:function (data) {
-                },
-                error:function (data) {
-                }
-            })
-        })
         // bootstrap table初始化
         $tctable.bootstrapTable({
             url: '/ui/list',
@@ -105,7 +93,7 @@
             ]
         });
     });
-    var testcaseDialog;
+    /*var testcaseDialog;
     function testcaseAction() {
         testcaseDialog = $.dialog({
             animationSpeed: 300,
@@ -115,7 +103,7 @@
                 initMaterialInput();
             }
         });
-    }
+    }*/
 </script>
 </body>
 </html>

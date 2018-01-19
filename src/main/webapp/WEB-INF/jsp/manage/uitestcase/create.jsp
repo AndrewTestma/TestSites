@@ -4,51 +4,72 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%--<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>--%>
 <c:set var="basePath" value="${pageContext.request.contextPath}"/>
-<div id="testcaseDialog" class="crudDialog">
-    <form id="createForm" method="post">
-        <div class="form-group">
-            <label for="tsname">用例名称</label>
-            <input id="tsname" type="text" class="form-control" name="tsname" maxlength="50">
-        </div>
-        <div class="form-group">
-            <select id="tsgrade" class="selectpicker" title="测试等级">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <select id="moduleSelect1" class="selectpicker" data-live-search="true"/>
-        </div>
-        <div class="form-group">
-            <a class="waves-effect waves-button" href="javascript:;" onclick="autoStepAction()"><i class="zmdi zmdi-plus"></i> 操作步骤</a>
-        </div>
-        <div class="form-group">
-            <label for="tsdbname">测试结果</label>
-            <input id="tsdbname" type="text" class="form-control" name="tsdbname" maxlength="50">
-        </div>
-        <div class="form-group">
-            <label for="tsusername">公共用例</label>
-            <input id="tsusername" type="text" class="form-control" name="tsusername" maxlength="50">
-        </div>
-        <div class="form-group">
-            <label for="tspassword">创建人</label>
-            <input id="tspassword" type="text" class="form-control" name="tspassword" maxlength="50">
-        </div>
-        <div class="form-group text-right dialog-buttons">
-            <a class="waves-effect waves-button" href="javascript:;" onclick="createSubmit();">保存</a>
-            <a class="waves-effect waves-button" href="javascript:;" onclick="createDialog.close();">取消</a>
-        </div>
-    </form>
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UI测试用例</title>
+    <jsp:include page="/resources/inc/head.jsp" flush="true"/>
+</head>
+<body>
+<div id="main">
+        <form class="form-horizontal" role="form">
+            <fieldset>
+                <legend>测试用例</legend>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label for="tsname">用例名称</label>
+                        <input id="tsname" type="text" class="form-control" name="tsname" maxlength="50">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <select id="tsgrade" class="form-control selectpicker" title="测试等级">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <select id="moduleSelect1" class="form-control selectpicker"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label for="tscommon">公共用例</label>
+                        <input id="tscommon" type="text" class="form-control" name="tscommon" maxlength="50">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label for="tscreator" >创建人</label>
+                        <input id="tscreator" type="text" class="form-control" name="tscreator" maxlength="50">
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group text-right dialog-buttons">
+                <a class="waves-effect waves-button" href="javascript:;" onclick="">保存</a>
+                <a class="waves-effect waves-button" href="javascript:;" onclick="">取消</a>
+            </div>
+        </form>
 </div>
+<jsp:include page="/resources/inc/footer.jsp" flush="true"/>
+
+</body>
 <script>
-    $('#moduleSelect1').append("<option>请选择</option>");
+    //动态加载模块
+    $('#moduleSelect1').append("<option>选择模块</option>");
     $(function() {
         $('.selectpicker').selectpicker({
-            size: 10
+            size: 40
         });
         $.ajax({
             type: "get",
@@ -59,9 +80,22 @@
                 $.each(resultJson, function (i, module) {
                     $('#moduleSelect1').append("<option value=" + module.tsmoduleid + ">" + module.tsame + "</option>");
                 })
-                   $('#moduleSelect1').selectpicker('refresh');
-                 $('#moduleSelect1').selectpicker('render');
+                $('#moduleSelect1').selectpicker('refresh');
+                $('#moduleSelect1').selectpicker('render');
             }
         });
     });
+    //bootstrap select 选择值后触发事件
+    $("#moduleSelect1").on('changed.bs.select',function (e) {
+        $.ajax({
+            type:"post",
+            url:"/module/save",
+            data:{"module":$("#moduleSelect1").selectpicker('val')},
+            success:function (data) {
+            },
+            error:function (data) {
+            }
+        })
+    })
 </script>
+</html>
