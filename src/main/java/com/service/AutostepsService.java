@@ -1,13 +1,15 @@
-package com.dao;
+package com.service;
 
 import com.pojo.Autosteps;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("AutostepsMapper")
-public interface AutostepsMapper {
+/**
+ * @Author:Andrew
+ * @Description:操作步骤服务service
+ * @Date 2018/1/22 0022
+ */
+public interface AutostepsService {
     int deleteByPrimaryKey(Integer tsautostepsid);
 
     int insert(Autosteps record);
@@ -16,7 +18,7 @@ public interface AutostepsMapper {
 
     Autosteps selectByPrimaryKey(Integer tsautostepsid);
 
-    List<Autosteps> selectList(@Param("offset")int offset,@Param("limit")int limit);
+    List<Autosteps> selectList(int offset, int limit);
 
     int updateByPrimaryKeySelective(Autosteps record);
 
