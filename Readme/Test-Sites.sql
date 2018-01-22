@@ -62,7 +62,7 @@ create table if not exists tsuitestcase(
 -- tsautosteps
 create table if not exists tsautosteps(
 	tsautostepsid integer(11) auto_increment,
-	tsname varchar(100) unique not null,
+	tsautostepsname varchar(100) unique not null,
 	tsproductid integer(11) not null,
 	tsmodulename varchar(100) not null,
 	tsselecttype varchar(100) not null,
@@ -74,6 +74,7 @@ create table if not exists tsautosteps(
 	tsverificationtype varchar(100) not null,
 	tsverificationcontent varchar(2048) not null,
 	tscommon integer(11) default null,
+	tssuccess integer(11) default null,
 	tsremarks varchar(100) default null,
 	tscreatetime timestamp default current_timestamp,
 	tscreator varchar(100) not null,

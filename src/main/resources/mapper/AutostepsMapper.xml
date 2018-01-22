@@ -3,7 +3,7 @@
 <mapper namespace="com.dao.AutostepsMapper">
   <resultMap id="BaseResultMap" type="com.pojo.Autosteps">
     <id column="tsautostepsid" jdbcType="INTEGER" property="tsautostepsid" />
-    <result column="tsname" jdbcType="VARCHAR" property="tsname" />
+    <result column="tsautostepsname" jdbcType="VARCHAR" property="tsautostepsname" />
     <result column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
     <result column="tsmodulename" jdbcType="VARCHAR" property="tsmodulename" />
     <result column="tsselecttype" jdbcType="VARCHAR" property="tsselecttype" />
@@ -18,11 +18,12 @@
     <result column="tsremarks" jdbcType="VARCHAR" property="tsremarks" />
     <result column="tscreatetime" jdbcType="TIMESTAMP" property="tscreatetime" />
     <result column="tscreator" jdbcType="VARCHAR" property="tscreator" />
+    <result column="tssuccess" jdbcType="INTEGER" property="tssuccess" />
   </resultMap>
   <sql id="Base_Column_List">
-    tsautostepsid, tsname, tsproductid, tsmodulename, tsselecttype, tsselectcontent, tsactiontype,
-    tsactioncontent, tsframepath, tswait, tsverificationtype, tsverificationcontent, 
-    tscommon, tsremarks, tscreatetime, tscreator
+    tsautostepsid, tsautostepsname, tsproductid, tsmodulename, tsselecttype, tsselectcontent, 
+    tsactiontype, tsactioncontent, tsframepath, tswait, tsverificationtype, tsverificationcontent, 
+    tscommon, tsremarks, tscreatetime, tscreator, tssuccess
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -30,31 +31,23 @@
     from tsautosteps
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </select>
-  <select id="selectList" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tsautosteps
-    ORDER BY
-    tsautostepsid
-    LIMIT #{offset}, #{limit}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsautosteps
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.pojo.Autosteps">
-    insert into tsautosteps (tsautostepsid, tsname, tsproductid, 
-      tsmodulename, tsselecttype, tsselectcontent,
+    insert into tsautosteps (tsautostepsid, tsautostepsname, tsproductid, 
+      tsmodulename, tsselecttype, tsselectcontent, 
       tsactiontype, tsactioncontent, tsframepath, 
       tswait, tsverificationtype, tsverificationcontent, 
       tscommon, tsremarks, tscreatetime, 
-      tscreator)
-    values (#{tsautostepsid,jdbcType=INTEGER}, #{tsname,jdbcType=VARCHAR}, #{tsproductid,jdbcType=INTEGER}, 
-      #{tsmodulename,jdbcType=VARCHAR}, #{tsselecttype,jdbcType=VARCHAR}, #{tsselectcontent,jdbcType=VARCHAR},
+      tscreator, tssuccess)
+    values (#{tsautostepsid,jdbcType=INTEGER}, #{tsautostepsname,jdbcType=VARCHAR}, #{tsproductid,jdbcType=INTEGER}, 
+      #{tsmodulename,jdbcType=VARCHAR}, #{tsselecttype,jdbcType=VARCHAR}, #{tsselectcontent,jdbcType=VARCHAR}, 
       #{tsactiontype,jdbcType=VARCHAR}, #{tsactioncontent,jdbcType=VARCHAR}, #{tsframepath,jdbcType=VARCHAR}, 
       #{tswait,jdbcType=INTEGER}, #{tsverificationtype,jdbcType=VARCHAR}, #{tsverificationcontent,jdbcType=VARCHAR}, 
       #{tscommon,jdbcType=INTEGER}, #{tsremarks,jdbcType=VARCHAR}, #{tscreatetime,jdbcType=TIMESTAMP}, 
-      #{tscreator,jdbcType=VARCHAR})
+      #{tscreator,jdbcType=VARCHAR}, #{tssuccess,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.Autosteps">
     insert into tsautosteps
@@ -62,8 +55,8 @@
       <if test="tsautostepsid != null">
         tsautostepsid,
       </if>
-      <if test="tsname != null">
-        tsname,
+      <if test="tsautostepsname != null">
+        tsautostepsname,
       </if>
       <if test="tsproductid != null">
         tsproductid,
@@ -107,13 +100,16 @@
       <if test="tscreator != null">
         tscreator,
       </if>
+      <if test="tssuccess != null">
+        tssuccess,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="tsautostepsid != null">
         #{tsautostepsid,jdbcType=INTEGER},
       </if>
-      <if test="tsname != null">
-        #{tsname,jdbcType=VARCHAR},
+      <if test="tsautostepsname != null">
+        #{tsautostepsname,jdbcType=VARCHAR},
       </if>
       <if test="tsproductid != null">
         #{tsproductid,jdbcType=INTEGER},
@@ -157,13 +153,16 @@
       <if test="tscreator != null">
         #{tscreator,jdbcType=VARCHAR},
       </if>
+      <if test="tssuccess != null">
+        #{tssuccess,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Autosteps">
     update tsautosteps
     <set>
-      <if test="tsname != null">
-        tsname = #{tsname,jdbcType=VARCHAR},
+      <if test="tsautostepsname != null">
+        tsautostepsname = #{tsautostepsname,jdbcType=VARCHAR},
       </if>
       <if test="tsproductid != null">
         tsproductid = #{tsproductid,jdbcType=INTEGER},
@@ -207,12 +206,15 @@
       <if test="tscreator != null">
         tscreator = #{tscreator,jdbcType=VARCHAR},
       </if>
+      <if test="tssuccess != null">
+        tssuccess = #{tssuccess,jdbcType=INTEGER},
+      </if>
     </set>
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pojo.Autosteps">
     update tsautosteps
-    set tsname = #{tsname,jdbcType=VARCHAR},
+    set tsautostepsname = #{tsautostepsname,jdbcType=VARCHAR},
       tsproductid = #{tsproductid,jdbcType=INTEGER},
       tsmodulename = #{tsmodulename,jdbcType=VARCHAR},
       tsselecttype = #{tsselecttype,jdbcType=VARCHAR},
@@ -226,7 +228,8 @@
       tscommon = #{tscommon,jdbcType=INTEGER},
       tsremarks = #{tsremarks,jdbcType=VARCHAR},
       tscreatetime = #{tscreatetime,jdbcType=TIMESTAMP},
-      tscreator = #{tscreator,jdbcType=VARCHAR}
+      tscreator = #{tscreator,jdbcType=VARCHAR},
+      tssuccess = #{tssuccess,jdbcType=INTEGER}
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </update>
 </mapper>

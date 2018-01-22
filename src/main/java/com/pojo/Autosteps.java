@@ -5,7 +5,7 @@ import java.util.Date;
 public class Autosteps {
     private Integer tsautostepsid;
 
-    private String tsname;
+    private String tsautostepsname;
 
     private Integer tsproductid;
 
@@ -35,6 +35,8 @@ public class Autosteps {
 
     private String tscreator;
 
+    private Integer tssuccess;
+
     public Integer getTsautostepsid() {
         return tsautostepsid;
     }
@@ -43,12 +45,12 @@ public class Autosteps {
         this.tsautostepsid = tsautostepsid;
     }
 
-    public String getTsname() {
-        return tsname;
+    public String getTsautostepsname() {
+        return tsautostepsname;
     }
 
-    public void setTsname(String tsname) {
-        this.tsname = tsname;
+    public void setTsautostepsname(String tsautostepsname) {
+        this.tsautostepsname = tsautostepsname;
     }
 
     public Integer getTsproductid() {
@@ -161,5 +163,13 @@ public class Autosteps {
 
     public void setTscreator(String tscreator) {
         this.tscreator = tscreator;
+    }
+
+    public Integer getTssuccess() {
+        return tssuccess;
+    }
+
+    public void setTssuccess(Integer tssuccess) {
+        this.tssuccess = tssuccess;
     }
 }
