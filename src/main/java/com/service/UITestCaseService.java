@@ -17,8 +17,6 @@ public interface UITestCaseService {
 
     int insertSelective(UITestCase record);
 
-    int selectByname(String tsname);
-
     UITestCase selectByPrimaryKey(Integer tsuitestcaseid);
 
     List<UITestCase> selectList(int offset, int limit);

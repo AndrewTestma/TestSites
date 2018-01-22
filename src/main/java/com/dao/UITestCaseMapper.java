@@ -13,9 +13,7 @@ public interface UITestCaseMapper {
     int insert(UITestCase record);
 
     int insertSelective(UITestCase record);
-
-    int selectByname(String tsname);
-
+    
     UITestCase selectByPrimaryKey(Integer tsuitestcaseid);
 
     List<UITestCase> selectList(@Param("offset")int offset, @Param("limit")int limit);

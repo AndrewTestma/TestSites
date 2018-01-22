@@ -33,11 +33,6 @@ public class UITestCaseServiceImpl implements UITestCaseService {
     }
 
     @Override
-    public int selectByname(String tsname) {
-        return uiTestCaseMapper.selectByname(tsname);
-    }
-
-    @Override
     public UITestCase selectByPrimaryKey(Integer tsuitestcaseid) {
         return uiTestCaseMapper.selectByPrimaryKey(tsuitestcaseid);
     }

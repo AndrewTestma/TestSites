@@ -22,12 +22,6 @@
     from tsuitestcase
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
   </select>
-  <select id="selectByname" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    tsuitestcaseid
-    from tsuitestcase
-    where tsname = #{tsname,jdbcType=VARCHAR}
-  </select>
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -40,7 +34,7 @@
     delete from tsuitestcase
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pojo.UITestCase">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="tsuitestcaseid" parameterType="com.pojo.UITestCase">
     insert into tsuitestcase (tsuitestcaseid, tsname, tsproductid, 
       tsmodulename, tsgrade, tsresultid, 
       tscommon, tscreatetime, tscreator
