@@ -22,6 +22,12 @@
     from tsuitestcase
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
   </select>
+  <select id="selectByname" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    tsuitestcaseid
+    from tsuitestcase
+    where tsname = #{tsname,jdbcType=VARCHAR}
+  </select>
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
