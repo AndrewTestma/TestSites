@@ -64,7 +64,7 @@ create table if not exists tsautosteps(
 	tsautostepsid integer(11) auto_increment,
 	tsname varchar(100) unique not null,
 	tsproductid integer(11) not null,
-	tsmoduleid integer(11) not null,	
+	tsmodulename varchar(100) not null,
 	tsselecttype varchar(100) not null,
 	tsselectcontent varchar(100) not null,
 	tsactiontype varchar(100) not null,	

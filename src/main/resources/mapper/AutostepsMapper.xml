@@ -5,7 +5,7 @@
     <id column="tsautostepsid" jdbcType="INTEGER" property="tsautostepsid" />
     <result column="tsname" jdbcType="VARCHAR" property="tsname" />
     <result column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
-    <result column="tsmoduleid" jdbcType="INTEGER" property="tsmoduleid" />
+    <result column="tsmodulename" jdbcType="VARCHAR" property="tsmodulename" />
     <result column="tsselecttype" jdbcType="VARCHAR" property="tsselecttype" />
     <result column="tsselectcontent" jdbcType="VARCHAR" property="tsselectcontent" />
     <result column="tsactiontype" jdbcType="VARCHAR" property="tsactiontype" />
@@ -20,7 +20,7 @@
     <result column="tscreator" jdbcType="VARCHAR" property="tscreator" />
   </resultMap>
   <sql id="Base_Column_List">
-    tsautostepsid, tsname, tsproductid, tsmoduleid, tsselecttype, tsselectcontent, tsactiontype, 
+    tsautostepsid, tsname, tsproductid, tsmodulename, tsselecttype, tsselectcontent, tsactiontype,
     tsactioncontent, tsframepath, tswait, tsverificationtype, tsverificationcontent, 
     tscommon, tsremarks, tscreatetime, tscreator
   </sql>
@@ -44,13 +44,13 @@
   </delete>
   <insert id="insert" parameterType="com.pojo.Autosteps">
     insert into tsautosteps (tsautostepsid, tsname, tsproductid, 
-      tsmoduleid, tsselecttype, tsselectcontent, 
+      tsmodulename, tsselecttype, tsselectcontent,
       tsactiontype, tsactioncontent, tsframepath, 
       tswait, tsverificationtype, tsverificationcontent, 
       tscommon, tsremarks, tscreatetime, 
       tscreator)
     values (#{tsautostepsid,jdbcType=INTEGER}, #{tsname,jdbcType=VARCHAR}, #{tsproductid,jdbcType=INTEGER}, 
-      #{tsmoduleid,jdbcType=INTEGER}, #{tsselecttype,jdbcType=VARCHAR}, #{tsselectcontent,jdbcType=VARCHAR}, 
+      #{tsmodulename,jdbcType=VARCHAR}, #{tsselecttype,jdbcType=VARCHAR}, #{tsselectcontent,jdbcType=VARCHAR},
       #{tsactiontype,jdbcType=VARCHAR}, #{tsactioncontent,jdbcType=VARCHAR}, #{tsframepath,jdbcType=VARCHAR}, 
       #{tswait,jdbcType=INTEGER}, #{tsverificationtype,jdbcType=VARCHAR}, #{tsverificationcontent,jdbcType=VARCHAR}, 
       #{tscommon,jdbcType=INTEGER}, #{tsremarks,jdbcType=VARCHAR}, #{tscreatetime,jdbcType=TIMESTAMP}, 
@@ -68,8 +68,8 @@
       <if test="tsproductid != null">
         tsproductid,
       </if>
-      <if test="tsmoduleid != null">
-        tsmoduleid,
+      <if test="tsmodulename != null">
+        tsmodulename,
       </if>
       <if test="tsselecttype != null">
         tsselecttype,
@@ -118,8 +118,8 @@
       <if test="tsproductid != null">
         #{tsproductid,jdbcType=INTEGER},
       </if>
-      <if test="tsmoduleid != null">
-        #{tsmoduleid,jdbcType=INTEGER},
+      <if test="tsmodulename != null">
+        #{tsmodulename,jdbcType=VARCHAR},
       </if>
       <if test="tsselecttype != null">
         #{tsselecttype,jdbcType=VARCHAR},
@@ -168,8 +168,8 @@
       <if test="tsproductid != null">
         tsproductid = #{tsproductid,jdbcType=INTEGER},
       </if>
-      <if test="tsmoduleid != null">
-        tsmoduleid = #{tsmoduleid,jdbcType=INTEGER},
+      <if test="tsmodulename != null">
+        tsmodulename = #{tsmodulename,jdbcType=VARCHAR},
       </if>
       <if test="tsselecttype != null">
         tsselecttype = #{tsselecttype,jdbcType=VARCHAR},
@@ -214,7 +214,7 @@
     update tsautosteps
     set tsname = #{tsname,jdbcType=VARCHAR},
       tsproductid = #{tsproductid,jdbcType=INTEGER},
-      tsmoduleid = #{tsmoduleid,jdbcType=INTEGER},
+      tsmodulename = #{tsmodulename,jdbcType=VARCHAR},
       tsselecttype = #{tsselecttype,jdbcType=VARCHAR},
       tsselectcontent = #{tsselectcontent,jdbcType=VARCHAR},
       tsactiontype = #{tsactiontype,jdbcType=VARCHAR},

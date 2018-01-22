@@ -9,7 +9,7 @@ public class Autosteps {
 
     private Integer tsproductid;
 
-    private Integer tsmoduleid;
+    private String tsmodulename;
 
     private String tsselecttype;
 
@@ -59,12 +59,12 @@ public class Autosteps {
         this.tsproductid = tsproductid;
     }
 
-    public Integer getTsmoduleid() {
-        return tsmoduleid;
+    public String getTsmodulename() {
+        return tsmodulename;
     }
 
-    public void setTsmoduleid(Integer tsmoduleid) {
-        this.tsmoduleid = tsmoduleid;
+    public void setTsmodulename(String tsmodulename) {
+        this.tsmodulename = tsmodulename;
     }
 
     public String getTsselecttype() {
