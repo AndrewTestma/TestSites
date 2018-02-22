@@ -18,7 +18,10 @@
 <body>
 <div id="main">
     <div id="toolbar">
-        <a class="waves-effect waves-button" href="/ui/create"><i class="zmdi zmdi-plus"></i> 添加用例</a>
+        <a class="btn btn-default" href="/ui/create"> <i class="glyphicon glyphicon-plus"> </i>添加用例</a>
+        <%--<button id="add" class="btn btn-default" title="添加" onclick="uitestcaseAction()" >
+            <i class="glyphicon glyphicon-plus"></i> 添加用例
+        </button>--%>
     </div>
     <div>
         <table id="tctable"></table>
@@ -27,8 +30,8 @@
 </div>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
-    var moduleSelect=$('#moduleSelect');
     var $tctable = $('#tctable');
+    var moduleSelect=$('#moduleSelect');
     // bootstrap select初始化
     $('#moduleSelect').append("<option>请选择</option>");
     $(function() {
@@ -93,6 +96,17 @@
             ]
         });
     });
+    /*var uitestcaseDialog;
+    function uitestcaseAction() {
+        uitestcaseDialog = $.dialog({
+            animationSpeed: 300,
+            title: '',
+            content: 'url:/ui/create',
+            onContentReady: function () {
+                initMaterialInput();
+            }
+        })
+    }*/
 </script>
 </body>
 </html>

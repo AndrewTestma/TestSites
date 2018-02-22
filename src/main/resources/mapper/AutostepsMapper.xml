@@ -43,7 +43,7 @@
     delete from tsautosteps
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pojo.Autosteps">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="tsautostepsid" parameterType="com.pojo.Autosteps">
     insert into tsautosteps (tsautostepsid, tsautostepsname, tsproductid, 
       tsmodulename, tsselecttype, tsselectcontent, 
       tsactiontype, tsactioncontent, tsframepath, 

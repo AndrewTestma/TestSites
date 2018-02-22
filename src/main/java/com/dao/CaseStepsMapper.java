@@ -1,7 +1,9 @@
 package com.dao;
 
 import com.pojo.CaseSteps;
+import org.springframework.stereotype.Repository;
 
+@Repository("CaseStepsMapper")
 public interface CaseStepsMapper {
     int deleteByPrimaryKey(Integer tscasestepsid);
 

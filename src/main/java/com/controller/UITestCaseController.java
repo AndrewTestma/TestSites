@@ -1,24 +1,19 @@
 package com.controller;
 
+import com.pojo.Autosteps;
 import com.pojo.UITestCase;
+import com.service.AutostepsService;
 import com.service.UITestCaseService;
-import com.utils.BaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.ModelAndView;
-import org.testng.TestNG;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +28,8 @@ public class UITestCaseController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "UITestCaseService")
     private UITestCaseService uiTestCaseService;
-
+    @Resource(name = "AutostepsService")
+    private AutostepsService autostepsService;
     /**
      * @Description:ui测试用例主页
      * */
@@ -64,12 +60,12 @@ public class UITestCaseController {
     }
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public int create(UITestCase uiTestCase){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    public int add(UITestCase uiTestCase,HttpServletRequest request){
         HttpSession session = request.getSession();
         uiTestCase.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
         uiTestCase.setTsmodulename((String)session.getAttribute("module"));
-        return uiTestCaseService.insert(uiTestCase);
+        uiTestCaseService.insert(uiTestCase);
+        return uiTestCase.getTsuitestcaseid();
     }
    /* *//**
      * @Description:获取测试用例列表

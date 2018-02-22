@@ -8,7 +8,7 @@
 <c:set var="basePath" value="${pageContext.request.contextPath}"/>
 <script src="${basePath}/resources/plugins/jquery-2.0.0.min.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
-<script src="${basePath}/resources/plugins/bootstrap-editable/js/bootstrap-editable.js"></script>
+<script src="${basePath}/resources/plugins/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-select-1.12.4/js/bootstrap-select.min.js"></script>
 <script src="${basePath}/resources/plugins/SmartWizard-3.3.1/js/jquery.smartWizard.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-table-1.11.0/bootstrap-table.min.js"></script>
