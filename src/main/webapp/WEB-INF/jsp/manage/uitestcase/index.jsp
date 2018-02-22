@@ -64,18 +64,13 @@
             smartDisplay: false,
             escape: true,
             searchOnEnterKey: true,
-            idField: 'tsuitestcaseid',
+            idFile: 'tsuitestcaseid',
             maintainSelected: true,
             toolbar: '#toolbar',
             columns: [
                 {field: 'tsuitestcaseid', title: '编号', sortable: true, align: 'center'},
                 {field: 'tsname', title: '用例名称'},
                 {field: 'tsgrade', title: '用例等级'},
-                {field:'action',title:'操作步骤',align:'center',formatter:function (value,row,index) {
-                    var id=row.tsuitestcaseid;
-                    var returnSteps='<a class="update" href="javascript:;"  onclick="updateAction('+id+')" data-toggle="tooltip"  title="操作步骤">操作步骤</a>';
-                    return returnSteps;
-                }, events:'actionEvents',clickToSelect:false},
                 {field:'action',title:'测试结果',align:'center',formatter:function (value,row,index) {
                     var id=row.tsuitestcaseid;
                     var returnResult='<a class="update" href="javascript:;"  onclick="updateAction('+id+')" data-toggle="tooltip"  title="详情">详情</a>';
@@ -90,9 +85,43 @@
                         +'  <a class="delete" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
-            ]
+            ],
+            onExpandRow:function (index,row,$detail) {
+                initSubTable(index,row,$detail);
+            }
         });
     });
+    function initSubTable(index,row,$detail) {
+        var id=row.tsuitestcaseid;
+        var cur_table=$detail.html('<table></table>').find('table');
+        $(cur_table).bootstrapTable({
+            url: '/autosteps/list',
+            idField: 'tsautostepsid',
+            maintainSelected: true,
+            columns: [
+                {field: 'tsautostepsid', title: '编号', sortable: true, align: 'center'},
+                {field: 'tsautostepsname', title: '步骤名称'},
+                {field: 'tsselecttype', title: '查找方式'},
+                {field: 'tsselectcontent', title: '查找内容'},
+                {field: 'tsactiontype', title: '执行方式'},
+                {field: 'tsactioncontent', title: '执行内容'},
+                {field: 'tsframepath', title: 'FramePath'},
+                {field: 'tswait', title: '等待时间'},
+                {field: 'tsverificationtype', title: '验证方式'},
+                {field: 'tsverificationcontent', title: '验证内容'},
+                {field: 'tsremarks', title: '备注'},
+                {field: 'tscreator', title: '创建人'},
+                {
+                    field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
+                    var id = row.tsproductid;
+                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateAction(' + id + ')" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'
+                        + '  <a class="delete" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                    return returnValue;
+                }, events: 'actionEvents', clickToSelect: false
+                }
+            ]
+        });
+    }
 </script>
 </body>
 </html>
