@@ -2,6 +2,8 @@ package com.service;
 
 import com.pojo.CaseSteps;
 
+import java.util.List;
+
 /**
  * @Author:Andrew
  * @Description:测试用例与操作步骤中间表
@@ -15,6 +17,8 @@ public interface CaseStepsService {
     int insertSelective(CaseSteps record);
 
     CaseSteps selectByPrimaryKey(Integer tscasestepsid);
+
+    List<Integer> selectBytsuitestcaseid(Integer tsuitestcaseid);
 
     int updateByPrimaryKeySelective(CaseSteps record);
 

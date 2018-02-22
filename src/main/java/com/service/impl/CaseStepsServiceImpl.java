@@ -6,6 +6,7 @@ import com.service.CaseStepsService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author:Andrew
@@ -34,6 +35,11 @@ public class CaseStepsServiceImpl implements CaseStepsService {
     @Override
     public CaseSteps selectByPrimaryKey(Integer tscasestepsid) {
         return caseStepsMapper.selectByPrimaryKey(tscasestepsid);
+    }
+
+    @Override
+    public List<Integer> selectBytsuitestcaseid(Integer tsuitestcaseid) {
+        return caseStepsMapper.selectBytsuitestcaseid(tsuitestcaseid);
     }
 
     @Override
