@@ -67,6 +67,13 @@ public class UITestCaseController {
         uiTestCaseService.insert(uiTestCase);
         return uiTestCase.getTsuitestcaseid();
     }
+    /**
+     * @Description:测试用例修改视图
+     * */
+    @RequestMapping(value = "/update",method = RequestMethod.GET)
+    public String update(){
+        return"/manage/uitestcase/update";
+    }
    /* *//**
      * @Description:获取测试用例列表
      * *//*
