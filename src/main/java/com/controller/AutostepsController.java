@@ -1,8 +1,8 @@
 package com.controller;
 
 import com.pojo.Autosteps;
-import com.pojo.CaseSteps;
 import com.service.AutostepsService;
+import com.service.CaseStepsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,6 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +33,15 @@ public class AutostepsController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "AutostepsService")
     private AutostepsService autostepsService;
+    @Resource(name ="CaseStepsService")
+    private CaseStepsService caseStepsService;
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(){
         return null;
     }
+    /**
+     * @see:查找所有的操作步骤
+     * */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
     public Object list(
@@ -49,6 +55,24 @@ public class AutostepsController {
         long total=rows.size();
         Map<String,Object> result=new HashMap<>();
         result.put("data",rows);
+        result.put("total",total);
+        return result;
+    }
+    /**
+     * @see:查找测试用例对应的操作步骤
+     * */
+    @RequestMapping(value = "/tcstep",method = RequestMethod.GET)
+    @ResponseBody
+    public Object tcstep(String uitestcaseID){
+        System.out.println(uitestcaseID);
+        List<Integer> list=caseStepsService.selectBytsuitestcaseid(Integer.valueOf(uitestcaseID));
+        List<Autosteps> autosteps=new ArrayList<>();
+        for(Integer i:list){
+            autosteps.add(autostepsService.selectByPrimaryKey(i));
+        }
+        long total=autosteps.size();
+        Map<String,Object> result=new HashMap<>();
+        result.put("data",autosteps);
         result.put("total",total);
         return result;
     }
