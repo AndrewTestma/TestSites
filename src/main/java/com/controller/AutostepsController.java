@@ -87,6 +87,7 @@ public class AutostepsController {
         HttpSession session = request.getSession();
         autosteps.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
         autosteps.setTsmodulename((String)session.getAttribute("module"));
+        autosteps.setTscommon(0);//每次新增默认操作步骤为执行失败
         autostepsService.insert(autosteps);
         return autosteps.getTsautostepsid();
     }
