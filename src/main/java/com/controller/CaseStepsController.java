@@ -22,7 +22,7 @@ public class CaseStepsController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "CaseStepsService")
     private CaseStepsService caseStepsService;
-
+    //添加中间表
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public int add(String uitestcaseID,String autostepsID){
