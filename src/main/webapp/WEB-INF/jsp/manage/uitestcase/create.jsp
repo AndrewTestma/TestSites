@@ -127,6 +127,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <div class="col-sm-4">
+                            <label>验证：</label>
+                            <div class="btn-group" data-toggle="buttons">
+                                <label  class="btn btn-info" name="options" onclick="verification(1)">是</label>
+                                <label  class="btn btn-info" name="options" onclick="verification(2)">否</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: none" id="tsverification">
+                    <div class="form-group">
                         <div class="col-sm-10">
                             <select id="tsverificationtype" name="tsverificationtype" class="form-control selectpicker" title="验证方式">
                                 <option>文本验证</option>
@@ -140,6 +150,7 @@
                             <label for="tsverificationcontent">验证内容</label>
                             <input id="tsverificationcontent" type="text" class="form-control" name="tsverificationcontent" maxlength="50">
                         </div>
+                    </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-4">
@@ -161,7 +172,7 @@
             </form>
             </div>
             <div>
-               <%-- <table id="autostepstable" style="display: none"></table>--%>
+                <table id="autostepstable" style="display: none"></table>
             </div>
         </fieldset>
     </div>
@@ -229,7 +240,6 @@
             },
             success: function(data) {
                 if(data>0){
-                    alert(data);
                     uitestcaseID=data;
                     document.getElementById("addtc").style.display="none";
                     document.getElementById("updatetc").style.display="inline";
@@ -253,8 +263,8 @@
                     //addAutoStepsDialog.close();
                     autoStespID=data;
                     document.getElementById("autostepsForm").style.display="none";
-                    /*document.getElementById("autostepstable").style.display="inline";*/
-                   /* autostepstable();*/
+                    document.getElementById("autostepstable").style.display="inline";
+                    autostepstable();
                     addCaseSteps();
 
                 }
@@ -263,6 +273,7 @@
             }
         });
     }
+    //添加测试用例与操作步骤中间表
     function addCaseSteps() {
         $.ajax({
             type:'post',
@@ -278,15 +289,16 @@
     function autostepstable() {
         // bootstrap table初始化
         $autostepstable.bootstrapTable({
-            url: '/autosteps/list',
-            height: getHeight(),
+            url: '/autosteps/tcstep',
+            method:'get',
+            queryParams:{uitestcaseID:uitestcaseID},
+            idField: 'tsautostepsid',
             striped: true,
             search: true,
             showRefresh: true,
             showColumns: true,
             minimumCountColumns: 2,
             clickToSelect: true,
-            detailView: true,
             detailFormatter: 'detailFormatter',
             pagination: true,
             paginationLoop: false,
@@ -297,7 +309,6 @@
             searchOnEnterKey: true,
             idField: 'tsproductid',
             maintainSelected: true,
-            toolbar: '#toolbar',
             columns: [
                 {field: 'tsproductid', title: '编号', sortable: true, align: 'center'},
                 {field: 'tsautostepsname', title: '步骤名称'},
@@ -321,6 +332,14 @@
                 }
             ]
         });
+    }
+    //是否需要验证
+    function verification(e) {
+        if(e==1){
+            document.getElementById('tsverification').style.display='inline';
+        }else{
+            document.getElementById('tsverification').style.display='none';
+        }
     }
 </script>
 </html>

@@ -95,7 +95,9 @@
         var id=row.tsuitestcaseid;
         var cur_table=$detail.html('<table></table>').find('table');
         $(cur_table).bootstrapTable({
-            url: '/autosteps/list',
+            url: '/autosteps/tcstep',
+            method:'get',
+            queryParams:{uitestcaseID:id},
             idField: 'tsautostepsid',
             maintainSelected: true,
             columns: [
