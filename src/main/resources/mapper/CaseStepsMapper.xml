@@ -16,7 +16,7 @@
     from tscasesteps
     where tscasestepsid = #{tscasestepsid,jdbcType=INTEGER}
   </select>
-  <select id="selectBytsuitestcaseid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectBytsuitestcaseid" parameterType="java.lang.Integer" resultType="Integer">
     select tsautostepsid
     from tscasesteps
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
