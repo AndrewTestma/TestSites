@@ -121,7 +121,7 @@
             <li class="sub-menu system_menus system_1 3" >
                 <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-lock-outline"></i> 场景管理</a>
                 <ul>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('业务管理', '');">业务管理</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('业务管理', '${basePath}/bus/index');">业务管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('回归测试', '');">回归测试</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('冒烟测试', '');">冒烟测试</a></li>
                 </ul>
