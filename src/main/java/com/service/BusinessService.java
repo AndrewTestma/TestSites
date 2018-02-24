@@ -1,15 +1,17 @@
-package com.dao;
+package com.service;
 
 import com.pojo.Business;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 /**
- * @Description:业务表
- * */
-@Repository("BusinessMapper")
-public interface BusinessMapper {
+ * @Author:Andrew
+ * @Description:业务表接口
+ * @Date 2018/2/24 0024
+ */
+public interface BusinessService {
+
     int deleteByPrimaryKey(Integer tsbusinessid);
 
     int insert(Business record);
