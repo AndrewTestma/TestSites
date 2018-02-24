@@ -80,6 +80,9 @@ public class AutostepsController {
     public String create(){
                 return "manage/autosteps/create";
     }
+    /**
+     * @Description:添加操作步骤
+     * */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public int add(Autosteps autosteps){
@@ -90,5 +93,20 @@ public class AutostepsController {
         autosteps.setTscommon(0);//每次新增默认操作步骤为执行失败
         autostepsService.insert(autosteps);
         return autosteps.getTsautostepsid();
+    }
+    /**
+     * @Description:修改操作步骤
+     * */
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @ResponseBody
+    public String update(Autosteps autosteps){
+        int i=autostepsService.updateByPrimaryKeySelective(autosteps);
+        if(i==1){
+            logger.info("操作步骤更新成功");
+            return "success";
+        }else{
+            logger.info("操作步骤更新失败");
+            return "error";
+        }
     }
 }

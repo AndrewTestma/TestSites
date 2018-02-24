@@ -102,7 +102,7 @@
                 {field: 'tscreator', title: '创建人'},
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id=row.tsuitestcaseid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateTCDialogAction(id)" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'
+                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateTCDialogAction(id)" data-toggle="tooltip"  title="Copy"><i class="glyphicon glyphicon-copy"></i></a>'
                         +'  <a class="delete" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
@@ -138,37 +138,136 @@
             maintainSelected: true,
             columns: [
                 {field: 'tsautostepsid', title: '编号', sortable: true, align: 'center'},
-                {field: 'tsautostepsname', title: '步骤名称'},
-                {field: 'tsselecttype', title: '查找方式'},
-                {field: 'tsselectcontent', title: '查找内容'},
-                {field: 'tsactiontype', title: '执行方式'},
-                {field: 'tsactioncontent', title: '执行内容'},
-                {field: 'tsframepath', title: 'FramePath'},
-                {field: 'tswait', title: '等待时间'},
-                {field: 'tsverificationtype', title: '验证方式'},
-                {field: 'tsverificationcontent', title: '验证内容'},
-                {field: 'tsremarks', title: '备注'},
+                {
+                    field: 'tsautostepsname',
+                    title: '步骤名称',
+                    editable:{
+                        type:'text',
+                        title:'步骤名称',
+                        validate:function (v) {
+                            if(!v)return '步骤名称不能为空'
+                        }
+                    }
+                },
+                {
+                    field: 'tsselecttype',
+                    title: '查找方式',
+                    editable:{
+                        type:'select',
+                        title:'查找方式',
+                        source:[
+                            {value:'id' ,text:'id'},
+                            {value:'name',text:'name'},
+                            {value:'xpath',text:'xpath'},
+                            {value:'linkText',text:'linkText'},
+                            {value:'className',text:'className'},
+                            {value:'cssSelector',text:'cssSelector'},
+                            {value:'partialLinkText',text:'partialLinkText'},
+                            {value:'tagName',text:'tagName'}
+                        ]
+                    }
+                },
+                {
+                    field: 'tsselectcontent',
+                    title: '查找内容',
+                    editable:{
+                        type:'text',
+                        title:'查找内容',
+                        validate:function (v) {
+                            if(!v)return '查找内容不能为空'
+                        }
+                    }
+                },
+                {
+                    field: 'tsactiontype',
+                    title: '执行方式',
+                    editable:{
+                        type:'select',
+                        title:'执行方式',
+                        source:[
+                            {value:'单击',text:'单击'},
+                            {value:'输入',text:'输入'},
+                            {value:'双击',text:'双击'},
+                            {value:'悬浮',text:'悬浮'},
+                            {value:'拖拽',text:'拖拽'}
+                        ]
+                    }
+                },
+                {
+                    field: 'tsactioncontent',
+                    title: '执行内容',
+                    editable:{
+                        type:'text',
+                        title:'执行内容'
+                    }
+                },
+                {
+                    field: 'tsframepath',
+                    title: 'FramePath',
+                    editable:{
+                        type:'text',
+                        title:'FramePath'
+                    }
+                },
+                {
+                    field: 'tswait',
+                    title: '等待时间',
+                    editable:{
+                        type:'text',
+                        title:'等待时间'
+                    }
+                },
+                {
+                    field: 'tsverificationtype',
+                    title: '验证方式',
+                    editable:{
+                        type:'select',
+                        title:'验证方式',
+                        source:[
+                            {value:'文本验证',text:'文本验证'},
+                            {value:'url验证',text:'url验证'},
+                            {value:'数据库验证',text:'数据库验证'}
+                        ]
+                    }
+                },
+                {
+                    field: 'tsverificationcontent',
+                    title: '验证内容',
+                    editable:{
+                        type:'text',
+                        title:'验证内容'
+                    }
+                },
+                {
+                    field: 'tsremarks',
+                    title: '备注',
+                    editable:{
+                        type:'text',
+                        title:'备注'
+                    }
+                },
                 {field: 'tscreator', title: '创建人'},
                 {
                     field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id = row.tsproductid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'
+                    var returnValue = '<a class="update" href="javascript:;"  onclick="" data-toggle="tooltip"  title="Copy"><i class="glyphicon glyphicon-copy"></i></a>'
                         + '  <a class="delete" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false
                 }
-            ]
-        });
-    }
-    //
-    var updateTCDialog;
-    function updateTCDialogAction(e) {
-        updateTCDialog = $.dialog({
-            animationSpeed: 300,
-            title: '修改用例',
-            content: 'url:/ui/update',
-            onContentReady: function () {
-                initMaterialInput();
+            ],
+            onEditableSave:function (field,row,oldValue,$el) {
+                $.ajax({
+                    type:'post',
+                    url:'/autosteps/update',
+                    data:row,
+                    dataType:'JSON',
+                    success:function (data) {
+                        if(data=="success"){
+                            alert(data);
+                        }
+                    }
+                })
             }
         });
     }
