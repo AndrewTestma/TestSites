@@ -30,7 +30,7 @@
     delete from tsbusiness
     where tsbusinessid = #{tsbusinessid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pojo.Business">
+  <insert id="insert" parameterType="com.pojo.Business" keyProperty="tsbusinessid" useGeneratedKeys="true">
     insert into tsbusiness (tsbusinessid, tsname, tsproductid, 
       tssmoke, tsregress, tsorder
       )

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,5 +56,15 @@ public class BusinessController {
         result.put("data",rows);
         result.put("total",total);
         return result;
+    }
+    /**
+     * @Description:添加业务
+     * */
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    public int add(Business business, HttpServletRequest request){
+        HttpSession session=request.getSession();
+        business.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
+        businessService.insert(business);
+        return business.getTsbusinessid();
     }
 }
