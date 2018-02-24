@@ -1,5 +1,11 @@
 package com.pojo;
 
+
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import freemarker.template.utility.DateUtil;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class UITestCase {
@@ -17,6 +23,8 @@ public class UITestCase {
 
     private Integer tscommon;
 
+    @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date tscreatetime;
 
     private String tscreator;
