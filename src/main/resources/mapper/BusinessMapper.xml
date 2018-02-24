@@ -23,7 +23,7 @@
     <include refid="Base_Column_List" />
     from tsbusiness
     ORDER BY
-    tsuitestcaseid
+    tsbusinessid
     LIMIT #{offset}, #{limit}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
