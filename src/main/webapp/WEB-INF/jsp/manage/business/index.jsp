@@ -25,7 +25,7 @@
 <body>
     <div id="main">
         <div id="toolbar">
-            <a class="btn btn-default" href="/ui/create"> <i class="glyphicon glyphicon-plus"> </i>添加业务</a>
+            <a class="btn btn-default" href="/bus/create"> <i class="glyphicon glyphicon-plus"> </i>添加业务</a>
         </div>
         <div>
             <table id="businessTable"></table>
@@ -37,7 +37,7 @@
     var $businessTable=$('#businessTable');
     $(function () {
         $businessTable.bootstrapTable({
-            url: '/ui/list',
+            url: '/bus/list',
             height: getHeight(),
             striped: true,
             search: true,
@@ -54,11 +54,22 @@
             smartDisplay: false,
             escape: true,
             searchOnEnterKey: true,
-            idFile: 'tsuitestcaseid',
+            idFile: 'tsbusinessid ',
             maintainSelected: true,
             toolbar: '#toolbar',
             columns: [
-                {field: 'tsuitestcaseid', title: '编号', sortable: true, align: 'center'}
+                {field: 'tsbusinessid ', title: '编号', sortable: true, align: 'center'},
+                {
+                    field:'tsname',
+                    title:'业务名称',
+                    editable:{
+                        type:'text',
+                        title:'业务名称',
+                        validate:function (v) {
+                            if(!v) return '业务名称不能为空'
+                        }
+                    }
+                }
             ]
         })
     })
