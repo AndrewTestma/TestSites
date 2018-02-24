@@ -1,5 +1,8 @@
 package com.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Autosteps {
@@ -31,6 +34,8 @@ public class Autosteps {
 
     private String tsremarks;
 
+    @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date tscreatetime;
 
     private String tscreator;
