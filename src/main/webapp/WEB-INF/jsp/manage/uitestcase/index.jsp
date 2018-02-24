@@ -69,8 +69,29 @@
             toolbar: '#toolbar',
             columns: [
                 {field: 'tsuitestcaseid', title: '编号', sortable: true, align: 'center'},
-                {field: 'tsname', title: '用例名称'},
-                {field: 'tsgrade', title: '用例等级'},
+                {
+                    field: 'tsname', title: '用例名称',
+                    editable:{
+                        type:'text',
+                        validate:function (v) {
+                            if(!v) return '用例名不能为空';
+                        }
+                    }
+                },
+                {
+                    field: 'tsgrade',
+                    title: '用例等级',
+                    editable:{
+                        type:'select',
+                        title:'用例等级',
+                        source:[
+                            {value: 1,text: 1},
+                            {value: 2,text: 2},
+                            {value: 3,text: 3},
+                            {value: 4,text: 4}
+                        ]
+                    }
+                },
                 {field:'action',title:'测试结果',align:'center',formatter:function (value,row,index) {
                     var id=row.tsuitestcaseid;
                     var returnResult='<a class="update" href="javascript:;"  onclick="updateAction('+id+')" data-toggle="tooltip"  title="详情">详情</a>';
@@ -81,16 +102,31 @@
                 {field: 'tscreator', title: '创建人'},
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id=row.tsuitestcaseid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateAction('+id+')" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'
+                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateTCDialogAction(id)" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'
                         +'  <a class="delete" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
             ],
             onExpandRow:function (index,row,$detail) {
                 initSubTable(index,row,$detail);
+            },
+            onEditableSave:function (field,row,oldValue,$el) {
+                $.ajax({
+                    type:'post',
+                    url:'/ui/update',
+                    data:row,
+                    dataType:'JSON',
+                    success:function (data) {
+                        alert("1");
+                        if(data=="success"){
+                            alert(data);
+                        }
+                    }
+                })
             }
         });
     });
+    //父子表
     function initSubTable(index,row,$detail) {
         var id=row.tsuitestcaseid;
         var cur_table=$detail.html('<table></table>').find('table');
@@ -116,12 +152,24 @@
                 {
                     field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id = row.tsproductid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateAction(' + id + ')" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'
+                    var returnValue = '<a class="update" href="javascript:;"  onclick="" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'
                         + '  <a class="delete" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false
                 }
             ]
+        });
+    }
+    //
+    var updateTCDialog;
+    function updateTCDialogAction(e) {
+        updateTCDialog = $.dialog({
+            animationSpeed: 300,
+            title: '修改用例',
+            content: 'url:/ui/update',
+            onContentReady: function () {
+                initMaterialInput();
+            }
         });
     }
 </script>

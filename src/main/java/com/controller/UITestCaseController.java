@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.text.resources.FormatData;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,10 +74,25 @@ public class UITestCaseController {
     /**
      * @Description:测试用例修改视图
      * */
-    @RequestMapping(value = "/update",method = RequestMethod.GET)
+  /*  @RequestMapping(value = "/update",method = RequestMethod.GET)
     public String update(){
         return"/manage/uitestcase/update";
+    }*/
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @ResponseBody
+    public String update(UITestCase uiTestCase){
+        logger.info(uiTestCase.getTsname());
+        int i=uiTestCaseService.updateByPrimaryKeySelective(uiTestCase);
+        System.out.println(i);
+       if(i==1){
+           logger.info("更新成功");
+           return "success";
+       }else {
+           logger.info("更新失败");
+           return "error";
+       }
     }
+
    /* *//**
      * @Description:获取测试用例列表
      * *//*
