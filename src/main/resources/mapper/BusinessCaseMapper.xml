@@ -16,6 +16,11 @@
     from tsbusinesscase
     where tsbusinesscaseid = #{tsbusinesscaseid,jdbcType=INTEGER}
   </select>
+  <select id="selectBytsbusinessid" parameterType="java.lang.Integer" resultType="Integer">
+    select tsuitestcaseid
+    from tsbusinesscase
+    where tsbusinessid = #{tsbusinessid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsbusinesscase
     where tsbusinesscaseid = #{tsbusinesscaseid,jdbcType=INTEGER}

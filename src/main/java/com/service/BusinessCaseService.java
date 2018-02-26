@@ -1,14 +1,15 @@
-package com.dao;
+package com.service;
 
 import com.pojo.BusinessCase;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 /**
+ * @Author:Andrew
  * @Description:业务与测试用例的中间表
- * */
-@Repository("BusinessCaseMapper")
-public interface BusinessCaseMapper {
+ * @Date 2018/2/26 0026
+ */
+public interface BusinessCaseService {
     int deleteByPrimaryKey(Integer tsbusinesscaseid);
 
     int insert(BusinessCase record);
