@@ -21,6 +21,11 @@
     from tscasesteps
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
   </select>
+  <select id="selectBytsorder" parameterType="java.lang.Integer" resultType="Integer">
+    select count(*)
+    from tscasesteps
+    where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tscasesteps
     where tscasestepsid = #{tscasestepsid,jdbcType=INTEGER}

@@ -29,6 +29,8 @@ public class CaseStepsController {
         CaseSteps caseSteps=new CaseSteps();
         caseSteps.setTsuitestcaseid(Integer.valueOf(uitestcaseID));
         caseSteps.setTsautostepsid(Integer.valueOf(autostepsID));
+        int i=caseStepsService.selectBytsorder(Integer.valueOf(uitestcaseID));
+        caseSteps.setTsorder(i+1);
         return caseStepsService.insert(caseSteps);
     }
 }

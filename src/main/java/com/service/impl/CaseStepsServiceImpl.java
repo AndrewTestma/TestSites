@@ -43,6 +43,11 @@ public class CaseStepsServiceImpl implements CaseStepsService {
     }
 
     @Override
+    public Integer selectBytsorder(Integer tsuitestcaseid) {
+        return caseStepsMapper.selectBytsorder(tsuitestcaseid);
+    }
+
+    @Override
     public int updateByPrimaryKeySelective(CaseSteps record) {
         return caseStepsMapper.updateByPrimaryKeySelective(record);
     }

@@ -20,6 +20,8 @@ public interface CaseStepsService {
 
     List<Integer> selectBytsuitestcaseid(Integer tsuitestcaseid);
 
+    Integer selectBytsorder(Integer tsuitestcaseid);
+
     int updateByPrimaryKeySelective(CaseSteps record);
 
     int updateByPrimaryKey(CaseSteps record);
