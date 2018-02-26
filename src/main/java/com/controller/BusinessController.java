@@ -61,6 +61,7 @@ public class BusinessController {
      * @Description:添加业务
      * */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @ResponseBody
     public int add(Business business, HttpServletRequest request){
         HttpSession session=request.getSession();
         business.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
