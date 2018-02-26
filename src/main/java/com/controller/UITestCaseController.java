@@ -3,6 +3,7 @@ package com.controller;
 import com.pojo.Autosteps;
 import com.pojo.UITestCase;
 import com.service.AutostepsService;
+import com.service.BusinessCaseService;
 import com.service.UITestCaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +18,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 /**
  * @Author:Andrew
  * @Description:
@@ -32,8 +31,8 @@ public class UITestCaseController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "UITestCaseService")
     private UITestCaseService uiTestCaseService;
-    @Resource(name = "AutostepsService")
-    private AutostepsService autostepsService;
+    @Resource(name = "BusinessCaseService")
+    private BusinessCaseService businessCaseService;
     /**
      * @Description:ui测试用例主页
      * */
@@ -92,7 +91,23 @@ public class UITestCaseController {
            return "error";
        }
     }
-
+    /**
+     * @Description:获取业务对应的测试用例
+     * */
+    @RequestMapping(value = "/buscase",method = RequestMethod.GET)
+    @ResponseBody
+    public Object buscase(String tsbusinessID){
+        List<Integer> list=businessCaseService.selectBytsbusinessid(Integer.valueOf(tsbusinessID));
+        List<UITestCase> rows=new ArrayList<>();
+        for(int i:list){
+            rows.add(uiTestCaseService.selectByPrimaryKey(i));
+        }
+        long total=rows.size();
+        Map<String,Object> result=new HashMap<>();
+        result.put("data",rows);
+        result.put("total",total);
+        return result;
+    }
    /* *//**
      * @Description:获取测试用例列表
      * *//*
