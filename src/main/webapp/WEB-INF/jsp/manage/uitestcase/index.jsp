@@ -92,11 +92,6 @@
                         ]
                     }
                 },
-                {field:'action',title:'测试结果',align:'center',formatter:function (value,row,index) {
-                    var id=row.tsuitestcaseid;
-                    var returnResult='<a class="update" href="javascript:;"  onclick="updateAction('+id+')" data-toggle="tooltip"  title="详情">详情</a>';
-                    return returnResult;
-                }, events:'actionEvents',clickToSelect:false},
                 {field: 'tscommon', title: '公共用例'},
                 {field: 'tscreatetime', title: '创建时间'},
                 {field: 'tscreator', title: '创建人'},

@@ -54,11 +54,11 @@
             smartDisplay: false,
             escape: true,
             searchOnEnterKey: true,
-            idFile: 'tsbusinessid ',
+            idFile: 'tsbusinessid',
             maintainSelected: true,
             toolbar: '#toolbar',
             columns: [
-                {field: 'tsbusinessid ', title: '编号', sortable: true, align: 'center'},
+                {field: 'tsbusinessid', title: '编号', sortable: true, align: 'center'},
                 {
                     field:'tsname',
                     title:'业务名称',
@@ -69,9 +69,37 @@
                             if(!v) return '业务名称不能为空'
                         }
                     }
-                }
-            ]
+                },
+                {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
+                    var id=row.tsuitestcaseid;
+                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateTCDialogAction(id)" data-toggle="tooltip"  title="Start"><i class="glyphicon glyphicon-play-circle"></i></a>'
+                        +'  <a class="delete" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                    return returnValue;
+                }, events: 'actionEvents', clickToSelect: false}
+            ],
+            onExpandRow:function (index,row,$detail) {
+                businitSubTable(index,row,$detail);
+            }
         })
     })
+    function businitSubTable(index,row,$detail) {
+        var id=row.tsbusinessid;
+        var cur_table=$detail.html('<table></table>').find('table');
+        $(cur_table).bootstrapTable({
+            url: '/ui/buscase',
+            method:'get',
+            queryParams:{tsbusinessID:id},
+            idField: 'tsuitestcaseid',
+            maintainSelected: true,
+            columns: [
+                {field: 'tsuitestcaseid', title: '编号', sortable: true, align: 'center'},
+                {field: 'tsname', title: '用例名称',},
+                {field: 'tsgrade', title: '用例等级'},
+                {field: 'tscommon', title: '公共用例'},
+                {field: 'tscreatetime', title: '创建时间'},
+                {field: 'tscreator', title: '创建人'}
+            ]
+        })
+    }
 </script>
 </html>
