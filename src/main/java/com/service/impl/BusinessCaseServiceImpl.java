@@ -43,6 +43,11 @@ public class BusinessCaseServiceImpl implements BusinessCaseService {
     }
 
     @Override
+    public Integer selectBytsorder(Integer tsbusinessid) {
+        return businessCaseMapper.selectBytsorder(tsbusinessid);
+    }
+
+    @Override
     public int updateByPrimaryKeySelective(BusinessCase record) {
         return businessCaseMapper.updateByPrimaryKeySelective(record);
     }

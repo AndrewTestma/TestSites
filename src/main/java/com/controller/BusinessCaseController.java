@@ -31,6 +31,8 @@ public class BusinessCaseController {
         BusinessCase businessCase=new BusinessCase();
         businessCase.setTsbusinessid(Integer.valueOf(tsbusinessid));
         businessCase.setTsuitestcaseid(Integer.valueOf(tsuitestcaseid));
+        int i=businessCaseService.selectBytsorder(Integer.valueOf(tsbusinessid));
+        businessCase.setTsorder(i+1);
         return businessCaseService.insert(businessCase);
      }
 }

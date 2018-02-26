@@ -21,11 +21,16 @@
     from tsbusinesscase
     where tsbusinessid = #{tsbusinessid,jdbcType=INTEGER}
   </select>
+  <select id="selectBytsorder" parameterType="java.lang.Integer" resultType="Integer">
+    select count(*)
+    from tsbusinesscase
+    where tsbusinessid = #{tsbusinessid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsbusinesscase
     where tsbusinesscaseid = #{tsbusinesscaseid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pojo.BusinessCase">
+  <insert id="insert" parameterType="com.pojo.BusinessCase" useGeneratedKeys="true" keyProperty="tsbusinessid">
     insert into tsbusinesscase (tsbusinesscaseid, tsbusinessid, tsuitestcaseid, 
       tsorder)
     values (#{tsbusinesscaseid,jdbcType=INTEGER}, #{tsbusinessid,jdbcType=INTEGER}, #{tsuitestcaseid,jdbcType=INTEGER}, 

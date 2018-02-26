@@ -19,6 +19,9 @@ public interface BusinessCaseMapper {
 
     List<Integer> selectBytsbusinessid(Integer tsbusinessid);
 
+    //返回order
+    Integer selectBytsorder(Integer tsbusinessid);
+
     int updateByPrimaryKeySelective(BusinessCase record);
 
     int updateByPrimaryKey(BusinessCase record);
