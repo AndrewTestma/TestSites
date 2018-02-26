@@ -1,14 +1,19 @@
 package com.utils;
 
+import com.controller.ExecuteController;
 import com.controller.UITestCaseController;
+import com.pojo.Autosteps;
+import com.pojo.UITestCase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
@@ -25,15 +30,14 @@ import java.util.Map;
  * @Date 2017/12/26 0026
  */
 public class BaseTest {
-   /* public static WebDriver driver=null;
+    public static WebDriver driver=null;
     public Logger logger= LoggerFactory.getLogger(this.getClass());
     public static Map<String,List<Autosteps>> autosteps=new HashMap<>();
-    public static UITestCase uiTestCase=null;
     @BeforeTest
     public void setup(){
         logger.info("开始测试");
-        autosteps= UITestCaseController.list;
         driver=setDriver("ChromeDriver");
+        autosteps= ExecuteController.listMap;
         driver.navigate().to("http://www.baidu.com");
     }
     @Test
@@ -42,13 +46,13 @@ public class BaseTest {
         logger.info("执行测试步骤");
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
                 for(Autosteps autosteps1:entry.getValue()){
-                    if(autosteps1.getTssearchid().equals("by.id")){
-                        webElement=driver.findElement(By.id(autosteps1.getTssearchcontent()));
+                    if(autosteps1.getTsselecttype().equals("id")){
+                        webElement=driver.findElement(By.id(autosteps1.getTsselectcontent()));
                     }
-                    if(autosteps1.getTsexecutionid().equals("单击")){
+                    if(autosteps1.getTsactiontype().equals("单击")){
                         webElement.click();
-                    }else if(autosteps1.getTsexecutionid().equals("输入")){
-                        webElement.sendKeys(autosteps1.getTsexecutioncontent());
+                    }else if(autosteps1.getTsactiontype().equals("输入")){
+                        webElement.sendKeys(autosteps1.getTsactioncontent());
                     }
                     try {
                         Thread.sleep(2000);
@@ -58,9 +62,9 @@ public class BaseTest {
                 }
         }
         logger.info("执行验证");
-        if(uiTestCase.getTsverificationid().equals("")){
+       /* if(uiTestCase.getTsverificationid().equals("")){
 
-        }
+        }*/
     }
     @AfterClass
     public void endTest(){
@@ -90,15 +94,15 @@ public class BaseTest {
                 break;
             case "ChromeDriver":
                 System.setProperty("webdriver.chrome.driver", "driver/Chromedriver.exe");
-				*//*ChromeOptions options = new ChromeOptions();
-				options.setBinary(this.driver_path); *//*
+				/*ChromeOptions options = new ChromeOptions();
+				options.setBinary(this.driver_path);*/
                 this.driver=new ChromeDriver();
                 break;
             case "InternetExplorerDriver":
                 System.setProperty("webdriver.ie.driver","" );
-				*//*DesiredCapabilities dc = DesiredCapabilities.internetExplorer();
+				DesiredCapabilities dc = DesiredCapabilities.internetExplorer();
 				dc.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-				dc.setCapability("ignoreProtectedModeSettings", true);*//*
+				dc.setCapability("ignoreProtectedModeSettings", true);
                 this.driver=new InternetExplorerDriver();
                 break;
             case "HtmlUnitDriver":
@@ -110,5 +114,4 @@ public class BaseTest {
         }
         return driver;
     }
-*/
 }
