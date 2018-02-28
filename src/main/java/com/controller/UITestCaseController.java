@@ -1,8 +1,6 @@
 package com.controller;
 
-import com.pojo.Autosteps;
 import com.pojo.UITestCase;
-import com.service.AutostepsService;
 import com.service.BusinessCaseService;
 import com.service.UITestCaseService;
 import org.slf4j.Logger;
@@ -12,12 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import sun.text.resources.FormatData;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
