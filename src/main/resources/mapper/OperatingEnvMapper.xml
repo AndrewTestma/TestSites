@@ -17,6 +17,14 @@
     from tsoperatingenv
     where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}
   </select>
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tsoperatingenv
+    ORDER BY
+    tsoperatingenvid
+    LIMIT #{offset}, #{limit}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsoperatingenv
     where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}

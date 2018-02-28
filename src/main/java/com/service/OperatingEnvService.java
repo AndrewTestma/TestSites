@@ -1,13 +1,15 @@
-package com.dao;
+package com.service;
 
 import com.pojo.OperatingEnv;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("OperatingEnvMapper")
-public interface OperatingEnvMapper {
+/**
+ * @Author:Andrew
+ * @Description:
+ * @Date 2018/2/28 0028
+ */
+public interface OperatingEnvService {
     int deleteByPrimaryKey(Integer tsoperatingenvid);
 
     int insert(OperatingEnv record);
@@ -16,7 +18,7 @@ public interface OperatingEnvMapper {
 
     OperatingEnv selectByPrimaryKey(Integer tsoperatingenvid);
 
-    List<OperatingEnv> selectList(@Param("offset")int offset, @Param("limit")int limit);
+    List<OperatingEnv> selectList(int offset, int limit);
 
     int updateByPrimaryKeySelective(OperatingEnv record);
 
