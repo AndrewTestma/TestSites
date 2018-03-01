@@ -11,6 +11,8 @@ public class OperatingEnv {
 
     private String tsdirverpath;
 
+    private Integer apply;
+
     public Integer getTsoperatingenvid() {
         return tsoperatingenvid;
     }
@@ -49,5 +51,13 @@ public class OperatingEnv {
 
     public void setTsdirverpath(String tsdirverpath) {
         this.tsdirverpath = tsdirverpath;
+    }
+
+    public Integer getApply() {
+        return apply;
+    }
+
+    public void setApply(Integer apply) {
+        this.apply = apply;
     }
 }

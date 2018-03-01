@@ -7,9 +7,10 @@
     <result column="tsurl" jdbcType="VARCHAR" property="tsurl" />
     <result column="tsdriver" jdbcType="VARCHAR" property="tsdriver" />
     <result column="tsdirverpath" jdbcType="VARCHAR" property="tsdirverpath" />
+    <result column="apply" jdbcType="INTEGER" property="apply" />
   </resultMap>
   <sql id="Base_Column_List">
-    tsoperatingenvid, tsname, tsurl, tsdriver, tsdirverpath
+    tsoperatingenvid, tsname, tsurl, tsdriver, tsdirverpath, apply
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,9 +32,11 @@
   </delete>
   <insert id="insert" parameterType="com.pojo.OperatingEnv">
     insert into tsoperatingenv (tsoperatingenvid, tsname, tsurl, 
-      tsdriver, tsdirverpath)
+      tsdriver, tsdirverpath, apply
+      )
     values (#{tsoperatingenvid,jdbcType=INTEGER}, #{tsname,jdbcType=VARCHAR}, #{tsurl,jdbcType=VARCHAR}, 
-      #{tsdriver,jdbcType=VARCHAR}, #{tsdirverpath,jdbcType=VARCHAR})
+      #{tsdriver,jdbcType=VARCHAR}, #{tsdirverpath,jdbcType=VARCHAR}, #{apply,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.OperatingEnv">
     insert into tsoperatingenv
@@ -53,6 +56,9 @@
       <if test="tsdirverpath != null">
         tsdirverpath,
       </if>
+      <if test="apply != null">
+        apply,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="tsoperatingenvid != null">
@@ -69,6 +75,9 @@
       </if>
       <if test="tsdirverpath != null">
         #{tsdirverpath,jdbcType=VARCHAR},
+      </if>
+      <if test="apply != null">
+        #{apply,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -87,6 +96,9 @@
       <if test="tsdirverpath != null">
         tsdirverpath = #{tsdirverpath,jdbcType=VARCHAR},
       </if>
+      <if test="apply != null">
+        apply = #{apply,jdbcType=INTEGER},
+      </if>
     </set>
     where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}
   </update>
@@ -95,7 +107,8 @@
     set tsname = #{tsname,jdbcType=VARCHAR},
       tsurl = #{tsurl,jdbcType=VARCHAR},
       tsdriver = #{tsdriver,jdbcType=VARCHAR},
-      tsdirverpath = #{tsdirverpath,jdbcType=VARCHAR}
+      tsdirverpath = #{tsdirverpath,jdbcType=VARCHAR},
+      apply = #{apply,jdbcType=INTEGER}
     where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}
   </update>
 </mapper>

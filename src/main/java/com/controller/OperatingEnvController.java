@@ -65,6 +65,7 @@ public class OperatingEnvController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public int add(OperatingEnv operatingEnv){
+        operatingEnv.setApply(1);
         return operatingEnvService.insert(operatingEnv);
     }
 
