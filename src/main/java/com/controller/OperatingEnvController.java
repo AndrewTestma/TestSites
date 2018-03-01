@@ -67,4 +67,32 @@ public class OperatingEnvController {
     public int add(OperatingEnv operatingEnv){
         return operatingEnvService.insert(operatingEnv);
     }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @ResponseBody
+    /**
+    * @Description: 运行设置更新
+    * @Param: [operatingEnv] 运行环境对象
+    * @return: java.lang.String 是否成功
+    * @Date: 2018/3/1 0001
+    */
+    public String update(OperatingEnv operatingEnv){
+        int i=operatingEnvService.updateByPrimaryKeySelective(operatingEnv);
+        if(i>0){
+            return "success";
+        }else{
+            return  "error";
+        }
+    }
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @ResponseBody
+    /**
+    * @Description:  删除操作
+    * @Param: [tsoperatingenvid] 主键ID
+    * @return: java.lang.Integer 是否成功
+    * @Date: 10:46 2018年03月01日
+     */
+    public int delete(String tsoperatingenvid){
+        return operatingEnvService.deleteByPrimaryKey(Integer.valueOf(tsoperatingenvid));
+    }
 }
