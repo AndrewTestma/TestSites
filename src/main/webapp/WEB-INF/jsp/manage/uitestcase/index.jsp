@@ -112,9 +112,7 @@
                     data:row,
                     dataType:'JSON',
                     success:function (data) {
-                        alert("1");
                         if(data=="success"){
-                            alert(data);
                         }
                     }
                 })

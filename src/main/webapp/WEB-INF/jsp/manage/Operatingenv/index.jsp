@@ -101,13 +101,26 @@
                     }
                 },
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
-                    var id=row.tsuitestcaseid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateTCDialogAction(id)" data-toggle="tooltip"  title="remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                    var id=row.tsoperatingenvid;
+                    var returnValue = '<a class="update" href="javascript:;"  onclick="delAction('+id+')" data-toggle="tooltip"  title="remove"><i class="glyphicon glyphicon-remove"></i></a>'+
+                        '<a class="update" href="javascript:;"  onclick="appAction('+id+')" data-toggle="tooltip"  title="apply"><i class="glyphicon glyphicon-cog"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
-            ]
+            ],
+            onEditableSave:function (field,row,oldValue,$el) {
+                $.ajax({
+                    type:'post',
+                    url:'/env/update',
+                    data:row,
+                    dataType:'JSON',
+                    success:function (data) {
+                        alert(data);
+                    }
+                })
+            }
         })
     })
+    //新增动作
     var OperatingenvDialog;
     function addOperatingenv() {
         OperatingenvDialog=$.dialog({
@@ -118,6 +131,30 @@
                 initMaterialInput();
             }
         });
+    }
+    //删除动作
+    function delAction(id) {
+        $.ajax({
+            type:'post',
+            url:'/env/delete',
+            data:{"tsoperatingenvid":id},
+            success:function () {
+                $envTable.bootstrapTable('refresh');
+            }
+        })
+    }
+    //设置默认运行环境
+    function appAction(id) {
+        $.ajax({
+            type:'post',
+            url:'/env/apply',
+            data:{"tsoperatingenvid":id},
+            success:function (data) {
+                if(data>0){
+                    alert("设置成功");
+                }
+            }
+        })
     }
 </script>
 </html>

@@ -309,6 +309,7 @@
             searchOnEnterKey: true,
             idField: 'tsproductid',
             maintainSelected: true,
+            toolbar: '#toolbar',
             columns: [
                 {field: 'tsproductid', title: '编号', sortable: true, align: 'center'},
                 {field: 'tsautostepsname', title: '步骤名称'},
