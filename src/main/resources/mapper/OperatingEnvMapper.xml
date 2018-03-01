@@ -111,4 +111,9 @@
       apply = #{apply,jdbcType=INTEGER}
     where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}
   </update>
+  <update id="updateByApply" parameterType="java.lang.Integer">
+    update tsoperatingenv
+    set apply = 1
+    where tsoperatingenvid != #{tsoperatingenvid,jdbcType=INTEGER}
+  </update>
 </mapper>

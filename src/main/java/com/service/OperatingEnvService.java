@@ -23,4 +23,6 @@ public interface OperatingEnvService {
     int updateByPrimaryKeySelective(OperatingEnv record);
 
     int updateByPrimaryKey(OperatingEnv record);
+
+    int updateByApply(Integer tsoperatingenvid);
 }

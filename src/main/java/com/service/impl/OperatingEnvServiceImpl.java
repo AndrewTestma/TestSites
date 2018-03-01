@@ -51,4 +51,9 @@ public class OperatingEnvServiceImpl implements OperatingEnvService {
     public int updateByPrimaryKey(OperatingEnv record) {
         return operatingEnvMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public int updateByApply(Integer tsoperatingenvid) {
+        return operatingEnvMapper.updateByApply(tsoperatingenvid);
+    }
 }

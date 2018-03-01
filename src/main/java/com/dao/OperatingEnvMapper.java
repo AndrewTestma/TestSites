@@ -21,4 +21,6 @@ public interface OperatingEnvMapper {
     int updateByPrimaryKeySelective(OperatingEnv record);
 
     int updateByPrimaryKey(OperatingEnv record);
+
+    int updateByApply(Integer tsoperatingenvid);
 }

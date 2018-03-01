@@ -96,4 +96,19 @@ public class OperatingEnvController {
     public int delete(String tsoperatingenvid){
         return operatingEnvService.deleteByPrimaryKey(Integer.valueOf(tsoperatingenvid));
     }
+    @RequestMapping(value = "/apply",method = RequestMethod.POST)
+    @ResponseBody
+    /**
+    * @Description: 设置默认运行环境
+    * @Param: [apply] 0代表默认
+    * @return: int 是否成功
+    * @Date: 13:33 2018年03月01日
+     */
+    public int apply(String tsoperatingenvid){
+        OperatingEnv operatingEnv=new OperatingEnv();
+        operatingEnvService.updateByApply(Integer.valueOf(tsoperatingenvid));
+        operatingEnv.setTsoperatingenvid(Integer.valueOf(tsoperatingenvid));
+        operatingEnv.setApply(0);
+        return operatingEnvService.updateByPrimaryKeySelective(operatingEnv);
+    }
 }
