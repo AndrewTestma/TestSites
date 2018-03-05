@@ -1,10 +1,9 @@
 package com.controller;
 
 import com.pojo.Autosteps;
-import com.service.AutostepsService;
-import com.service.BusinessCaseService;
-import com.service.CaseStepsService;
-import com.service.UITestCaseService;
+import com.pojo.OperatingEnv;
+import com.pojo.Product;
+import com.service.*;
 import com.utils.BaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +27,11 @@ import java.util.Map;
 @Controller("ExecuteController")
 @RequestMapping("/exec")
 public class ExecuteController {
+
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     public static  Map<String,List<Autosteps>> listMap=null;
+    public static Product pro=null;
+    public static OperatingEnv env=null;
     @Resource(name = "BusinessCaseService")
     private BusinessCaseService businessCaseService;
     @Resource(name = "UITestCaseService")
@@ -38,13 +40,22 @@ public class ExecuteController {
     private AutostepsService autostepsService;
     @Resource(name = "CaseStepsService")
     private CaseStepsService caseStepsService;
-    /**
-     * @Description:执行的业务线
-     * */
+    @Resource(name = "ProductService")
+    private ProductService productService;
+    @Resource(name = "OperatingEnvService")
+    private OperatingEnvService operatingEnvService;
     @RequestMapping(value = "/business",method = RequestMethod.GET)
     @ResponseBody
-    public String execBusiness(String tsbusinessid){
+    /**
+    * @Description: 执行业务线，将值传递到TestBaseCase
+    * @Param: [tsbusinessid:业务线ID, tsproductid:产品ID]
+    * @return: java.lang.String
+    * @Date: 10:52 2018年03月05日
+     */
+    public String execBusiness(String tsbusinessid,String tsproductid){
         listMap=new HashMap<>();
+        pro=productService.selectByPrimaryKey(Integer.valueOf(tsproductid));
+        env=operatingEnvService.selectByPrimaryKey(0);
         List<Integer> uiIdList=businessCaseService.selectBytsbusinessid(Integer.valueOf(tsbusinessid));
         if(uiIdList.size()>0){
             execAutoSteps(uiIdList);
