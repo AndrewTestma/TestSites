@@ -2,12 +2,9 @@ package com.utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
  * @Author:Andrew
@@ -15,10 +12,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  * @Date 2017/12/26 0026
  */
 public class DriverManager {
-    /**
-     * @Description:设置driver
-     * */
-    public static   WebDriver driver=null;
+
+    public static WebDriver driver=null;
     public static WebDriver setDriver(String string)
     {
         switch (string)
