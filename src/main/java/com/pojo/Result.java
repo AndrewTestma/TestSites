@@ -19,6 +19,10 @@ public class Result {
 
     private Date tsexecutiontime;
 
+    private Integer tsbusinessid;
+
+    private Integer tsproductid;
+
     public Integer getTsresultid() {
         return tsresultid;
     }
@@ -81,5 +85,21 @@ public class Result {
 
     public void setTsexecutiontime(Date tsexecutiontime) {
         this.tsexecutiontime = tsexecutiontime;
+    }
+
+    public Integer getTsbusinessid() {
+        return tsbusinessid;
+    }
+
+    public void setTsbusinessid(Integer tsbusinessid) {
+        this.tsbusinessid = tsbusinessid;
+    }
+
+    public Integer getTsproductid() {
+        return tsproductid;
+    }
+
+    public void setTsproductid(Integer tsproductid) {
+        this.tsproductid = tsproductid;
     }
 }

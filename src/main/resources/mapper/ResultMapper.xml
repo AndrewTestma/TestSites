@@ -10,10 +10,12 @@
     <result column="tscount" jdbcType="INTEGER" property="tscount" />
     <result column="tsexecutive" jdbcType="VARCHAR" property="tsexecutive" />
     <result column="tsexecutiontime" jdbcType="TIMESTAMP" property="tsexecutiontime" />
+    <result column="tsbusinessid" jdbcType="INTEGER" property="tsbusinessid" />
+    <result column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
   </resultMap>
   <sql id="Base_Column_List">
     tsresultid, tstotaltime, tstotalsteps, tsrunsteps, tsresult, tscount, tsexecutive, 
-    tsexecutiontime
+    tsexecutiontime, tsbusinessid, tsproductid
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -28,10 +30,12 @@
   <insert id="insert" parameterType="com.pojo.Result">
     insert into tsresult (tsresultid, tstotaltime, tstotalsteps, 
       tsrunsteps, tsresult, tscount, 
-      tsexecutive, tsexecutiontime)
+      tsexecutive, tsexecutiontime, tsbusinessid, 
+      tsproductid)
     values (#{tsresultid,jdbcType=INTEGER}, #{tstotaltime,jdbcType=INTEGER}, #{tstotalsteps,jdbcType=INTEGER}, 
       #{tsrunsteps,jdbcType=INTEGER}, #{tsresult,jdbcType=INTEGER}, #{tscount,jdbcType=INTEGER}, 
-      #{tsexecutive,jdbcType=VARCHAR}, #{tsexecutiontime,jdbcType=TIMESTAMP})
+      #{tsexecutive,jdbcType=VARCHAR}, #{tsexecutiontime,jdbcType=TIMESTAMP}, #{tsbusinessid,jdbcType=INTEGER}, 
+      #{tsproductid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.Result">
     insert into tsresult
@@ -60,6 +64,12 @@
       <if test="tsexecutiontime != null">
         tsexecutiontime,
       </if>
+      <if test="tsbusinessid != null">
+        tsbusinessid,
+      </if>
+      <if test="tsproductid != null">
+        tsproductid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="tsresultid != null">
@@ -85,6 +95,12 @@
       </if>
       <if test="tsexecutiontime != null">
         #{tsexecutiontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tsbusinessid != null">
+        #{tsbusinessid,jdbcType=INTEGER},
+      </if>
+      <if test="tsproductid != null">
+        #{tsproductid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -112,6 +128,12 @@
       <if test="tsexecutiontime != null">
         tsexecutiontime = #{tsexecutiontime,jdbcType=TIMESTAMP},
       </if>
+      <if test="tsbusinessid != null">
+        tsbusinessid = #{tsbusinessid,jdbcType=INTEGER},
+      </if>
+      <if test="tsproductid != null">
+        tsproductid = #{tsproductid,jdbcType=INTEGER},
+      </if>
     </set>
     where tsresultid = #{tsresultid,jdbcType=INTEGER}
   </update>
@@ -123,7 +145,9 @@
       tsresult = #{tsresult,jdbcType=INTEGER},
       tscount = #{tscount,jdbcType=INTEGER},
       tsexecutive = #{tsexecutive,jdbcType=VARCHAR},
-      tsexecutiontime = #{tsexecutiontime,jdbcType=TIMESTAMP}
+      tsexecutiontime = #{tsexecutiontime,jdbcType=TIMESTAMP},
+      tsbusinessid = #{tsbusinessid,jdbcType=INTEGER},
+      tsproductid = #{tsproductid,jdbcType=INTEGER}
     where tsresultid = #{tsresultid,jdbcType=INTEGER}
   </update>
 </mapper>
