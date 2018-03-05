@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class TestBaseCase {
     public static WebDriver driver;
-    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    public Logger logger= LoggerFactory.getLogger(this.getClass());
     public static Map<String,List<Autosteps>> autosteps=new HashMap<>();
     /**
      * @Description:测试执行前操作
