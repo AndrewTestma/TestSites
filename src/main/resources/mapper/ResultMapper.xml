@@ -33,7 +33,7 @@
     delete from tsresult
     where tsresultid = #{tsresultid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pojo.Result">
+  <insert id="insert" parameterType="com.pojo.Result" keyProperty="tsresultid" useGeneratedKeys="true">
     insert into tsresult (tsresultid, tstotaltime, tstotalsteps, 
       tsrunsteps, tsresult, tscount, 
       tsexecutive, tsexecutiontime, tsbusinessid, 
@@ -110,7 +110,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Result">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Result" useGeneratedKeys="true" keyProperty="tsresultid">
     update tsresult
     <set>
       <if test="tstotaltime != null">
