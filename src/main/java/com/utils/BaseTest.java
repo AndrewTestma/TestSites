@@ -3,8 +3,6 @@ package com.utils;
 
 import com.pojo.Autosteps;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -23,6 +21,9 @@ public class BaseTest extends TestBaseCase {
     public void test(){
         logger.info("执行测试步骤");
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
+            tstotalsteps=entry.getValue().size()+tstotalsteps;
+        }
+        for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
                 for(Autosteps autosteps1:entry.getValue()){
                     if(autosteps1.getTsactiontype().equals("单击")){
                         elementAction.click(autosteps1);
@@ -30,11 +31,7 @@ public class BaseTest extends TestBaseCase {
                        elementAction.sendKey(autosteps1,autosteps1.getTsactioncontent());
                     }
                     Assertion.verityType(autosteps1);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    tsrunsteps++;
                 }
         }
     }

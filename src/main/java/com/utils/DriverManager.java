@@ -14,7 +14,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 public class DriverManager {
 
     public static WebDriver driver=null;
-    public static WebDriver setDriver(String string)
+    public static WebDriver setDriver(String string,String driverPath)
     {
         switch (string)
         {
@@ -34,7 +34,7 @@ public class DriverManager {
                 driver=new FirefoxDriver(firefoxProfile);
                 break;
             case "ChromeDriver":
-                System.setProperty("webdriver.chrome.driver", "driver/Chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", driverPath);
 				/*ChromeOptions options = new ChromeOptions();
 				options.setBinary(this.driver_path);*/
                 driver=new ChromeDriver();
