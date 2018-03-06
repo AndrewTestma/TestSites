@@ -36,7 +36,7 @@
             showColumns: true,
             minimumCountColumns: 2,
             clickToSelect: true,
-            detailView: true,
+            detailView: false,
             detailFormatter: 'detailFormatter',
             pagination: true,
             paginationLoop: false,

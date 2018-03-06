@@ -25,81 +25,97 @@
 <body>
     <div id="main">
         <div id="toolbar">
-            <a class="btn btn-default" href="/bus/create"> <i class="glyphicon glyphicon-plus"> </i>添加业务</a>
+            <a class=" btn btn-default" href="/bus/create"> <i class="glyphicon glyphicon-plus"> </i>添加业务</a>
         </div>
-        <div>
+
             <table id="businessTable"></table>
-        </div>
     </div>
-</body>
-<jsp:include page="/resources/inc/footer.jsp" flush="true"/>
-<script>
-    var $businessTable=$('#businessTable');
-    $(function () {
-        $businessTable.bootstrapTable({
-            url: '/bus/list',
-            height: getHeight(),
-            striped: true,
-            search: true,
-            showRefresh: true,
-            showColumns: true,
-            minimumCountColumns: 2,
-            clickToSelect: true,
-            detailView: true,
-            detailFormatter: 'detailFormatter',
-            pagination: true,
-            paginationLoop: false,
-            sidePagination: 'client',
-            silentSort: false,
-            smartDisplay: false,
-            escape: true,
-            searchOnEnterKey: true,
-            idFile: 'tsbusinessid',
-            maintainSelected: true,
-            toolbar: '#toolbar',
-            columns: [
-                {field: 'tsbusinessid', title: '编号', sortable: true, align: 'center'},
-                {
-                    field:'tsname',
-                    title:'业务名称',
-                    editable:{
-                        type:'text',
+    <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
+    <script>
+        var $businessTable=$('#businessTable');
+        var tsbusinessid;
+        $(function () {
+            $businessTable.bootstrapTable({
+                url: '/bus/list',
+                height: getHeight(),
+                striped: true,
+                search: true,
+                showRefresh: true,
+                showColumns: true,
+                minimumCountColumns: 2,
+                clickToSelect: true,
+                detailView: true,
+                detailFormatter: 'detailFormatter',
+                pagination: true,
+                paginationLoop: false,
+                sidePagination: 'client',
+                silentSort: false,
+                smartDisplay: false,
+                escape: true,
+                searchOnEnterKey: true,
+                idFile: 'tsbusinessid',
+                maintainSelected: true,
+                toolbar: '#toolbar',
+                columns: [
+                    {field: 'tsbusinessid', title: '编号', sortable: true, align: 'center'},
+                    {
+                        field:'tsname',
                         title:'业务名称',
-                        validate:function (v) {
-                            if(!v) return '业务名称不能为空'
+                        align: 'center',
+                        editable:{
+                            type:'text',
+                            title:'业务名称',
+                            validate:function (v) {
+                                if(!v) return '业务名称不能为空'
+                            }
                         }
-                    }
-                },
-                {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
-                    var id=row.tsuitestcaseid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateTCDialogAction(id)" data-toggle="tooltip"  title="Start"><i class="glyphicon glyphicon-play-circle"></i></a>'
-                        +'  <a class="delete" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
-                    return returnValue;
-                }, events: 'actionEvents', clickToSelect: false}
-            ],
-            onExpandRow:function (index,row,$detail) {
-                businitSubTable(index,row,$detail);
-            }
+                    },
+                    {field: 'action', title: '报告', align: 'center', formatter: function (value, row, index) {
+                        tsbusinessid = row.tsbusinessid;
+                        var returnModule = ' <a class="waves-effect waves-button" href="/result/index?tsbusinessid='+tsbusinessid+'"> 显示详情</a>';
+                        return returnModule;
+                    }, events: 'actionEvents', clickToSelect: false},
+                    {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
+                        var id=row.tsbusinessid;
+                        var pid=row.tsproductid;
+                        var returnValue = '<a class="update" href="javascript:;"  onclick="execBusiness('+id+','+pid+')" data-toggle="tooltip"  title="Start"><i class="glyphicon glyphicon-play-circle"></i></a>'
+                            +'  <a class="delete" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                        return returnValue;
+                    }, events: 'actionEvents', clickToSelect: false}
+                ],
+                onExpandRow:function (index,row,$detail) {
+                    businitSubTable(index,row,$detail);
+                }
+            })
         })
-    })
-    function businitSubTable(index,row,$detail) {
-        var id=row.tsbusinessid;
-        var cur_table=$detail.html('<table></table>').find('table');
-        $(cur_table).bootstrapTable({
-            url: '/ui/buscase',
-            method:'get',
-            queryParams:{tsbusinessID:id},
-            idField: 'tsuitestcaseid',
-            maintainSelected: true,
-            columns: [
-                {field: 'tsuitestcaseid', title: '编号', sortable: true, align: 'center'},
-                {field: 'tsname', title: '用例名称',},
-                {field: 'tsgrade', title: '用例等级'},
-                {field: 'tscommon', title: '公共用例'},
-                {field: 'tscreatetime', title: '创建时间'},
-                {field: 'tscreator', title: '创建人'}
-            ]
-        })
-    }
-</script>
+        function businitSubTable(index,row,$detail) {
+            var id=row.tsbusinessid;
+            var cur_table=$detail.html('<table></table>').find('table');
+            $(cur_table).bootstrapTable({
+                url: '/ui/buscase',
+                method:'get',
+                queryParams:{tsbusinessID:id},
+                idField: 'tsuitestcaseid',
+                maintainSelected: true,
+                columns: [
+                    {field: 'tsuitestcaseid', title: '编号', sortable: true, align: 'center'},
+                    {field: 'tsname', title: '用例名称',},
+                    {field: 'tsgrade', title: '用例等级'},
+                    {field: 'tscommon', title: '公共用例'},
+                    {field: 'tscreatetime', title: '创建时间'},
+                    {field: 'tscreator', title: '创建人'}
+                ]
+            })
+        }
+        function execBusiness(id,pid) {
+            $.ajax({
+                type:'get',
+                url:'/exec/business',
+                data:{"tsbusinessid":id,"tsproductid":pid},
+                success:function (data) {
+                }
+            })
+        }
+    </script>
+</body>
 </html>

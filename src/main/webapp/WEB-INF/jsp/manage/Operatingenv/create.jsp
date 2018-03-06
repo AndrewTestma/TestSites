@@ -36,9 +36,9 @@
             <div class="form-group">
                 <label for="tsdriver">浏览器</label>
                 <select id="tsdriver" name="tsdriver" class="form-control" title="浏览器">
-                    <option>IE</option>
-                    <option>Chrome</option>
-                    <option>Firefox</option>
+                    <option>InternetExplorerDriver</option>
+                    <option>ChromeDriver</option>
+                    <option>FirefoxDriver</option>
                 </select>
             </div>
             <div class="form-group">

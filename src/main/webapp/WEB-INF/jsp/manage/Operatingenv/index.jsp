@@ -20,6 +20,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>运行设置</title>
     <jsp:include page="/resources/inc/head.jsp" flush="true"/>
+    <style>
+        .fixed-table-body {min-height:200px;}
+    </style>
 </head>
 <body>
 <div id="main">
@@ -86,9 +89,9 @@
                         type:'select',
                         title:'启动浏览器',
                         source:[
-                            {value:'IE',text:'IE'},
-                            {value:'Chrome',text:'Chrome'},
-                            {value:'Firefox',text:'Firefox'}
+                            {value:'InternetExplorerDriver',text:'InternetExplorerDriver'},
+                            {value:'ChromeDriver',text:'ChromeDriver'},
+                            {value:'FirefoxDriver',text:'FirefoxDriver'}
                         ]
                     }
                 },

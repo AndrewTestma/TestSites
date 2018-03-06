@@ -114,8 +114,8 @@
             <li class="sub-menu system_menus system_1 3">
                 <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-accounts"></i> 用例管理</a>
                 <ul>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('UI测试用例', '${basePath}/ui/index');">UI测试用例</a></li>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('接口测试用例', '');">接口测试用例</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('UI用例', '${basePath}/ui/index');">UI用例</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('API用例', '');">API用例</a></li>
                 </ul>
             </li>
             <li class="sub-menu system_menus system_1 3" >
