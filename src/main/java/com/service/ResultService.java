@@ -1,10 +1,13 @@
-package com.dao;
-
+package com.service;
 import com.pojo.Result;
-import org.springframework.stereotype.Repository;
 
-@Repository("ResultMapper")
-public interface ResultMapper {
+/**
+ * @program: TestSites
+ * @description: 报告接口类
+ * @author: Mr.Andrew
+ * @create: 2018-03-06 09:53
+ **/
+public interface ResultService {
     int deleteByPrimaryKey(Integer tsresultid);
 
     int insert(Result record);
