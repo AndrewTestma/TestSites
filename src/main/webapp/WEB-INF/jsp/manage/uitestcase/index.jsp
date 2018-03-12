@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8"%>
+<%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -20,10 +21,8 @@
     <div id="toolbar">
         <a class="btn btn-default" href="/ui/create"> <i class="glyphicon glyphicon-plus"> </i>添加用例</a>
     </div>
-    <div>
-        <table id="tctable"></table>
-        <select id="moduleSelect" class="selectpicker" data-live-search="true"/>
-    </div>
+    <table id="tctable"></table>
+    <select id="moduleSelect" class="selectpicker" data-live-search="true"/>
 </div>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
@@ -92,7 +91,18 @@
                         ]
                     }
                 },
-                {field: 'tscommon', title: '公共用例'},
+                {
+                    field:'tscommon',title:'公共步骤',align:'center',formatter:function (value,row,index) {
+                    var value=row.tscommon;
+                    var returnValue;
+                    if(value==1){
+                        returnValue='<i class="glyphicon glyphicon-star"></i>'
+                    }else {
+                        returnValue='<i class="glyphicon glyphicon-star-empty"></i>'
+                    }
+                    return returnValue;
+                },events: 'actionEvents', clickToSelect: false
+                },
                 {field: 'tscreatetime', title: '创建时间'},
                 {field: 'tscreator', title: '创建人'},
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
@@ -232,6 +242,18 @@
                     }
                 },
                 {
+                    field:'tscommon',title:'公共步骤',align:'center',formatter:function (value,row,index) {
+                    var value=row.tscommon;
+                    var returnValue;
+                    if(value==1){
+                        returnValue='<i class="glyphicon glyphicon-star"></i>'
+                    }else {
+                        returnValue='<i class="glyphicon glyphicon-star-empty"></i>'
+                    }
+                    return returnValue;
+                },events: 'actionEvents', clickToSelect: false
+                },
+                {
                     field: 'tsremarks',
                     title: '备注',
                     editable:{
@@ -263,6 +285,28 @@
                 })
             }
         });
+    }
+    //删除测试用例
+    function deleteAction(id) {
+        $.ajax({
+            type:'get',
+            url:'/ui/delete',
+            data:{"tsuitestcaseid":id},
+            success:function (data) {
+                if(data>0){
+                    alert("删除成功");
+                }else{
+                    alert("删除失败");
+                }
+                var opt={
+                    url: '/ui/list',
+                };
+                $tctable.bootstrapTable('refresh',opt);
+            },
+            error:function () {
+                alert("操作异常");
+            }
+        })
     }
 </script>
 </body>

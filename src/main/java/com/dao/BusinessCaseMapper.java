@@ -19,6 +19,8 @@ public interface BusinessCaseMapper {
 
     List<Integer> selectBytsbusinessid(Integer tsbusinessid);
 
+    List<Integer> selectBytsuitestcaseid(Integer tsuitestcaseid);
+
     //返回order
     Integer selectBytsorder(Integer tsbusinessid);
 

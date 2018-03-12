@@ -84,10 +84,13 @@ public class ExecuteController {
                 tsresultid =resultService.insert(result);
             }else{
                result.setTsresultid(resultService.selectBybusinessid(Integer.valueOf(tsbusinessid)).getTsresultid());
-               result.setTscount(result.getTscount()+1);
+               result.setTscount(resultService.selectBybusinessid(Integer.valueOf(tsbusinessid)).getTscount()+1);
                tsresultid =resultService.updateByPrimaryKey(result);
             }
         }
+        TestBaseCase.tstotalsteps=0;
+        TestBaseCase.tsrunsteps=0;
+        TestBaseCase.tstotaltime=0;
         return tsresultid;
     }
     /**

@@ -17,9 +17,14 @@
     where tsbusinesscaseid = #{tsbusinesscaseid,jdbcType=INTEGER}
   </select>
   <select id="selectBytsbusinessid" parameterType="java.lang.Integer" resultType="Integer">
+  select tsuitestcaseid
+  from tsbusinesscase
+  where tsbusinessid = #{tsbusinessid,jdbcType=INTEGER}
+</select>
+  <select id="selectBytsuitestcaseid" parameterType="java.lang.Integer" resultType="Integer">
     select tsuitestcaseid
     from tsbusinesscase
-    where tsbusinessid = #{tsbusinessid,jdbcType=INTEGER}
+    where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
   </select>
   <select id="selectBytsorder" parameterType="java.lang.Integer" resultType="Integer">
     select count(*)
