@@ -104,8 +104,8 @@
                 {field: 'tscreator', title: '创建人'},
                 {
                     field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
-                    var id = row.tsproductid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
+                    var id = row.tsuitestcaseid;
+                    var returnValue = '<a class="update" href="/ui/edit?tsuitestcaseid='+id+'"   data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
                         + '  <a class="delete" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
