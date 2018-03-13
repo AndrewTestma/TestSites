@@ -4,10 +4,13 @@ import com.pojo.CaseSteps;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository("CaseStepsMapper")
 public interface CaseStepsMapper {
     int deleteByPrimaryKey(Integer tscasestepsid);
+
+    int deleteByMore(CaseSteps caseSteps);
 
     int insert(CaseSteps record);
 

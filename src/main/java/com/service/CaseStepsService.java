@@ -3,6 +3,7 @@ package com.service;
 import com.pojo.CaseSteps;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author:Andrew
@@ -11,6 +12,8 @@ import java.util.List;
  */
 public interface CaseStepsService {
     int deleteByPrimaryKey(Integer tscasestepsid);
+
+    int deleteByMore(CaseSteps caseSteps);
 
     int insert(CaseSteps record);
 

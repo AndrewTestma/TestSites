@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author:Andrew
@@ -21,6 +22,11 @@ public class CaseStepsServiceImpl implements CaseStepsService {
     @Override
     public int deleteByPrimaryKey(Integer tscasestepsid) {
         return caseStepsMapper.deleteByPrimaryKey(tscasestepsid);
+    }
+
+    @Override
+    public int deleteByMore(CaseSteps caseSteps) {
+        return caseStepsMapper.deleteByMore(caseSteps);
     }
 
     @Override
