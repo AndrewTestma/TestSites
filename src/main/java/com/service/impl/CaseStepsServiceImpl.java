@@ -3,6 +3,7 @@ package com.service.impl;
 import com.dao.CaseStepsMapper;
 import com.pojo.CaseSteps;
 import com.service.CaseStepsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Service("CaseStepsService")
 public class CaseStepsServiceImpl implements CaseStepsService {
-    @Resource(name="CaseStepsMapper")
+    @Autowired(required = false)
     private CaseStepsMapper caseStepsMapper;
     @Override
     public int deleteByPrimaryKey(Integer tscasestepsid) {

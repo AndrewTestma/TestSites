@@ -3,6 +3,8 @@ package com.service.impl;
 import com.dao.BusinessCaseMapper;
 import com.pojo.BusinessCase;
 import com.service.BusinessCaseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,7 +17,7 @@ import java.util.List;
  */
 @Service("BusinessCaseService")
 public class BusinessCaseServiceImpl implements BusinessCaseService {
-    @Resource(name = "BusinessCaseMapper")
+    @Autowired(required = false)
     private BusinessCaseMapper businessCaseMapper;
     @Override
     public int deleteByPrimaryKey(Integer tsbusinesscaseid) {
@@ -40,6 +42,11 @@ public class BusinessCaseServiceImpl implements BusinessCaseService {
     @Override
     public List<Integer> selectBytsbusinessid(Integer tsbusinessid) {
         return businessCaseMapper.selectBytsbusinessid(tsbusinessid);
+    }
+
+    @Override
+    public List<Integer> selectBytsuitestcaseid(Integer tsuitestcaseid) {
+        return businessCaseMapper.selectBytsuitestcaseid(tsuitestcaseid);
     }
 
     @Override

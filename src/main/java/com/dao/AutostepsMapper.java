@@ -18,6 +18,8 @@ public interface AutostepsMapper {
 
     List<Autosteps> selectList(@Param("offset") int offset,@Param("limit") int limit);
 
+    List<Autosteps> selectByModule(String moduleName);
+
     int updateByPrimaryKeySelective(Autosteps record);
 
     int updateByPrimaryKey(Autosteps record);

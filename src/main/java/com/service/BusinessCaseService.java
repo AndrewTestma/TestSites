@@ -20,6 +20,8 @@ public interface BusinessCaseService {
 
     List<Integer> selectBytsbusinessid(Integer tsbusinessid);
 
+    List<Integer> selectBytsuitestcaseid(Integer tsuitestcaseid);
+
     Integer selectBytsorder(Integer tsbusinessid);
 
     int updateByPrimaryKeySelective(BusinessCase record);

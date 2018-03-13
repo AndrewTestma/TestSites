@@ -20,6 +20,8 @@ public interface AutostepsService {
 
     List<Autosteps> selectList(int offset, int limit);
 
+    List<Autosteps> selectByModule(String moduleName);
+
     int updateByPrimaryKeySelective(Autosteps record);
 
     int updateByPrimaryKey(Autosteps record);

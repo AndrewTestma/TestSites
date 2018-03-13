@@ -39,6 +39,12 @@
     tsautostepsid
     LIMIT #{offset}, #{limit}
   </select>
+  <select id="selectByModule" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tsautosteps
+    where tsmodulename = #{tsmodulename,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsautosteps
     where tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}

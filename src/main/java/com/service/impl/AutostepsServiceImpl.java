@@ -43,6 +43,11 @@ public class AutostepsServiceImpl implements AutostepsService {
     }
 
     @Override
+    public List<Autosteps> selectByModule(String moduleName) {
+        return autostepsMapper.selectByModule(moduleName);
+    }
+
+    @Override
     public int updateByPrimaryKeySelective(Autosteps record) {
         return autostepsMapper.updateByPrimaryKeySelective(record);
     }
