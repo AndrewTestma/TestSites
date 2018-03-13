@@ -18,10 +18,12 @@
 </head>
 <body>
 <div id="main">
+
     <div id="toolbar">
         <a class="btn btn-default" href="/ui/create"> <i class="glyphicon glyphicon-plus"> </i>添加用例</a>
     </div>
     <table id="tctable"></table>
+
     <select id="moduleSelect" class="selectpicker" data-live-search="true"/>
 </div>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>

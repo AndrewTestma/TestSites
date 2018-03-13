@@ -65,9 +65,15 @@
                     <i class="glyphicon glyphicon-plus"></i> 添加
                 </a>--%>
                    <button id="addat" onclick="addAutoSteps()" class="btn btn-default" title="添加">
-                       <i class="glyphicon glyphicon-plus"></i> 添加步骤
+                       <i class="glyphicon glyphicon-plus"></i> 新建步骤
+                   </button>
+                   <button id="addat" onclick="Reuse()" class="btn btn-default" title="添加">
+                       <i class="glyphicon glyphicon-plus"></i> 复用步骤
                    </button>
             </div>
+            <div id="toolbars">
+            </div>
+            <table id="autostepstable" style="display: none"></table>
             <div>
                 <form class="form-horizontal" style="display: none" method="post" id="autostepsForm">
                 <fieldset>
@@ -154,12 +160,6 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-4">
-                            <label for="tsremarks">备注</label>
-                            <input id="tsremarks" type="text" class="form-control" name="tsremarks" maxlength="50">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-4">
                             <label for="tscreator1">创建人</label>
                             <input id="tscreator1" type="text" class="form-control" name="tscreator" maxlength="50">
                         </div>
@@ -170,9 +170,6 @@
                     </div>
                 </fieldset>
             </form>
-            </div>
-            <div>
-                <table id="autostepstable" style="display: none"></table>
             </div>
         </fieldset>
     </div>
@@ -190,7 +187,7 @@
                 initMaterialInput();
             }
         });*/
-        document.getElementById("autostepsForm").style.display="inline";
+        document.getElementById("autostepsForm").style.display="table";
     }
     //动态加载模块
     $('#moduleSelect1').append("<option>选择模块</option>");
@@ -263,8 +260,8 @@
                     //addAutoStepsDialog.close();
                     autoStespID=data;
                     document.getElementById("autostepsForm").style.display="none";
-                    document.getElementById("autostepstable").style.display="inline";
-                    autostepstable();
+                    document.getElementById("autostepstable").style.display="table";
+                    autostepstable(0);
                     addCaseSteps();
 
                 }
@@ -272,6 +269,12 @@
             error:function (data) {
             }
         });
+    }
+    //点击复用按钮
+    function Reuse() {
+        document.getElementById("autostepsForm").style.display="none";
+        document.getElementById("autostepstable").style.display="table";
+        autostepstable(1);
     }
     //添加测试用例与操作步骤中间表
     function addCaseSteps() {
@@ -286,32 +289,35 @@
             }
         })
     }
-    function autostepstable() {
+    function autostepstable(id) {
         // bootstrap table初始化
+        var url;
+        var queryParams;
+        if(id==0){
+            url='/autosteps/tcstep';
+            queryParams={uitestcaseID:uitestcaseID};
+        }else{
+            url='/autosteps/listByModule';
+            queryParams={moduleName:$('#moduleSelect1').selectpicker('val')};
+        }
         $autostepstable.bootstrapTable({
-            url: '/autosteps/tcstep',
+            url: url,
             method:'get',
-            queryParams:{uitestcaseID:uitestcaseID},
+            queryParams:queryParams,
             idField: 'tsautostepsid',
             striped: true,
-            search: true,
             showRefresh: true,
             showColumns: true,
-            minimumCountColumns: 2,
-            clickToSelect: true,
-            detailFormatter: 'detailFormatter',
             pagination: true,
             paginationLoop: false,
             sidePagination: 'client',
-            silentSort: false,
             smartDisplay: false,
             escape: true,
             searchOnEnterKey: true,
-            idField: 'tsproductid',
             maintainSelected: true,
             toolbar: '#toolbar',
             columns: [
-                {field: 'tsproductid', title: '编号', sortable: true, align: 'center'},
+                {field: 'tsautostepsid', title: '编号', sortable: true, align: 'center'},
                 {field: 'tsautostepsname', title: '步骤名称'},
                 {field: 'tsselecttype', title: '查找方式'},
                 {field: 'tsselectcontent', title: '查找内容'},
