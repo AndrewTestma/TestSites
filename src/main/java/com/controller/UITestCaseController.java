@@ -70,6 +70,7 @@ public class UITestCaseController {
         HttpSession session = request.getSession();
         uiTestCase.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
         uiTestCase.setTsmodulename((String)session.getAttribute("module"));
+        uiTestCase.setTscommon(0);
         uiTestCaseService.insert(uiTestCase);
         return uiTestCase.getTsuitestcaseid();
     }
@@ -109,11 +110,29 @@ public class UITestCaseController {
     }
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     @ResponseBody
+    /** 
+    * @Description: 删除测试用例
+    * @Param: [tsuitestcaseid] 
+    * @return: int
+    * @Date: 16:23 2018年03月13日
+     */ 
     public int delete(String tsuitestcaseid){
         int i=0;
         if(businessCaseService.selectBytsuitestcaseid(Integer.valueOf(tsuitestcaseid)).size()==0){
             i=uiTestCaseService.deleteByPrimaryKey(Integer.valueOf(tsuitestcaseid));
         }
         return i;
+    }
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    /** 
+    * @Description: 传递实体对象到create页面 
+    * @Param: [tsuitestcaseid, model] 
+    * @return: java.lang.String
+    * @Date: 17:20 2018年03月13日
+     */ 
+    public String edit(@RequestParam("tsuitestcaseid")String tsuitestcaseid,Model model){
+        UITestCase uiTestCase=uiTestCaseService.selectByPrimaryKey(Integer.valueOf(tsuitestcaseid));
+        model.addAttribute("uiTestCase",uiTestCase);
+        return "/manage/uitestcase/create";
     }
 }
