@@ -109,4 +109,20 @@ public class AutostepsController {
             return "error";
         }
     }
+    @RequestMapping(value = "/listByModule",method = RequestMethod.GET)
+    @ResponseBody
+    /**
+    * @Description: 返回某个模块下的所有操作步骤
+    * @Param: [moduleName]:模块名称
+    * @return: java.util.Map<java.lang.String,java.lang.Object>：绑定在table的数据
+    * @Date: 9:40 2018年03月13日
+     */
+    public Map<String,Object> listByModule(String moduleName){
+        Map<String,Object> result=new HashMap<>();
+        List<Autosteps> rows=autostepsService.selectByModule(moduleName);
+        long total=rows.size();
+        result.put("data",rows);
+        result.put("total",total);
+        return result;
+    }
 }
