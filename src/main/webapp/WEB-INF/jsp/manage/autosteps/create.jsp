@@ -16,18 +16,19 @@
     <jsp:include page="/resources/inc/head.jsp" flush="true"/>
 </head>
 <body>
-<div class="container">
+<div class="myform">
     <form class="form-horizontal" method="post" id="autostepsForm">
         <fieldset>
             <div class="form-group">
-                <div class="col-sm-4">
-                    <label for="tsautostepsname">步骤名称</label>
+                <div class="col-sm-12">
+                    <label for="tsautostepsname">步骤名称：</label>
                     <input id="tsautostepsname" type="text" class="form-control" name="tsautostepsname" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-10">
-                    <select id="tsselecttype" name="tsselecttype" class="form-control selectpicker" title="查找方式">
+                <div class="col-sm-12">
+                    <label for="tsselecttype">查找方式：</label>
+                    <select id="tsselecttype" name="tsselecttype" class="form-control " title="查找方式">
                         <option>id</option>
                         <option>name</option>
                         <option>xpath</option>
@@ -40,14 +41,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-4">
-                    <label for="tsselectcontent">查找内容</label>
+                <div class="col-sm-12">
+                    <label for="tsselectcontent">查找内容：</label>
                     <input id="tsselectcontent" type="text" class="form-control" name="tsselectcontent" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-10">
-                    <select id="tsactiontype" name="tsactiontype" class="form-control selectpicker" title="执行方式">
+                <div class="col-sm-12">
+                    <label for="tsactiontype">执行内容：</label>
+                    <select id="tsactiontype" name="tsactiontype" class="form-control " title="执行方式">
                         <option>单击</option>
                         <option>输入</option>
                         <option>双击</option>
@@ -57,26 +59,27 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-4">
-                    <label for="tsactioncontent">执行内容</label>
+                <div class="col-sm-12">
+                    <label for="tsactioncontent">执行内容：</label>
                     <input id="tsactioncontent" type="text" class="form-control" name="tsactioncontent" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-4">
-                    <label for="tsframepath">FramePath</label>
+                <div class="col-sm-12">
+                    <label for="tsframepath">FramePath：</label>
                     <input id="tsframepath" type="text" class="form-control" name="tsframepath" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-4">
-                    <label for="tswait">等待时间</label>
+                <div class="col-sm-12">
+                    <label for="tswait">等待时间：</label>
                     <input id="tswait" type="text" class="form-control" name="tswait" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-10">
-                    <select id="tsverificationtype" name="tsverificationtype" class="form-control selectpicker" title="验证方式">
+                <div class="col-sm-12">
+                    <label for="tsverificationtype">验证方式：</label>
+                    <select id="tsverificationtype" name="tsverificationtype" class="form-control " title="验证方式">
                         <option>文本验证</option>
                         <option>url验证</option>
                         <option>数据库验证</option>
@@ -84,26 +87,28 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-4">
-                    <label for="tsverificationcontent">验证内容</label>
+                <div class="col-sm-12">
+                    <label for="tsverificationcontent">验证内容：</label>
                     <input id="tsverificationcontent" type="text" class="form-control" name="tsverificationcontent" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-4">
-                    <label for="tsremarks">备注</label>
+                <div class="col-sm-12">
+                    <label for="tsremarks">备注：</label>
                     <input id="tsremarks" type="text" class="form-control" name="tsremarks" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-4">
-                    <label for="tscreator">创建人</label>
+                <div class="col-sm-12">
+                    <label for="tscreator">创建人：</label>
                     <input id="tscreator" type="text" class="form-control" name="tscreator" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
-                <a class="waves-effect waves-button" href="javascript:;" onclick="createAutoSteps();">保存</a>
-                <a class="waves-effect waves-button" href="javascript:;" onclick="addAutoStepsDialog.close();">取消</a>
+                <div class="col-sm-12">
+                    <a class="btn  btn-success" onclick="createAutoSteps();">保存</a>
+                    <a class="btn btn-info"  onclick="addAutoStepsDialog.close();">取消</a>
+                </div>
             </div>
         </fieldset>
     </form>
@@ -112,6 +117,7 @@
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
     //点击保存操作步骤
+    var autoStespID;
     function createAutoSteps() {
         $.ajax({
             type: 'post',
@@ -120,61 +126,28 @@
             beforeSend: function() {
             },
             success: function(data) {
-                if(data==1){
+                if(data>0){
+                    autoStespID=data;
+                    addCaseSteps();
                     addAutoStepsDialog.close();
-                    autostepstable();
                 }
             },
             error:function (data) {
             }
         });
     }
-    function autostepstable() {
-        // bootstrap table初始化
-        $autostepstable.bootstrapTable({
-            url: '/autosteps/list',
-            height: getHeight(),
-            striped: true,
-            search: true,
-            showRefresh: true,
-            showColumns: true,
-            minimumCountColumns: 2,
-            clickToSelect: true,
-            detailView: true,
-            detailFormatter: 'detailFormatter',
-            pagination: true,
-            paginationLoop: false,
-            sidePagination: 'client',
-            silentSort: false,
-            smartDisplay: false,
-            escape: true,
-            searchOnEnterKey: true,
-            idField: 'tsproductid',
-            maintainSelected: true,
-            toolbar: '#toolbar',
-            columns: [
-                {field: 'tsproductid', title: '编号', sortable: true, align: 'center'},
-                {field: 'tsautostepsname', title: '步骤名称'},
-                {field: 'tsselecttype', title: '查找方式'},
-                {field: 'tsselectcontent', title: '查找内容'},
-                {field: 'tsactiontype', title: '执行方式'},
-                {field: 'tsactioncontent', title: '执行内容'},
-                {field: 'tsframepath', title: 'FramePath'},
-                {field: 'tswait', title: '等待时间'},
-                {field: 'tsverificationtype', title: '验证方式'},
-                {field: 'tsverificationcontent', title: '验证内容'},
-                {field: 'tsremarks', title: '备注'},
-                {field: 'tscreator', title: '创建人'},
-                {
-                    field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
-                    var id = row.tsproductid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateAction(' + id + ')" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'
-                        + '  <a class="delete" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
-                    return returnValue;
-                }, events: 'actionEvents', clickToSelect: false
+    //添加测试用例与操作步骤中间表
+    function addCaseSteps() {
+        $.ajax({
+            type:'post',
+            url:'/casesteps/add',
+            data:{'uitestcaseID':uitestcaseID,'autostepsID':autoStespID},
+            success:function (data) {
+                if(data==1){
+                    alert("添加成功");
                 }
-            ]
-        });
+            }
+        })
     }
 </script>
 </html>

@@ -18,36 +18,31 @@
 </head>
 <body>
 <div id="main">
-
-    <div id="toolbar">
-        <a class="btn btn-default" href="/ui/create"> <i class="glyphicon glyphicon-plus"> </i>添加用例</a>
+    <div  id="toolbar" class="form-group">
+        <div class="form-group">
+            <div class="col-sm-8">
+                <a class="btn btn-default" href="/ui/create"> <i class="glyphicon glyphicon-plus"> </i>添加用例</a>
+            </div>
+        </div>
+        <div id="select_div" class="form-group">
+            <div class="col-sm-4">
+                <select id="module" class="btn btn-default moduleselect" data-url="/module/selectlist" data-first-title="请选择模块"
+                        data-first-value="" data-json-name="tsame" data-json-value="tsame"></select>
+            </div>
+        </div>
     </div>
     <table id="tctable"></table>
-
-    <select id="moduleSelect" class="selectpicker" data-live-search="true"/>
 </div>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
     var $tctable = $('#tctable');
     var moduleSelect=$('#moduleSelect');
-    // bootstrap select初始化
-    $('#moduleSelect').append("<option>请选择</option>");
     $(function() {
-        $.ajax({
-            type:"get",
-            url:"/module/selectlist",
-            dataType: "json",
-            success:function (resMsg) {
-                var resultJson = eval(resMsg);
-                $.each(resultJson,function (i,module) {
-                    $('#moduleSelect').append("<option value=" + module.tsmoduleid + ">" + module.tsame + "</option>");
-                })
-                /*   $('#moduleSelect').selectpicker('refresh');
-                 $('#moduleSelect').selectpicker('render');*/
-            }
+        $('#select_div').cxSelect({
+            selects: ['moduleselect'],  // 数组，请注意顺序
         });
         // bootstrap table初始化
-        $tctable.bootstrapTable({
+        $('#tctable').bootstrapTable({
             url: '/ui/list',
             height: getHeight(),
             striped: true,
@@ -107,10 +102,11 @@
                 },
                 {field: 'tscreatetime', title: '创建时间'},
                 {field: 'tscreator', title: '创建人'},
-                {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
-                    var id=row.tsuitestcaseid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateTCDialogAction(id)" data-toggle="tooltip"  title="Copy"><i class="glyphicon glyphicon-copy"></i></a>'
-                        +'  <a class="delete" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                {
+                    field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
+                    var id = row.tsproductid;
+                    var returnValue = '<a class="update" href="javascript:;"  onclick="" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
+                        + '  <a class="delete" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
             ],
@@ -263,15 +259,7 @@
                         title:'备注'
                     }
                 },
-                {field: 'tscreator', title: '创建人'},
-                {
-                    field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
-                    var id = row.tsproductid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="" data-toggle="tooltip"  title="Copy"><i class="glyphicon glyphicon-copy"></i></a>'
-                        + '  <a class="delete" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
-                    return returnValue;
-                }, events: 'actionEvents', clickToSelect: false
-                }
+                {field: 'tscreator', title: '创建人'}
             ],
             onEditableSave:function (field,row,oldValue,$el) {
                 $.ajax({

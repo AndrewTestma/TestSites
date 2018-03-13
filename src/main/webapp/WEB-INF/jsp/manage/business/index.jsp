@@ -96,7 +96,6 @@
                 method:'get',
                 queryParams:{tsbusinessID:id},
                 idField: 'tsuitestcaseid',
-                maintainSelected: true,
                 columns: [
                     {field: 'tsuitestcaseid', title: '编号', sortable: true, align: 'center'},
                     {field: 'tsname', title: '用例名称',},

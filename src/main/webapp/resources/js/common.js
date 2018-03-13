@@ -16,11 +16,11 @@ $(function() {
 		}
 	});
 	// select2初始化
-	$('select').select2();
+	//$('select').select2();
 });
 // 动态高度
 function getHeight() {
-	return $(window).height() - 20;
+	// return $(window).height() - 20;
 }
 // 数据表格展开内容
 function detailFormatter(index, row) {
