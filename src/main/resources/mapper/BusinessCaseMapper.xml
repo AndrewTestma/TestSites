@@ -35,6 +35,11 @@
     delete from tsbusinesscase
     where tsbusinesscaseid = #{tsbusinesscaseid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByMore">
+    delete from tsbusinesscase
+    where tsbusinessid = #{tsbusinessid}
+    and  tsuitestcaseid= #{tsuitestcaseid}
+  </delete>
   <insert id="insert" parameterType="com.pojo.BusinessCase" useGeneratedKeys="true" keyProperty="tsbusinessid">
     insert into tsbusinesscase (tsbusinesscaseid, tsbusinessid, tsuitestcaseid, 
       tsorder)

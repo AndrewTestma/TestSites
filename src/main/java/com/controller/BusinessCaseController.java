@@ -27,12 +27,19 @@ public class BusinessCaseController {
      * */
      @RequestMapping(value = "/add",method = RequestMethod.POST)
      @ResponseBody
-    public int add(String  tsbusinessid ,String tsuitestcaseid ){
+     public int add(String  tsbusinessid ,String tsuitestcaseid ){
+         logger.debug("增加业务线与测试用例中间表数据");
         BusinessCase businessCase=new BusinessCase();
         businessCase.setTsbusinessid(Integer.valueOf(tsbusinessid));
         businessCase.setTsuitestcaseid(Integer.valueOf(tsuitestcaseid));
         int i=businessCaseService.selectBytsorder(Integer.valueOf(tsbusinessid));
         businessCase.setTsorder(i+1);
         return businessCaseService.insert(businessCase);
+     }
+     @RequestMapping(value = "/del",method = RequestMethod.POST)
+     @ResponseBody
+     public int del(String  tsbusinessid ,String tsuitestcaseid ){
+         logger.debug("删除业务线与测试用例中间表数据");
+         return  businessCaseService.deleteByMore(Integer.valueOf(tsbusinessid),Integer.valueOf(tsuitestcaseid));
      }
 }

@@ -12,6 +12,8 @@ import java.util.List;
 public interface BusinessCaseService {
     int deleteByPrimaryKey(Integer tsbusinesscaseid);
 
+    int deleteByMore(Integer tsbusinessid,Integer tsuitestcaseid);
+
     int insert(BusinessCase record);
 
     int insertSelective(BusinessCase record);

@@ -25,6 +25,11 @@ public class BusinessCaseServiceImpl implements BusinessCaseService {
     }
 
     @Override
+    public int deleteByMore(Integer tsbusinessid, Integer tsuitestcaseid) {
+        return businessCaseMapper.deleteByMore(tsbusinessid,tsuitestcaseid);
+    }
+
+    @Override
     public int insert(BusinessCase record) {
         return businessCaseMapper.insert(record);
     }

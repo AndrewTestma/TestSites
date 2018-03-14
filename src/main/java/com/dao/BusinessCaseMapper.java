@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.pojo.BusinessCase;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
 @Repository("BusinessCaseMapper")
 public interface BusinessCaseMapper {
     int deleteByPrimaryKey(Integer tsbusinesscaseid);
+
+    int deleteByMore(@Param("tsbusinessid")Integer tsbusinessid,@Param("tsuitestcaseid")Integer tsuitestcaseid);
 
     int insert(BusinessCase record);
 
