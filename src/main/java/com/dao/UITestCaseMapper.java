@@ -18,6 +18,8 @@ public interface UITestCaseMapper {
 
     List<UITestCase> selectList(@Param("offset")int offset, @Param("limit")int limit);
 
+    List<UITestCase> selectListByModuel(@Param("module") String module);
+
     int updateByPrimaryKeySelective(UITestCase record);
 
     int updateByPrimaryKey(UITestCase record);

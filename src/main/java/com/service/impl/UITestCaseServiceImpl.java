@@ -43,6 +43,11 @@ public class UITestCaseServiceImpl implements UITestCaseService {
     }
 
     @Override
+    public List<UITestCase> selectListByModuel(String module) {
+        return uiTestCaseMapper.selectListByModuel(module);
+    }
+
+    @Override
     public int updateByPrimaryKeySelective(UITestCase record) {
         return uiTestCaseMapper.updateByPrimaryKeySelective(record);
     }

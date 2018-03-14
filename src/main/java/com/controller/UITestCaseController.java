@@ -52,8 +52,13 @@ public class UITestCaseController {
             @RequestParam(required = false, defaultValue = "", value = "search") String search,
             @RequestParam(required = false, value = "sort") String sort,
             @RequestParam(required = false, value = "order") String order,
-            @RequestParam(required = false,value = "")String module){
-        List<UITestCase> rows=uiTestCaseService.selectList(offset,limit);
+            @RequestParam(required = false)String module){
+        List<UITestCase> rows;
+        if(module==""){
+        rows=uiTestCaseService.selectList(offset,limit);
+        }else{
+            rows=uiTestCaseService.selectListByModuel(module);
+        }
         long total=rows.size();
         Map<String,Object> result=new HashMap<>();
         result.put("data",rows);
@@ -82,7 +87,6 @@ public class UITestCaseController {
     public String update(UITestCase uiTestCase){
         logger.info(uiTestCase.getTsname());
         int i=uiTestCaseService.updateByPrimaryKeySelective(uiTestCase);
-        System.out.println(i);
        if(i==1){
            logger.info("更新成功");
            return "success";

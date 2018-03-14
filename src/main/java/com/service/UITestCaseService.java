@@ -21,6 +21,8 @@ public interface UITestCaseService {
 
     List<UITestCase> selectList(int offset, int limit);
 
+    List<UITestCase> selectListByModuel( String module);
+
     int updateByPrimaryKeySelective(UITestCase record);
 
     int updateByPrimaryKey(UITestCase record);
