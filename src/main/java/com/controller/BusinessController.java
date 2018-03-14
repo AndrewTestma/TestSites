@@ -5,6 +5,7 @@ import com.service.BusinessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -57,15 +58,30 @@ public class BusinessController {
         result.put("total",total);
         return result;
     }
-    /**
-     * @Description:添加业务
-     * */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
+    /**
+    * @Description: 添加业务线
+    * @Param: [business, request]:业务实体对象,获取session中的产品ID
+    * @return: int
+    * @Date: 15:47 2018年03月14日
+     */
     public int add(Business business, HttpServletRequest request){
         HttpSession session=request.getSession();
         business.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
         businessService.insert(business);
         return business.getTsbusinessid();
+    }
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    /**
+    * @Description: 传递实体对象，进行编辑修改
+    * @Param: [tsbusinessid, model]:业务ID，实体对象
+    * @return: java.lang.String
+    * @Date: 19:18 2018年03月14日
+     */
+    public String edit(@RequestParam("tsbusinessid")String tsbusinessid, Model model){
+        Business business=businessService.selectByPrimaryKey(Integer.valueOf(tsbusinessid));
+        model.addAttribute("business",business);
+        return "/manage/business/create";
     }
 }
