@@ -30,6 +30,12 @@
     tsuitestcaseid
     LIMIT #{offset}, #{limit}
   </select>
+  <select id="selectListByModuel" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tsuitestcase
+    WHERE tsmodulename = #{module}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsuitestcase
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
