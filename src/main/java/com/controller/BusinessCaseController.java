@@ -27,6 +27,12 @@ public class BusinessCaseController {
      * */
      @RequestMapping(value = "/add",method = RequestMethod.POST)
      @ResponseBody
+     /**
+     * @Description: 增加业务线与测试用例中间表数据
+     * @Param: [tsbusinessid, tsuitestcaseid]
+     * @return: int
+     * @Date: 15:28 2018年03月14日
+      */
      public int add(String  tsbusinessid ,String tsuitestcaseid ){
          logger.debug("增加业务线与测试用例中间表数据");
         BusinessCase businessCase=new BusinessCase();
@@ -38,6 +44,12 @@ public class BusinessCaseController {
      }
      @RequestMapping(value = "/del",method = RequestMethod.POST)
      @ResponseBody
+     /** 
+     * @Description: 删除业务线与测试用例中间表数据 
+     * @Param: [tsbusinessid, tsuitestcaseid]
+     * @return: int
+     * @Date: 15:28 2018年03月14日
+      */ 
      public int del(String  tsbusinessid ,String tsuitestcaseid ){
          logger.debug("删除业务线与测试用例中间表数据");
          return  businessCaseService.deleteByMore(Integer.valueOf(tsbusinessid),Integer.valueOf(tsuitestcaseid));
