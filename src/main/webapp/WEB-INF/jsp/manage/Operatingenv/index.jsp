@@ -13,25 +13,21 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%--<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>--%>
 <c:set var="basePath" value="${pageContext.request.contextPath}"/>
-<html>
+<!DOCTYPE HTML>
+<html lang="zh-cn">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>运行设置</title>
     <jsp:include page="/resources/inc/head.jsp" flush="true"/>
-    <style>
-        .fixed-table-body {min-height:200px;}
-    </style>
 </head>
 <body>
 <div id="main">
-    <div id="toolbar">
+    <div id="toolbar" class="form-group">
         <a class="btn btn-default" onclick="addOperatingenv()"> <i class="glyphicon glyphicon-plus"> </i>添加运行环境</a>
     </div>
-    <div>
-        <table id="envTable"></table>
-    </div>
+    <table id="envTable"></table>
 </div>
 </body>
 <jsp:include page="/resources/inc/footer.jsp"/>

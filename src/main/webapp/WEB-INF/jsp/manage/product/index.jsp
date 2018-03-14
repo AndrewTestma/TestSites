@@ -18,7 +18,7 @@
 <body>
 <div id="main">
     <div id="toolbar">
-        <a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 添加产品</a>
+        <a class="btn btn-default" href="javascript:;" onclick="createAction()"><i class="glyphicon glyphicon-plus"></i> 添加产品</a>
     </div>
     <table id="table"></table>
 </div>
@@ -50,16 +50,16 @@
             toolbar: '#toolbar',
             columns: [
                 {field: 'tsproductid', title: '编号', sortable: true, align: 'center'},
-                {field: 'tsname', title: '产品名称'},
+                {field: 'tsname', title: '产品名称', align: 'center'},
                 {field: 'action', title: '模块信息', align: 'center', formatter: function (value, row, index) {
-                    var returnModule = ' <a class="waves-effect waves-button" href="javascript:;" onclick="redirectAction()"> 显示详情</a>';
+                    var returnModule = ' <a href="javascript:;" onclick="redirectAction()"> 显示详情</a>';
                     return returnModule;
                 }, events: 'actionEvents', clickToSelect: false},
-                {field: 'tsurl', title: '测试地址'},
-                {field: 'tsdburl', title: '数据库地址'},
-                {field: 'tsdbname', title: '数据库名称'},
-                {field: 'tsusername', title: '登录名'},
-                {field: 'tspassword', title: '登录密码'},
+                {field: 'tsurl', title: '测试地址', align: 'center'},
+                {field: 'tsdburl', title: '数据库地址', align: 'center'},
+                {field: 'tsdbname', title: '数据库名称', align: 'center'},
+                {field: 'tsusername', title: '登录名', align: 'center'},
+                {field: 'tspassword', title: '登录密码', align: 'center'},
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id=row.tsproductid;
                     var returnValue = '<a class="update" href="javascript:;"  onclick="updateAction('+id+')" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'

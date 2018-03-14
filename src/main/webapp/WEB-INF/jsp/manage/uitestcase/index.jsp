@@ -27,7 +27,7 @@
         <div id="select_div" class="form-group">
             <div class="col-sm-4">
                 <select id="module" class="btn btn-default moduleselect" data-url="/module/selectlist" data-first-title="请选择模块"
-                        data-first-value="" data-json-name="tsame" data-json-value="tsame"></select>
+                        data-first-value="" data-json-name="tsame" data-json-value="tsame" onchange="onChangeModule(this.options[this.options.selectedIndex].value)"></select>
             </div>
         </div>
     </div>
@@ -37,14 +37,48 @@
 <script>
     var $tctable = $('#tctable');
     var moduleSelect=$('#moduleSelect');
+    var ModuleStr="";//更改模块
     $(function() {
         $('#select_div').cxSelect({
             selects: ['moduleselect'],  // 数组，请注意顺序
         });
-        // bootstrap table初始化
+        tableData();
+    });
+    //删除测试用例
+    function deleteAction(id) {
+        $.ajax({
+            type:'get',
+            url:'/ui/delete',
+            data:{"tsuitestcaseid":id},
+            success:function (data) {
+                if(data>0){
+                    alert("删除成功");
+                }else{
+                    alert("删除失败");
+                }
+                var opt={
+                    url: '/ui/list',
+                };
+                $tctable.bootstrapTable('refresh',opt);
+            },
+            error:function () {
+                alert("操作异常");
+            }
+        })
+    }
+
+    //更改模块触发事件
+    function onChangeModule(module) {
+        ModuleStr=module;
+        tableData();
+    }
+    //table 加载数据
+    function tableData() {
+        $tctable.bootstrapTable('destroy');//销毁table，重新加载
         $('#tctable').bootstrapTable({
             url: '/ui/list',
             height: getHeight(),
+            queryParams:{module:ModuleStr},
             striped: true,
             search: true,
             showRefresh: true,
@@ -105,8 +139,8 @@
                 {
                     field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id = row.tsuitestcaseid;
-                    var returnValue = '<a class="update" href="/ui/edit?tsuitestcaseid='+id+'"   data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
-                        + '  <a class="delete" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                    var returnValue = '<a class="btn btn-default" href="/ui/edit?tsuitestcaseid='+id+'"   data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
+                        + '  <a class="btn btn-default" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
             ],
@@ -126,7 +160,7 @@
                 })
             }
         });
-    });
+    }
     //父子表
     function initSubTable(index,row,$detail) {
         var id=row.tsuitestcaseid;
@@ -275,28 +309,6 @@
                 })
             }
         });
-    }
-    //删除测试用例
-    function deleteAction(id) {
-        $.ajax({
-            type:'get',
-            url:'/ui/delete',
-            data:{"tsuitestcaseid":id},
-            success:function (data) {
-                if(data>0){
-                    alert("删除成功");
-                }else{
-                    alert("删除失败");
-                }
-                var opt={
-                    url: '/ui/list',
-                };
-                $tctable.bootstrapTable('refresh',opt);
-            },
-            error:function () {
-                alert("操作异常");
-            }
-        })
     }
 </script>
 </body>

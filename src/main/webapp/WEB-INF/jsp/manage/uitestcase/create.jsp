@@ -16,7 +16,18 @@
     <jsp:include page="/resources/inc/head.jsp" flush="true"/>
 </head>
 <body>
+
 <div class="container">
+    <div class="row">
+        <div class="span6">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/ui/index">UI用例</a> <span class="divider">></span>
+                </li>
+                <li class="active">新建用例</li>
+            </ul>
+        </div>
+    </div>
     <div class="myform">
         <form class="form-horizontal" method="post" id="testcaseForm">
             <fieldset form="testcaseForm">
@@ -43,8 +54,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-4">
-                        <label for="moduleSelect1">选择模块:</label>
-                        <select id="moduleSelect1" class="form-control selectpicker"></select>
+                        <label for="tsmodulename">选择模块:</label>
+                        <select id="tsmodulename" class="form-control selectpicker"></select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -68,8 +79,8 @@
                         <button id="addtc" onclick="adduitestcase()" type="button" class="btn btn-primary" title="添加"><i
                                 class="glyphicon glyphicon-plus"></i> 新增用例
                         </button>
-                        <button id="updatetc" style="display: none" onclick="updatetc()" type="button"
-                                class="btn btn-primary" title="添加"><i class="glyphicon glyphicon-plus"></i> 修改用例
+                        <button id="updatetc" style="display: none" onclick="updatetcAction()" type="button"
+                                class="btn btn-primary" title="修改"><i class="glyphicon glyphicon-plus"></i> 修改用例
                         </button>
                     </div>
                 </div>
@@ -90,6 +101,7 @@
         </div>
         <table id="autostepstable" style="display: none"></table>
     </fieldset>
+
 </div>
 </body>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
@@ -97,6 +109,7 @@
     var uitestcaseID;//测试用例ID
     var addAutoStepsDialog;//新建步骤dialog
     var $autostepstable = $('#autostepstable');//步骤列表
+    //打开新建步骤dialog
     function addAutoSteps() {
         addAutoStepsDialog = $.dialog({
             title: '新建步骤',
@@ -108,7 +121,7 @@
         autostepstable(0);
     }
     //动态加载模块
-    $('#moduleSelect1').append("<option>选择模块</option>");
+    $('#tsmodulename').append("<option>选择模块</option>");
     $(function () {
         $('.selectpicker').selectpicker({
             size: 40
@@ -125,13 +138,12 @@
                         optionStr += " selected "
                     }
                     optionStr += ">" + module.tsame + "</option>";
-                    $('#moduleSelect1').append(optionStr);
+                    $('#tsmodulename').append(optionStr);
                 })
-                $('#moduleSelect1').selectpicker('refresh');
-                $('#moduleSelect1').selectpicker('render');
+                $('#tsmodulename').selectpicker('refresh');
+                $('#tsmodulename').selectpicker('render');
             }
         });
-        console.log('${uiTestCase.tsuitestcaseid}');
         if ('${uiTestCase.tsuitestcaseid}'!=""){
              uitestcaseID='${uiTestCase.tsuitestcaseid}';
             document.getElementById("updatetc").style.display = "inline";
@@ -143,11 +155,11 @@
         }
     });
     //bootstrap select 选择值后触发事件
-    $("#moduleSelect1").on('changed.bs.select', function (e) {
+    $("#tsmodulename").on('changed.bs.select', function (e) {
         $.ajax({
             type: "post",
             url: "/module/save",
-            data: {"module": $("#moduleSelect1").selectpicker('val')},
+            data: {"module": $("#tsmodulename").selectpicker('val')},
             success: function (data) {
             },
             error: function (data) {
@@ -182,6 +194,7 @@
     function Reuse() {
         autostepstable(1);
     }
+    //table数据加载
     function autostepstable(stepType) {
         document.getElementById("autostepstable").style.display = "table";
         $autostepstable.bootstrapTable('destroy');
@@ -193,7 +206,7 @@
             queryParams = {uitestcaseID: uitestcaseID};
         } else {
             url = '/autosteps/listByModule';
-            queryParams = {moduleName: $('#moduleSelect1').selectpicker('val')};
+            queryParams = {moduleName: $('#tsmodulename').selectpicker('val')};
         }
         $autostepstable.bootstrapTable({
             url: url,
@@ -234,9 +247,8 @@
                         addStr = 'none';
                         delStr = "inline";
                     }
-                    var returnValue = ' <a  href="javascript:;" onclick="" data-toggle="tooltip" title="编辑"><i class="glyphicon glyphicon-pencil"></i></a> '
-                    + ' <a id="' + id + '"  style="display: '+addStr+'"  href="javascript:;"  onclick="InsertCaseSteps(' + id + ')" data-toggle="tooltip"  title="添加"><i class="glyphicon glyphicon-plus"></i></a>'
-                    + '  <a  id="' + id + '1" style="display: '+delStr+'"   href="javascript:;" onclick="DelCaseSteps(' + id + ')" data-toggle="tooltip" title="取消"><i class="glyphicon glyphicon-minus"></i></a>';
+                    var returnValue =' <a id="' + id + '" class="btn btn-default" style="display: '+addStr+'"  href="javascript:;"  onclick="InsertCaseSteps(' + id + ')" data-toggle="tooltip"  title="添加"><i class="glyphicon glyphicon-plus"></i></a>'
+                    + '  <a  id="' + id + '1" class="btn btn-default" style="display: '+delStr+'"   href="javascript:;" onclick="DelCaseSteps(' + id + ')" data-toggle="tooltip" title="取消"><i class="glyphicon glyphicon-minus"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false
                 }
@@ -271,6 +283,19 @@
                 if (data > 0) {
                     document.getElementById(addid).style.display = "inline";
                     document.getElementById(delid).style.display = "none";
+                }
+            }
+        })
+    }
+    //修改测试用例
+    function updatetcAction() {
+        $.ajax({
+            type:'post',
+            url:'/ui/update',
+            data:$('#testcaseForm').serialize(),
+            success:function (data) {
+                if(data=="success"){
+                    alert("更新成功");
                 }
             }
         })
