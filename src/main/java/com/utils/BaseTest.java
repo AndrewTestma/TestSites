@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author:Andrew
@@ -24,7 +25,8 @@ public class BaseTest extends TestBaseCase {
             tstotalsteps=entry.getValue().size()+tstotalsteps;
         }
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
-                for(Autosteps autosteps1:entry.getValue()){
+            extentTest=extentReports.startTest(entry.getKey());
+            for(Autosteps autosteps1:entry.getValue()){
                     if(autosteps1.getTsactiontype().equals("单击")){
                         elementAction.click(autosteps1);
                     }else if(autosteps1.getTsactiontype().equals("输入")){
