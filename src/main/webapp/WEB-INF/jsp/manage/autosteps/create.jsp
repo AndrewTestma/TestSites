@@ -80,6 +80,7 @@
                 <div class="col-sm-12">
                     <label for="tsverificationtype">验证方式：</label>
                     <select id="tsverificationtype" name="tsverificationtype" class="form-control " title="验证方式">
+                        <option>验证方式</option>
                         <option>文本验证</option>
                         <option>url验证</option>
                         <option>数据库验证</option>

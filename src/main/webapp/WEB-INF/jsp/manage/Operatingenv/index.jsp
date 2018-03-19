@@ -101,8 +101,8 @@
                 },
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id=row.tsoperatingenvid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="delAction('+id+')" data-toggle="tooltip"  title="remove"><i class="glyphicon glyphicon-remove"></i></a>'+
-                        '<a class="update" href="javascript:;"  onclick="appAction('+id+')" data-toggle="tooltip"  title="apply"><i class="glyphicon glyphicon-cog"></i></a>';
+                    var returnValue ='<a class="btn btn-default" href="javascript:;"  onclick="appAction('+id+')" data-toggle="tooltip"  title="apply"><i class="glyphicon glyphicon-cog"></i></a>'
+                        +'<a class="btn btn-default" href="javascript:;"  onclick="delAction('+id+')" data-toggle="tooltip"  title="remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
             ],

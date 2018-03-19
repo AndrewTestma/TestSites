@@ -35,6 +35,7 @@
                 <div class="form-group">
                     <div class="col-sm-4">
                         <label for="tsname">用例名称:</label>
+                        <input id="tsuitestcaseid"  type="hidden" class="form-control" name="tsuitestcaseid" value="${uiTestCase.tsuitestcaseid}" maxlength="50">
                         <input id="tsname" type="text" class="form-control" name="tsname" value="${uiTestCase.tsname}"
                                maxlength="50">
                     </div>
@@ -42,8 +43,7 @@
                 <div class="form-group">
                     <div class="col-sm-4">
                         <label for="tsgrade">测试等级:</label>
-                        <select id="tsgrade" name="tsgrade" class="form-control selectpicker"
-                                title="${uiTestCase.tsgrade}">
+                        <select id="tsgrade" name="tsgrade" class="form-control">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -55,15 +55,15 @@
                 <div class="form-group">
                     <div class="col-sm-4">
                         <label for="tsmodulename">选择模块:</label>
-                        <select id="tsmodulename" class="form-control selectpicker"></select>
+                        <select id="tsmodulename" name="tsmodulename" class="form-control selectpicker"></select>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-4">
                         <label for="tscommon">公共用例:</label>
-                        <select id="tscommon" name="tsgrade" class="form-control selectpicker">
-                            <option>是</option>
-                            <option>否</option>
+                        <select id="tscommon" name="tscommon" class="form-control">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
                         </select>
                     </div>
                 </div>
@@ -76,12 +76,12 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-4">
-                        <button id="addtc" onclick="adduitestcase()" type="button" class="btn btn-primary" title="添加"><i
+                        <a id="addtc" onclick="adduitestcase()"  class="btn btn-primary" title="添加"><i
                                 class="glyphicon glyphicon-plus"></i> 新增用例
-                        </button>
-                        <button id="updatetc" style="display: none" onclick="updatetcAction()" type="button"
-                                class="btn btn-primary" title="修改"><i class="glyphicon glyphicon-plus"></i> 修改用例
-                        </button>
+                        </a>
+                        <a id="updatetc" style="display: none"  onclick="updatetcAction()" class="btn btn-primary" title="修改">
+                            <i class="glyphicon glyphicon-plus"></i> 修改用例
+                        </a>
                     </div>
                 </div>
             </fieldset>
@@ -101,7 +101,6 @@
         </div>
         <table id="autostepstable" style="display: none"></table>
     </fieldset>
-
 </div>
 </body>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
@@ -148,9 +147,12 @@
              uitestcaseID='${uiTestCase.tsuitestcaseid}';
             document.getElementById("updatetc").style.display = "inline";
             document.getElementById("addtc").style.display = "none";
-            if ('${uiTestCase.tscommon}' == 0) {
+          /*  if ('${uiTestCase.tscommon}' == 0) {
                 $('#tscommon').selectpicker('val', '否');
-            }
+            }*/
+            $('#tsgrade').val('${uiTestCase.tsgrade}');
+            /*$('#tscommon').selectpicker('val', '否');*/
+            $('#tscommon').val('${uiTestCase.tscommon}');
             autostepstable(0);
         }
     });
@@ -189,6 +191,21 @@
             error: function (data) {
             }
         });
+    }
+    //修改测试用例
+    function updatetcAction() {
+        $.ajax({
+            type:'post',
+            url:'/ui/update',
+            data:$('#testcaseForm').serialize(),
+            success:function (data) {
+                if(data=="success"){
+                    alert("更新成功");
+                }else{
+                    alert("修改失败");
+                }
+            }
+        })
     }
     //点击复用按钮
     function Reuse() {
@@ -283,19 +300,6 @@
                 if (data > 0) {
                     document.getElementById(addid).style.display = "inline";
                     document.getElementById(delid).style.display = "none";
-                }
-            }
-        })
-    }
-    //修改测试用例
-    function updatetcAction() {
-        $.ajax({
-            type:'post',
-            url:'/ui/update',
-            data:$('#testcaseForm').serialize(),
-            success:function (data) {
-                if(data=="success"){
-                    alert("更新成功");
                 }
             }
         })

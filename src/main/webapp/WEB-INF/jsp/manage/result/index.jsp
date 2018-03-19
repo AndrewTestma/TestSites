@@ -23,11 +23,21 @@
     <jsp:include page="/resources/inc/head.jsp" flush="true"/>
 </head>
 <body>
-<div id="main">
+
+<%--<div id="main">
     <div id="toolbar">
         <table id="resultTable"></table>
     </div>
-</div>
+
+    ${tsbusinessid}
+</div>--%>
+<iframe src="/resources/result/${tsbusinessid}.html" style="width: 100%;height: 100%"></iframe>
+<%--<iframe src="" style="width: 100%;height: 100%" id="myFrame"></iframe>--%>
+<%--<script>--%>
+    <%--var a=document.getElementById("myFrame").src = "/resources/result/${tsbusinessid}.html";--%>
+    <%--console.log(a);--%>
+
+<%--</script>--%>
 </body>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>

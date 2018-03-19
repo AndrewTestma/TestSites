@@ -99,29 +99,8 @@
             toolbar: '#toolbar',
             columns: [
                 {field: 'tsuitestcaseid', title: '编号', sortable: true, align: 'center'},
-                {
-                    field: 'tsname', title: '用例名称',
-                    editable:{
-                        type:'text',
-                        validate:function (v) {
-                            if(!v) return '用例名不能为空';
-                        }
-                    }
-                },
-                {
-                    field: 'tsgrade',
-                    title: '用例等级',
-                    editable:{
-                        type:'select',
-                        title:'用例等级',
-                        source:[
-                            {value: 1,text: 1},
-                            {value: 2,text: 2},
-                            {value: 3,text: 3},
-                            {value: 4,text: 4}
-                        ]
-                    }
-                },
+                {field: 'tsname', title: '用例名称'},
+                {field: 'tsgrade', title: '用例等级'},
                 {
                     field:'tscommon',title:'公共步骤',align:'center',formatter:function (value,row,index) {
                     var value=row.tscommon;

@@ -36,7 +36,7 @@
             <div class="form-group">
                 <div class="col-sm-4">
                     <a id="addbus" onclick="addbusiness()" class="btn btn-primary" title="添加"><i class="glyphicon glyphicon-plus"></i> 新增业务</a>
-                    <a id="updatebus" style="display: none" onclick="updatebusiness()" class="btn btn-primary" title="添加"><i class="glyphicon glyphicon-plus"></i> 修改业务</a>
+                    <a id="updatebus" style="display: none" onclick="updatebusiness('${business.tsbusinessid}')" class="btn btn-primary" title="添加"><i class="glyphicon glyphicon-plus"></i> 修改业务</a>
                 </div>
             </div>
         </fieldset>
@@ -47,12 +47,12 @@
             <div id="select_div" class="form-group">
                 <div class="col-sm-4">
                     <select id="module" class="btn btn-default moduleselect" data-url="/module/selectlist" data-first-title="请选择模块"
-                            data-first-value="" data-json-name="tsame" data-json-value="tsame" onchange="onChangeModule(this.options[this.options.selectedIndex].value)"></select>
+                            data-first-value="" data-json-name="tsame" data-json-value="tsame"></select>
                 </div>
             </div>
             <div id="insert_div" class="form-group" style="display: none">
                 <div class="col-sm-4">
-                    <a class="btn btn-default" href="#" onclick=""> <i class="glyphicon glyphicon-plus"> </i>添加用例</a>
+                    <a class="btn btn-default" href="#" onclick="insert_divAction()"> <i class="glyphicon glyphicon-plus"> </i>添加用例</a>
                 </div>
             </div>
         </div>
@@ -83,6 +83,10 @@
             document.getElementById("insert_div").style.display="inline";
             document.getElementById("addbus").style.display="none";
             document.getElementById("updatebus").style.display="inline";
+        }else{
+            url='/ui/list';
+            queryParams={module:""};
+            type=0;
         }
         tableData(url,queryParams,type);
     })
@@ -105,8 +109,21 @@
         })
     }
     //修改业务
-    function updatebusiness() {
-        
+    function updatebusiness(id) {
+        $.ajax({
+            type:'post',
+            url:'/bus/update',
+            data:{'tsbusinessid':id,'tsname':$('#tsname').val()},
+            success:function (data) {
+                if(data>0){
+                    busID=data;
+                    alert("修改成功");
+                }
+            },
+            error:function () {
+                alert("操作出错")
+            }
+        })
     }
     //table 加载数据
     function tableData(url,queryParams,type) {
@@ -172,7 +189,7 @@
         $.ajax({
             type:'post',
             url:'/buscase/add',
-            data:{'tsbusinessid':busID,'tsuitestcaseid':id},
+            data:{'tsbusinessid':'${business.tsbusinessid}','tsuitestcaseid':id},
             success:function (data) {
                 if(data>0){
                     document.getElementById(delid).style.display = "inline";
@@ -198,12 +215,19 @@
         })
     }
     //更改模块触发事件
+    $('#select_div').change(function () {
+        onChangeModule(this.options[this.options.selectedIndex].value);
+    })
     function onChangeModule(module) {
         ModuleStr=module;
         url='/ui/list';
         queryParams={module:ModuleStr};
         type=0;
         tableData(url,queryParams,type);
+    }
+    //点击添加用例重新刷新表格
+    function insert_divAction() {
+        onChangeModule("");
     }
 </script>
 </html>
