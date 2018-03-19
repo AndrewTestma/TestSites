@@ -67,6 +67,7 @@ public class BusinessController {
     * @Date: 15:47 2018年03月14日
      */
     public int add(Business business, HttpServletRequest request){
+        logger.debug("/bus/add:添加业务线");
         HttpSession session=request.getSession();
         business.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
         businessService.insert(business);
@@ -80,8 +81,24 @@ public class BusinessController {
     * @Date: 19:18 2018年03月14日
      */
     public String edit(@RequestParam("tsbusinessid")String tsbusinessid, Model model){
+        logger.debug("/bus/edit:传递实体对象，进行编辑修改");
         Business business=businessService.selectByPrimaryKey(Integer.valueOf(tsbusinessid));
         model.addAttribute("business",business);
         return "/manage/business/create";
+    }
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @ResponseBody
+    /**
+    * @Description: 修改业务
+    * @Param: [business]:实体对象
+    * @return: int
+    * @Date: 19:23 2018年03月14日
+     */
+    public int update(String  tsbusinessid,String tsname){
+        logger.debug("/bus/update:修改业务");
+        Business business=new Business();
+        business.setTsbusinessid(Integer.valueOf(tsbusinessid));
+        business.setTsname(tsname);
+        return businessService.updateByPrimaryKeySelective(business);
     }
 }
