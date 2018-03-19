@@ -97,12 +97,29 @@
             ]
         })
     }
+    //执行测试动作
     function execBusiness(id,pid) {
         $.ajax({
             type:'get',
             url:'/exec/business',
             data:{"tsbusinessid":id,"tsproductid":pid},
             success:function (data) {
+            }
+        })
+    }
+    //删除业务
+    function deleteAction(id) {
+        $.ajax({
+            type:'get',
+            url:'/bus/del',
+            data:{"tsbusinessid":id},
+            success:function (data) {
+                if(data>0){
+                    var opt={
+                        url: '/ui/buscase',
+                    };
+                    $tctable.bootstrapTable('refresh',opt);
+                }
             }
         })
     }
