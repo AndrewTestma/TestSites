@@ -46,7 +46,7 @@
         <div id="toolbar" class="form-group">
             <div id="select_div" class="form-group">
                 <div class="col-sm-4">
-                    <select id="module" class="btn btn-default moduleselect" data-url="/module/selectlist" data-first-title="请选择模块"
+                    <select onchange="changeValue()" id="module" class="btn btn-default moduleselect" data-url="/module/selectlist" data-first-title="请选择模块"
                             data-first-value="" data-json-name="tsame" data-json-value="tsame"></select>
                 </div>
             </div>
@@ -73,7 +73,7 @@
         queryParams={module:ModuleStr};
         //cxselect 数据加载
         $('#select_div').cxSelect({
-            selects: ['moduleselect'],  // 数组，请注意顺序
+            selects: ['moduleselect']  // 数组，请注意顺序
         });
         if('${business}'!=""){
             url='/ui/buscase';
@@ -89,7 +89,7 @@
             type=0;
         }
         tableData(url,queryParams,type);
-    })
+    });
     //点击新增业务
     function addbusiness() {
         $.ajax({
@@ -186,10 +186,13 @@
     function InsertBus(id) {
         var addid = id;
         var delid = id + "1";
+        if('${business}'!=""){
+            busID='${business.tsbusinessid}';
+        }
         $.ajax({
             type:'post',
             url:'/buscase/add',
-            data:{'tsbusinessid':'${business.tsbusinessid}','tsuitestcaseid':id},
+            data:{'tsbusinessid':busID,'tsuitestcaseid':id},
             success:function (data) {
                 if(data>0){
                     document.getElementById(delid).style.display = "inline";
@@ -202,10 +205,13 @@
     function DelBus(id) {
         var addid = id;
         var delid = id + "1";
+        if('${business}'!=""){
+            busID='${business.tsbusinessid}';
+        }
         $.ajax({
             type:'post',
             url:'/buscase/del',
-            data:{'tsbusinessid':'${business.tsbusinessid}','tsuitestcaseid':id},
+            data:{'tsbusinessid':busID,'tsuitestcaseid':id},
             success:function (data) {
                 if(data>0){
                     document.getElementById(delid).style.display = "none";
@@ -214,10 +220,12 @@
             }
         })
     }
-    //更改模块触发事件
-    $('#select_div').change(function () {
-        onChangeModule(this.options[this.options.selectedIndex].value);
-    })
+    function changeValue(){
+        if($("#module").val()!=undefined&&$("#module").val().length>0){
+            onChangeModule($("#module").val());
+        }
+    }
+
     function onChangeModule(module) {
         ModuleStr=module;
         url='/ui/list';

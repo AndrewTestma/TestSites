@@ -113,13 +113,11 @@
             type:'get',
             url:'/bus/del',
             data:{"tsbusinessid":id},
-            success:function (data) {
-                if(data>0){
-                    var opt={
-                        url: '/ui/buscase',
-                    };
-                    $tctable.bootstrapTable('refresh',opt);
-                }
+            success:function () {
+                var opt={
+                    url: '/bus/list',
+                };
+                $businessTable.bootstrapTable('refresh',opt);
             }
         })
     }
