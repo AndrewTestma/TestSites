@@ -27,7 +27,6 @@
     <div id="toolbar">
         <a class=" btn btn-default" href="/bus/create"> <i class="glyphicon glyphicon-plus"> </i>添加业务</a>
     </div>
-
     <table id="businessTable"></table>
 </div>
 </body>
