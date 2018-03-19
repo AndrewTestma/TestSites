@@ -18,12 +18,13 @@ import java.util.Set;
 public class BaseTest extends TestBaseCase {
     public Logger logger= LoggerFactory.getLogger(this.getClass());
     public ElementAction elementAction=new ElementAction();
-    @Test
+    @Test()
     public void test(){
         logger.info("执行测试步骤");
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
             tstotalsteps=entry.getValue().size()+tstotalsteps;
         }
+        /*Assertion.initialization();*/
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
             extentTest=extentReports.startTest(entry.getKey());
             for(Autosteps autosteps1:entry.getValue()){
@@ -35,6 +36,9 @@ public class BaseTest extends TestBaseCase {
                     Assertion.verityType(autosteps1);
                     tsrunsteps++;
                 }
+            Assertion.writeReport();
+            extentReports.flush();
+            extentReports.endTest(extentTest);
         }
     }
 }

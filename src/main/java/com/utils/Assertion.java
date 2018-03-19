@@ -19,9 +19,9 @@ import java.util.Date;
  **/
 public class Assertion  extends TestBaseCase {
     private static Logger logger= LoggerFactory.getLogger(Assertion.class);
-    public static ExtentTest verification=extentReports.startTest("验证点");
-    public static ExtentTest  parameter=extentReports.startTest("参数");
-    public static ExtentTest screenshot;
+    public static ExtentTest verification=null;
+    public static ExtentTest  parameter=null;
+    public static ExtentTest screenshot=null;
     public static String screenShotPath;
     public static int i=0;//控制写入报告次数
     public static ElementAction action=new ElementAction();
@@ -36,16 +36,38 @@ public class Assertion  extends TestBaseCase {
         screenShot.setscreenName(Assertion.formatDate(nowDate));
         screenShotPath=screenShot.takeScreenshot();
     }
+    /*
+     * @Description：初始化子报表
+     * @date 2018/3/19 13:08
+     */
+   /* public static void initialization(){
+        if(verification!=null && parameter!=null){
+            extentReports.endTest(verification);
+            extentReports.endTest(parameter);
+        }
+    }*/
+    /*
+     * @Description:判断验证方式
+     * @param:[autosteps]:实体对象
+     * @date 2018/3/19 11:02
+     */
     public static void verityType(Autosteps autosteps){
         if(!autosteps.getTsverificationtype().equals("")){
+           if(verification==null&parameter==null){
+               verification=extentReports.startTest("验证点");
+               parameter=extentReports.startTest("参数");
+           }
             switch(autosteps.getTsverificationtype()){
                 case "数据库验证":
                     break;
                 case  "url验证":
-                    verityAssertLocation(autosteps.getTsverificationcontent(),true);
+                    verityAssertLocation(autosteps,autosteps.getTsverificationcontent(),true);
+                    break;
+                case "文本验证":
+                    verityAssertText(autosteps,autosteps.getTsverificationcontent(),true);
                     break;
                 default :
-                    verityAssertText(autosteps.getTsverificationcontent(),true);
+                    logger.info("操作不需要验证");
                     break;
             }
         }
@@ -55,7 +77,7 @@ public class Assertion  extends TestBaseCase {
     * @Param:[url]:页面URL,[flag]:条件判断
     * @Date: 14:06 2018年03月05日
      */
-    public static void verityAssertLocation(String url,Boolean flag){
+    public static void verityAssertLocation(Autosteps autosteps,String url,Boolean flag){
         String verityStr="页面是否跳转至:"+url+"地址";
         logger.info(verityStr);
         Boolean f;
@@ -66,9 +88,9 @@ public class Assertion  extends TestBaseCase {
         }
         try{
             Assert.assertTrue(f);
-            AssertPassLog(url,flag);
+            AssertPassLog(autosteps,url,flag);
         }catch(Error e){
-            AssertFailedLog(url,flag);
+            AssertFailedLog(autosteps,url,flag);
         }
     }
     /**
@@ -76,62 +98,90 @@ public class Assertion  extends TestBaseCase {
     * @Param:[text]:验证的文本,[flag]:条件判断
     * @Date: 14:34 2018年03月05日
      */
-    public static void verityAssertText(String text,Boolean flag){
+    public static void verityAssertText(Autosteps autosteps,String text,Boolean flag){
         String verityStr="页面是否存在当前:"+text;
         logger.info(verityStr);
+        StringBuffer stringBuffer=new StringBuffer();
         Boolean f;
         try{
-            text="//*[text()=\""+text+"\"]";
-            driver.findElements(By.xpath(text));
+            stringBuffer.append("//*[text()=\"");
+            stringBuffer.append(text);
+            stringBuffer.append("\"]");
+            driver.findElements(By.xpath(stringBuffer.toString()));
             f=true;
         }catch(Exception e){
             f=false;
         }
         try{
             Assert.assertTrue(f);
-            AssertPassLog(text,flag);
+            AssertPassLog(autosteps,text,flag);
         }catch(Error e){
-            AssertFailedLog(text,flag);
+            AssertFailedLog(autosteps,text,flag);
         }
     }
     /**
     * @Description: 验证成功
     * @Date: 14:29 2018年03月05日
      */
-    public static void AssertPassLog(String verityStr,Boolean parameterStr){
+    public static void AssertPassLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证成功");
-        writeExtentReport(verityStr,parameterStr,"PASS");
+        writeExtentReport(autosteps,verityStr,parameterStr,"PASS");
     }
     /**
     * @Description:验证失败
     * @Date: 14:30 2018年03月05日
      */
-    public static void AssertFailedLog(String verityStr,Boolean parameterStr){
+    public static void AssertFailedLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证失败");
-        writeExtentReport(verityStr,parameterStr,"FAILED");
+        writeExtentReport(autosteps,verityStr,parameterStr,"FAILED");
         snapshotInfo();
     }
     /**
      * @将验证结果及测试数据写入测试报告中
      * @param status 验证状态
      * */
-    public static void writeExtentReport(String verityStr,Boolean parameterStr,String status){
-        parameter.log(LogStatus.INFO,"正常建站数据");
-        if(status.equals("PASS")){
-            verification.log(LogStatus.PASS,verityStr,"PASS");
-        }else{
-            verification.log(LogStatus.FAIL,verityStr,"FAILED");
-            screenshot=extentReports.startTest("截图");
-            screenshot.log(LogStatus.FAIL,screenshot.addBase64ScreenShot(screenShotPath));
-        }
-        if(i==0){
+    public static void writeExtentReport(Autosteps autosteps,String verityStr,Boolean parameterStr,String status){
+       try{
+           parameter.log(LogStatus.INFO,autosteps.getTsactioncontent());
+           if(status.equals("PASS")){
+               verification.log(LogStatus.PASS,autosteps.getTsverificationcontent(),"PASS");
+           }else{
+               verification.log(LogStatus.FAIL,autosteps.getTsverificationcontent(),"FAILED");
+               screenshot=extentReports.startTest("截图");
+               screenshot.log(LogStatus.FAIL,screenshot.addBase64ScreenShot(screenShotPath));
+           }
+           extentReports.flush();
+          /* if(i==0){
+               extentTest.appendChild(parameter);
+               extentTest.appendChild(verification);
+               if(screenshot!=null){
+                   extentTest.appendChild(screenshot);
+               }
+               i++;
+           }*/
+       }catch (Error e){
+           logger.info("验证结果写入测试报告出错");
+       }
+    }
+    /*
+     * @Description:写入子表测试报告
+     * @date 2018/3/19 13:26
+     */
+    public static void writeReport(){
+        try{
             extentTest.appendChild(parameter);
             extentTest.appendChild(verification);
             if(screenshot!=null){
                 extentTest.appendChild(screenshot);
             }
-            extentReports.flush();
-            i++;
+
+        }catch(Exception e){
+            logger.info("添加子表出错");
+        }finally {
+            extentReports.endTest(parameter);
+            extentReports.endTest(verification);
+            parameter=null;
+            verification=null;
         }
     }
 }

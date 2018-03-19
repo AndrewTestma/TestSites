@@ -14,6 +14,7 @@ import org.testng.annotations.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -34,9 +35,7 @@ public class TestBaseCase {
     public long startTime;//开始时间
     public long endTime;//结束时间
     /** 
-    * @Description: 获取当前路径，并截取 
-    * @Param:  
-    * @return: 
+    * @Description: 获取当前路径，并截取
     * @Date: 19:20 2018年03月15日
      */ 
     public String getLocalPath(){
@@ -44,19 +43,17 @@ public class TestBaseCase {
         path = path.substring(0,path.indexOf("/WEB-INF"));
         return path;
     }
-
     @BeforeSuite
     public void initializationExtentReport(){
-        extentReports=new ExtentReports(reportLocation,true, NetworkMode.OFFLINE);
+        extentReports=new ExtentReports(reportLocation,true, NetworkMode.OFFLINE,Locale.SIMPLIFIED_CHINESE);
         extentReports.addSystemInfo("Host Name", "Andrew");
     }
-
     /**
      * @Description:测试执行前操作
      * */
     @BeforeTest
     public void startSetUp(){
-        logger.info("---开始测试---");
+        logger.info("---打开浏览器---");
         startTime=System.currentTimeMillis();
         String driverType=ExecuteController.env.getTsdriver();
         String driverPath=ExecuteController.env.getTsdirverpath();
@@ -74,7 +71,6 @@ public class TestBaseCase {
         }else{
             extentTest.log(LogStatus.PASS,"成功");
         }
-        extentReports.endTest(extentTest);
         extentReports.flush();
     }
     /**
@@ -91,7 +87,7 @@ public class TestBaseCase {
     }
     @AfterSuite
     public void closeExtentReport(){
-        extentReports.flush();
+        extentReports.endTest(extentTest);
         extentReports.close();
     }
     public static ExtentReports getextent() {

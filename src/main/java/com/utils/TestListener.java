@@ -25,7 +25,6 @@ public class TestListener extends TestListenerAdapter {
         super.onTestStart(tr);
         logger.info("测试用例:"+tr.getName()+"---start"+this.hashCode());
         extent=TestBaseCase.getextent();
-        extentTest=extent.startTest(tr.getName());
     }
 
     @Override
