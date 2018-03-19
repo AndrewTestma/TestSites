@@ -1,12 +1,10 @@
 package com.controller;
 
-import com.pojo.Autosteps;
-import com.pojo.OperatingEnv;
-import com.pojo.Product;
-import com.pojo.Result;
+import com.pojo.*;
 import com.service.*;
 import com.utils.BaseTest;
 import com.utils.TestBaseCase;
+import com.utils.TestListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.testng.TestNG;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -36,6 +30,7 @@ public class ExecuteController {
     public static  Map<String,List<Autosteps>> listMap=null;
     public static Product pro=null;
     public static OperatingEnv env=null;
+    public static Business business=null;
     @Resource(name = "BusinessCaseService")
     private BusinessCaseService businessCaseService;
     @Resource(name = "UITestCaseService")
@@ -50,6 +45,8 @@ public class ExecuteController {
     private OperatingEnvService operatingEnvService;
     @Autowired
     private ResultService resultService;
+    @Autowired
+    private BusinessService businessService;
     @RequestMapping(value = "/business",method = RequestMethod.GET)
     @ResponseBody
     /**
@@ -58,17 +55,20 @@ public class ExecuteController {
     * @return: java.lang.String
     * @Date: 10:52 2018年03月05日
      */
-    public int execBusiness(String tsbusinessid,String tsproductid){
+    public int execBusiness(String tsbusinessid, String tsproductid){
         int tsresultid=0;
         listMap=new LinkedHashMap<>();
         pro=productService.selectByPrimaryKey(Integer.valueOf(tsproductid));
         env=operatingEnvService.selectByPrimaryKey(0);
+        business=businessService.selectByPrimaryKey(Integer.valueOf(tsbusinessid));
         List<Integer> uiIdList=businessCaseService.selectBytsbusinessid(Integer.valueOf(tsbusinessid));
         Result result=new Result();
         if(uiIdList.size()>0){
             execAutoSteps(uiIdList);
             TestNG testNG=new TestNG();
-            testNG.setTestClasses(new Class[]{new BaseTest().getClass()});
+            TestListener testListener=new TestListener();
+            testNG.addListener(testListener);
+            testNG.setTestClasses(new Class[]{BaseTest.class});
             testNG.run();
             result.setTsbusinessid(Integer.valueOf(tsbusinessid));
             result.setTscount(1);
