@@ -26,7 +26,7 @@ public class TestBaseCase {
     public static WebDriver driver;
     public static ExtentReports extentReports;
     public static ExtentTest extentTest;
-    public final  String  reportLocation=getLocalPath()+"/resources/result/ExtentReport.html";
+    public String  reportLocation;
     public Logger logger= LoggerFactory.getLogger(this.getClass());
     public static Map<String,List<Autosteps>> autosteps=new HashMap<>();
     public static int tstotaltime;//执行时长
@@ -45,6 +45,8 @@ public class TestBaseCase {
     }
     @BeforeSuite
     public void initializationExtentReport(){
+        reportLocation=getLocalPath()+"/resources/result/"+ExecuteController.business.getTsbusinessid()+".html";
+        logger.info(reportLocation);
         extentReports=new ExtentReports(reportLocation,true, NetworkMode.OFFLINE,Locale.SIMPLIFIED_CHINESE);
         extentReports.addSystemInfo("Host Name", "Andrew");
     }

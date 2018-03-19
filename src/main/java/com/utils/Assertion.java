@@ -22,7 +22,7 @@ public class Assertion  extends TestBaseCase {
     public static ExtentTest verification=null;
     public static ExtentTest  parameter=null;
     public static ExtentTest screenshot=null;
-    public static String screenShotPath;
+    public static String screenShotPath;//绝对路径，图片存放地址
     public static int i=0;//控制写入报告次数
     public static ElementAction action=new ElementAction();
     public static String formatDate(Date date)
@@ -36,16 +36,6 @@ public class Assertion  extends TestBaseCase {
         screenShot.setscreenName(Assertion.formatDate(nowDate));
         screenShotPath=screenShot.takeScreenshot();
     }
-    /*
-     * @Description：初始化子报表
-     * @date 2018/3/19 13:08
-     */
-   /* public static void initialization(){
-        if(verification!=null && parameter!=null){
-            extentReports.endTest(verification);
-            extentReports.endTest(parameter);
-        }
-    }*/
     /*
      * @Description:判断验证方式
      * @param:[autosteps]:实体对象
@@ -104,9 +94,9 @@ public class Assertion  extends TestBaseCase {
         StringBuffer stringBuffer=new StringBuffer();
         Boolean f;
         try{
-            stringBuffer.append("//*[text()=\"");
-            stringBuffer.append(text);
-            stringBuffer.append("\"]");
+            stringBuffer.append("//*[text()='"+text+"'");
+           /* stringBuffer.append(text);
+            stringBuffer.append("\"]");*/
             driver.findElements(By.xpath(stringBuffer.toString()));
             f=true;
         }catch(Exception e){
@@ -133,8 +123,8 @@ public class Assertion  extends TestBaseCase {
      */
     public static void AssertFailedLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证失败");
-        writeExtentReport(autosteps,verityStr,parameterStr,"FAILED");
         snapshotInfo();
+        writeExtentReport(autosteps,verityStr,parameterStr,"FAILED");
     }
     /**
      * @将验证结果及测试数据写入测试报告中
@@ -148,17 +138,9 @@ public class Assertion  extends TestBaseCase {
            }else{
                verification.log(LogStatus.FAIL,autosteps.getTsverificationcontent(),"FAILED");
                screenshot=extentReports.startTest("截图");
-               screenshot.log(LogStatus.FAIL,screenshot.addBase64ScreenShot(screenShotPath));
+               screenshot.log(LogStatus.FAIL,screenshot.addBase64ScreenShot(ScreenShot.screenPath));
            }
            extentReports.flush();
-          /* if(i==0){
-               extentTest.appendChild(parameter);
-               extentTest.appendChild(verification);
-               if(screenshot!=null){
-                   extentTest.appendChild(screenshot);
-               }
-               i++;
-           }*/
        }catch (Error e){
            logger.info("验证结果写入测试报告出错");
        }
@@ -182,6 +164,7 @@ public class Assertion  extends TestBaseCase {
             extentReports.endTest(verification);
             parameter=null;
             verification=null;
+            screenshot=null;
         }
     }
 }

@@ -24,7 +24,6 @@ public class BaseTest extends TestBaseCase {
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
             tstotalsteps=entry.getValue().size()+tstotalsteps;
         }
-        /*Assertion.initialization();*/
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
             extentTest=extentReports.startTest(entry.getKey());
             for(Autosteps autosteps1:entry.getValue()){
