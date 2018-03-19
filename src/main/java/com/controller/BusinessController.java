@@ -101,4 +101,15 @@ public class BusinessController {
         business.setTsname(tsname);
         return businessService.updateByPrimaryKeySelective(business);
     }
+    /**
+     * @Description:删除业务
+     * @param:tsbusinessid:主键
+     * @return:删除个数
+     * @date: 2018/3/19 18:41
+     */
+    @RequestMapping(value = "/del",method = RequestMethod.GET)
+    @ResponseBody
+    public int del(String tsbusinessid){
+        return businessService.deleteByPrimaryKey(Integer.valueOf(tsbusinessid));
+    }
 }
