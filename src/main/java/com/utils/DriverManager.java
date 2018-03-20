@@ -5,6 +5,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * @Author:Andrew
@@ -14,7 +20,13 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 public class DriverManager {
 
     public static WebDriver driver=null;
-    public static WebDriver setDriver(String string,String driverPath)
+    /**
+     * @Description:本地调用浏览器方法
+     * @param:[string,driverPath]:浏览器类型,本地地址
+     * @return:dirver
+     * @date:2018/3/20 11:39
+     */
+    public static WebDriver setLocalDriver(String string,String driverPath)
     {
         switch (string)
         {
@@ -52,6 +64,31 @@ public class DriverManager {
             default:
                 driver=new FirefoxDriver();
                 break;
+        }
+        return driver;
+    }
+    /**
+     * @Description:远程调用浏览器方式
+     * @param:[string,driverPath]:浏览器类型,远程地址
+     * @return:driver
+     * @date:2018/3/20 11:38
+     */
+    public static WebDriver setRemoteDriver(String string,String driverPath)
+    {
+        if (string.equals("ChromeDriver")) {
+            DesiredCapabilities dc = DesiredCapabilities.chrome();
+            try {
+                driver =new EventFiringWebDriver(new RemoteWebDriver(new URL(driverPath), dc));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        } else if (string.equals("ie")) {
+            DesiredCapabilities dc = DesiredCapabilities.internetExplorer();
+            try {
+                driver =new EventFiringWebDriver(new RemoteWebDriver(new URL(driverPath), dc));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
         return driver;
     }

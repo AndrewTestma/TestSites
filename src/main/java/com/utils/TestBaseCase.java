@@ -59,10 +59,16 @@ public class TestBaseCase {
         startTime=System.currentTimeMillis();
         String driverType=ExecuteController.env.getTsdriver();
         String driverPath=ExecuteController.env.getTsdirverpath();
-        driver=DriverManager.setDriver(driverType,driverPath);
+        String driverName=ExecuteController.env.getTsname();
+        if(driverName.equals("本地")){
+            driver=DriverManager.setLocalDriver(driverType,driverPath);
+        }else {
+            driver=DriverManager.setRemoteDriver(driverType,driverPath);
+        }
         autosteps= ExecuteController.listMap;
         String url=ExecuteController.pro.getTsurl();
         driver.navigate().to(url);
+        driver.manage().window().maximize();
     }
     @AfterMethod
     public void ExtentResult(ITestResult result){
