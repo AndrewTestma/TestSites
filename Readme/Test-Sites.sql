@@ -102,3 +102,17 @@ create table if not exists tsresult(
 	tsexecutiontime timestamp default current_timestamp,
 	primary key(tsresultid)
 )engine=innodb;
+-- tsuser
+create table if not exists tsuser(
+  tsuserid integer(11) auto_increment,
+  tsname varchar(100) not null,
+  tspassword varchar(100) not null,
+  primary key(tsuserid)
+)engine=innodb;
+-- tsuserproduct
+create table if not exists tsuserproduct(
+  tsuserproductid integer(11) auto_increment,
+  tsuserid integer(11) not null,
+  tsproductid INTEGER(11) not null,
+  primary key(tsuserproductid)
+)engine=innodb;
