@@ -14,6 +14,8 @@ public interface BusinessCaseService {
 
     int deleteByMore(Integer tsbusinessid,Integer tsuitestcaseid);
 
+    int deleteBytsbusinessid(Integer tsbusinessid);
+
     int insert(BusinessCase record);
 
     int insertSelective(BusinessCase record);

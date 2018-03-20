@@ -1,9 +1,11 @@
 package com.controller;
 
 import com.pojo.Business;
+import com.service.BusinessCaseService;
 import com.service.BusinessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +26,10 @@ import java.util.Map;
 @RequestMapping("/bus")
 public class BusinessController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
-    @Resource(name = "BusinessService")
+    @Autowired
     private BusinessService businessService;
+    @Autowired
+    private BusinessCaseService businessCaseService;
     /**
      * @Description:业务管理视图
      * */
@@ -110,6 +114,7 @@ public class BusinessController {
     @RequestMapping(value = "/del",method = RequestMethod.GET)
     @ResponseBody
     public int del(String tsbusinessid){
+        businessCaseService.deleteBytsbusinessid(Integer.valueOf(tsbusinessid));
         return businessService.deleteByPrimaryKey(Integer.valueOf(tsbusinessid));
     }
 }

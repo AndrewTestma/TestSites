@@ -40,6 +40,10 @@
     where tsbusinessid = #{tsbusinessid}
     and  tsuitestcaseid= #{tsuitestcaseid}
   </delete>
+  <delete id="deleteBytsbusinessid">
+    delete from tsbusinesscase
+    where tsbusinessid = #{tsbusinessid}
+  </delete>
   <insert id="insert" parameterType="com.pojo.BusinessCase" useGeneratedKeys="true" keyProperty="tsbusinessid">
     insert into tsbusinesscase (tsbusinesscaseid, tsbusinessid, tsuitestcaseid, 
       tsorder)
