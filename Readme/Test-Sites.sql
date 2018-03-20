@@ -91,6 +91,8 @@ create table if not exists tscasesteps(
 -- tsresult
 create table if not exists tsresult(
 	tsresultid integer(11) auto_increment,
+	tsproductid INTEGER (11) not null,
+	tsbusinessid INTEGER (11) not null,
 	tstotaltime integer(11) default null,
 	tstotalsteps integer(11) default null,
 	tsrunsteps integer(11) default null,
