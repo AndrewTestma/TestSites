@@ -117,7 +117,6 @@
                 initMaterialInput();
             }
         });
-        autostepstable(0);
     }
     //动态加载模块
     $('#tsmodulename').append("<option>选择模块</option>");
@@ -147,11 +146,7 @@
              uitestcaseID='${uiTestCase.tsuitestcaseid}';
             document.getElementById("updatetc").style.display = "inline";
             document.getElementById("addtc").style.display = "none";
-          /*  if ('${uiTestCase.tscommon}' == 0) {
-                $('#tscommon').selectpicker('val', '否');
-            }*/
             $('#tsgrade').val('${uiTestCase.tsgrade}');
-            /*$('#tscommon').selectpicker('val', '否');*/
             $('#tscommon').val('${uiTestCase.tscommon}');
             autostepstable(0);
         }

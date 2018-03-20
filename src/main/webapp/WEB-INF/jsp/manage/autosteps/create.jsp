@@ -130,6 +130,7 @@
                 if(data>0){
                     autoStespID=data;
                     addCaseSteps();
+                    autostepstable(0);
                     addAutoStepsDialog.close();
                 }
             },
@@ -144,9 +145,6 @@
             url:'/casesteps/add',
             data:{'uitestcaseID':uitestcaseID,'autostepsID':autoStespID},
             success:function (data) {
-                if(data==1){
-                    alert("添加成功");
-                }
             }
         })
     }
