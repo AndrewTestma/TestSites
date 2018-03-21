@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.pojo.Autosteps;
+import com.pojo.User;
 import com.service.AutostepsService;
 import com.service.CaseStepsService;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ import java.util.Map;
  */
 @Controller("AutostepsController")
 @RequestMapping("/autosteps")
-@SessionAttributes("username")
+@SessionAttributes("user")
 public class AutostepsController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "AutostepsService")
@@ -83,13 +84,13 @@ public class AutostepsController {
      * */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public int add(Autosteps autosteps,@ModelAttribute("username")String username){
+    public int add(Autosteps autosteps,@ModelAttribute("user")User user){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         autosteps.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
         autosteps.setTsmodulename((String)session.getAttribute("module"));
         autosteps.setTscommon(0);//每次新增默认操作步骤为执行失败
-        autosteps.setTscreator(username);
+        autosteps.setTscreator(user.getTsname());
         autostepsService.insert(autosteps);
         return autosteps.getTsautostepsid();
     }

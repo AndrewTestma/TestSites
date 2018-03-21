@@ -2,6 +2,7 @@ package com.controller;
 
 import com.pojo.BusinessCase;
 import com.pojo.UITestCase;
+import com.pojo.User;
 import com.service.BusinessCaseService;
 import com.service.CaseStepsService;
 import com.service.UITestCaseService;
@@ -25,7 +26,7 @@ import java.util.*;
  */
 @Controller("UITestCaseController")
 @RequestMapping("/ui")
-@SessionAttributes("username")
+@SessionAttributes("user")
 public class UITestCaseController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "UITestCaseService")
@@ -69,12 +70,12 @@ public class UITestCaseController {
     }
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public int add(UITestCase uiTestCase,HttpServletRequest request,@ModelAttribute("username")String username){
+    public int add(UITestCase uiTestCase,HttpServletRequest request,@ModelAttribute("user")User user){
         HttpSession session = request.getSession();
         uiTestCase.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
         uiTestCase.setTsmodulename((String)session.getAttribute("module"));
         uiTestCase.setTscommon(0);
-        uiTestCase.setTscreator(username);
+        uiTestCase.setTscreator(user.getTsname());
         uiTestCaseService.insert(uiTestCase);
         return uiTestCase.getTsuitestcaseid();
     }

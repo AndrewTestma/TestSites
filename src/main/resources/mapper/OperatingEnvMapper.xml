@@ -16,7 +16,7 @@
     select 
     <include refid="Base_Column_List" />
     from tsoperatingenv
-    where apply = #{apply,jdbcType=INTEGER}
+    where tsoperatingenvid = #{tsoperatingenvid,jdbcType=INTEGER}
   </select>
   <select id="selectList" resultMap="BaseResultMap">
     select

@@ -9,9 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.testng.TestNG;
 
 import javax.annotation.Resource;
@@ -24,6 +22,7 @@ import java.util.*;
  */
 @Controller("ExecuteController")
 @RequestMapping("/exec")
+@SessionAttributes("user")
 public class ExecuteController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     public static  Map<String,List<Autosteps>> listMap=null;
@@ -54,11 +53,11 @@ public class ExecuteController {
     * @return: java.lang.String
     * @Date: 10:52 2018年03月05日
      */
-    public int execBusiness(String tsbusinessid, String tsproductid){
+    public int execBusiness(String tsbusinessid, String tsproductid, @ModelAttribute("user")User user){
         int tsresultid=0;
         listMap=new LinkedHashMap<>();
         pro=productService.selectByPrimaryKey(Integer.valueOf(tsproductid));
-        env=operatingEnvService.selectByPrimaryKey(0);
+        env=operatingEnvService.selectByPrimaryKey(Integer.valueOf(user.getTsoperatingenvid()));
         business=businessService.selectByPrimaryKey(Integer.valueOf(tsbusinessid));
         List<Integer> uiIdList=businessCaseService.selectBytsbusinessid(Integer.valueOf(tsbusinessid));
         /*Result result=new Result();*/

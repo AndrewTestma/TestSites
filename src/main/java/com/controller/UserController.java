@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
  * @date 2018/3/2017:02
  */
 @Controller("UserController")
-@SessionAttributes({"username","tsoperatingenvid"})
+@SessionAttributes({"user"})
 @RequestMapping("/user")
 public class UserController {
 
@@ -38,14 +38,12 @@ public class UserController {
     @ResponseBody
     public int login(String name,String password,ModelMap model){
         User user=userService.selectCount(name,password);
-        int i=0;
         if(user!=null){
-            model.addAttribute("username",user.getTsname());
-            model.addAttribute("tsoperatingenvid",user.getTsoperatingenvid());
-            i=1;
+            model.addAttribute("user",user);
+            return 1;
         }
 
-        return i;
+        return 0;
     }
 
 }

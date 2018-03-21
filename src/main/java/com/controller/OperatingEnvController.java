@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Controller("OperatingEnvController")
 @RequestMapping("/env")
-@SessionAttributes("tsoperatingenvid")
+@SessionAttributes("user")
 public class OperatingEnvController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
 
@@ -107,9 +107,7 @@ public class OperatingEnvController {
      * @return:int
      * @date:2018/3/21 10:18
      */
-    public int apply(String tsoperatingenvid, ModelMap modelMap,@ModelAttribute("username")String username){
-        User user=new User();
-        user.setTsname(username);
+    public int apply(String tsoperatingenvid, ModelMap modelMap,@ModelAttribute("user")User user){
         user.setTsoperatingenvid(tsoperatingenvid);
         userService.updateByPrimaryKeySelective(user);
         modelMap.addAttribute("tsoperatingenvid",tsoperatingenvid);
