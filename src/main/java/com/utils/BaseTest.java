@@ -23,9 +23,6 @@ public class BaseTest extends TestBaseCase {
     @Test()
     public void test(){
         logger.info("执行测试步骤");
-       /* for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
-            tstotalsteps=entry.getValue().size()+tstotalsteps;
-        }*/
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
             extentTest=extentReports.startTest(entry.getKey());
             elementAction=new ElementAction(driver);

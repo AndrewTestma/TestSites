@@ -31,38 +31,6 @@ public class TestBaseCase {
     public ExtentReports extentReports;
     public ExtentTest extentTest;
     public Map<String,List<Autosteps>> autosteps=new HashMap<>();
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(WebDriver driver) {
-        this.driver = driver;
-    }
-
-    public ExtentReports getExtentReports() {
-        return extentReports;
-    }
-
-    public void setExtentReports(ExtentReports extentReports) {
-        this.extentReports = extentReports;
-    }
-
-    public ExtentTest getExtentTest() {
-        return extentTest;
-    }
-
-    public void setExtentTest(ExtentTest extentTest) {
-        this.extentTest = extentTest;
-    }
-
-    public Map<String, List<Autosteps>> getAutosteps() {
-        return autosteps;
-    }
-
-    public void setAutosteps(Map<String, List<Autosteps>> autosteps) {
-        this.autosteps = autosteps;
-    }
-
     /*public static int tstotaltime;//执行时长
     public static int tstotalsteps=0;//总步数
     public static int tsrunsteps=0;//执行步数
