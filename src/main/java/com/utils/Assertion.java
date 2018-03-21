@@ -6,6 +6,9 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -27,6 +30,7 @@ public class Assertion{
     public ExtentTest verification=null;
     public ExtentTest  parameter=null;
     public ExtentTest screenshot=null;
+    public Boolean t;
     public static String screenShotPath;//绝对路径，图片存放地址
     public static int i=0;//控制写入报告次数
     public Assertion(WebDriver driver, ExtentReports extentReports,ExtentTest extentTest){
@@ -67,6 +71,7 @@ public class Assertion{
                     break;
                 default :
                     logger.info("操作不需要验证");
+                    t=true;
                     break;
             }
         }
@@ -77,6 +82,7 @@ public class Assertion{
     * @Date: 14:06 2018年03月05日
      */
     public  void verityAssertLocation(Autosteps autosteps,String url,Boolean flag){
+
         String verityStr="页面是否跳转至:"+url+"地址";
         logger.info(verityStr);
         Boolean f;
@@ -98,6 +104,11 @@ public class Assertion{
     * @Date: 14:34 2018年03月05日
      */
     public  void verityAssertText(Autosteps autosteps,String text,Boolean flag){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String verityStr="页面是否存在当前:"+text;
         logger.info(verityStr);
         StringBuffer stringBuffer=new StringBuffer();
@@ -123,6 +134,7 @@ public class Assertion{
      */
     public  void AssertPassLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证成功");
+        t=true;
         writeExtentReport(autosteps,verityStr,parameterStr,"PASS");
     }
     /**
@@ -131,6 +143,7 @@ public class Assertion{
      */
     public  void AssertFailedLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证失败");
+        t=false;
         snapshotInfo();
         writeExtentReport(autosteps,verityStr,parameterStr,"FAILED");
     }

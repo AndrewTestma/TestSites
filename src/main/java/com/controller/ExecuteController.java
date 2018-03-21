@@ -3,6 +3,7 @@ package com.controller;
 import com.pojo.*;
 import com.service.*;
 import com.utils.BaseTest;
+import com.utils.ExtentReportMap;
 import com.utils.TestBaseCase;
 import com.utils.TestListener;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ import java.util.*;
 @SessionAttributes("user")
 public class ExecuteController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
-    public static  Map<String,List<Autosteps>> listMap=null;
+    public  Map<String,List<Autosteps>> listMap=null;
     public static Product pro=null;
     public static OperatingEnv env=null;
     public static Business business=null;
@@ -66,7 +67,7 @@ public class ExecuteController {
             TestNG testNG = new TestNG();
             TestListener testListener = new TestListener();
             testNG.addListener(testListener);
-            testNG.setTestClasses(new Class[]{BaseTest.class});
+            testNG.setTestClasses(new Class[]{TestBaseCase.class});
             testNG.run();
             /*result.setTsbusinessid(Integer.valueOf(tsbusinessid));
             result.setTscount(1);
@@ -103,7 +104,8 @@ public class ExecuteController {
             for(int n: caseStepsService.selectBytsuitestcaseid(i)){
                 autosteps.add(autostepsService.selectByPrimaryKey(n));
             }
-            listMap.put(tsname,autosteps);
-        }
+             listMap.put(tsname,autosteps);
+             ExtentReportMap.autosteps.put(Thread.currentThread().getName(),listMap);
+            }
     }
 }

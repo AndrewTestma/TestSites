@@ -2,6 +2,7 @@ package com.utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -48,7 +49,7 @@ public class DriverManager {
             case "ChromeDriver":
                 System.setProperty("webdriver.chrome.driver", driverPath);
 				/*ChromeOptions options = new ChromeOptions();
-				options.setBinary(this.driver_path);*/
+				options.setBinary(driverPath);*/
                 driver=new ChromeDriver();
                 break;
             case "InternetExplorerDriver":

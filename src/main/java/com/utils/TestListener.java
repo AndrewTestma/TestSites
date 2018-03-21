@@ -1,10 +1,14 @@
 package com.utils;
 
+import com.pojo.User;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
@@ -18,6 +22,7 @@ import java.net.UnknownHostException;
  * @author: Mr.Andrew
  * @create: 2018-03-15 13:29
  **/
+@SessionAttributes("user")
 public class TestListener extends TestListenerAdapter {
     public Logger logger= LoggerFactory.getLogger(this.getClass().getName());
     ExtentReports extent;
@@ -26,21 +31,21 @@ public class TestListener extends TestListenerAdapter {
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
         logger.info("测试用例:"+tr.getName()+"---start"+this.hashCode());
-        String ip= null;
+       /* String ip= null;
         try {
             ip = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        extent=ExtentReportMap.getMap(ip);
+        extent=ExtentReportMap.getMap(1);*/
     }
 
     @Override
     public void onTestFailure(ITestResult tr) {
         super.onTestFailure(tr);
         logger.info("【" +tr.getMethod().getDescription() + " Failure】");
-        extentTest.log(LogStatus.FAIL, tr.getThrowable());
-        extent.endTest(extentTest);
+     /*   extentTest.log(LogStatus.FAIL, tr.getThrowable());
+        extent.endTest(extentTest);*/
 
     }
 
@@ -48,17 +53,17 @@ public class TestListener extends TestListenerAdapter {
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
         logger.info("【" + tr.getMethod().getDescription() + " Skipped】");
-        extentTest.log(LogStatus.SKIP, "SKIP");
-        extent.endTest(extentTest);
+       /* extentTest.log(LogStatus.SKIP, "SKIP");
+        extent.endTest(extentTest);*/
     }
 
     @Override
     public void onTestSuccess(ITestResult tr) {
         super.onTestSuccess(tr);
         logger.info("【" + tr.getMethod().getDescription() + " Success】");
-        //logger.info("参数:"+tr.getParameters()[0]);
+     /*   //logger.info("参数:"+tr.getParameters()[0]);
         extent.endTest(extentTest);
-        extent.flush();
+        extent.flush();*/
     }
 
     @Override

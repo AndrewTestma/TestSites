@@ -2,6 +2,7 @@ package com.utils;
 
 import com.controller.ExecuteController;
 import com.pojo.Autosteps;
+import com.pojo.User;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -9,6 +10,9 @@ import com.relevantcodes.extentreports.NetworkMode;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -30,7 +34,8 @@ public class TestBaseCase {
     public WebDriver driver;
     public ExtentReports extentReports;
     public ExtentTest extentTest;
-    public Map<String,List<Autosteps>> autosteps=new HashMap<>();
+    public ElementAction elementAction=null;
+    public Assertion assertion=null;
     /*public static int tstotaltime;//执行时长
     public static int tstotalsteps=0;//总步数
     public static int tsrunsteps=0;//执行步数
@@ -48,23 +53,16 @@ public class TestBaseCase {
     @BeforeSuite
     public void initializationExtentReport(){
         reportLocation=getLocalPath()+"/resources/result/"+ExecuteController.business.getTsbusinessid()+".html";
-        logger.info(reportLocation);
-        String ip=null;
-        try {
-            ip = InetAddress.getLocalHost().getHostAddress();
-            logger.info(ip);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
         extentReports=new ExtentReports(reportLocation,true, NetworkMode.OFFLINE,Locale.SIMPLIFIED_CHINESE);
         extentReports.addSystemInfo("Host Name", "Andrew");
-        ExtentReportMap.setMap(ip,extentReports);
+        ExtentReportMap.map.put(Thread.currentThread().getName(),extentReports);
     }
     /**
      * @Description:测试执行前操作
      * */
     @BeforeTest
     public void startSetUp(){
+        logger.info(Thread.currentThread().getName());
         logger.info("---打开浏览器---");
         /*startTime=System.currentTimeMillis();*/
         String driverType=ExecuteController.env.getTsdriver();
@@ -75,11 +73,15 @@ public class TestBaseCase {
         }else {
             driver=DriverManager.setRemoteDriver(driverType,driverPath);
         }
-        autosteps= ExecuteController.listMap;
+        /*autosteps= ExecuteController.listMap;*/
+
+     /*   ExtentReportMap.autosteps.put(user.getTsuserid(),ExecuteController.listMap);*/
         String url=ExecuteController.pro.getTsurl();
         driver.navigate().to(url);
         driver.manage().window().maximize();
     }
+
+
     @AfterMethod
     public void ExtentResult(ITestResult result){
         if(result.getStatus()==ITestResult.FAILURE){
@@ -107,5 +109,44 @@ public class TestBaseCase {
     public void closeExtentReport(){
         extentReports.endTest(extentTest);
         extentReports.close();
+    }
+
+    @Test()
+    public void test(){
+        logger.info("执行测试步骤");
+        /*String ip=null;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+            logger.info(ip);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        Map<String,List<Autosteps>> autosteps=null;
+        if(ExtentReportMap.autosteps.get(ip)!=null){
+            autosteps=ExtentReportMap.autosteps.get(ip);
+        }*/
+        if(ExtentReportMap.autosteps.get(Thread.currentThread().getName())!=null){
+            for(Map.Entry<String,List<Autosteps>> entry:ExtentReportMap.autosteps.get(Thread.currentThread().getName()).entrySet()){
+                extentTest=extentReports.startTest(entry.getKey());
+                elementAction=new ElementAction(driver);
+                assertion=new Assertion(driver,extentReports,extentTest);
+                for(Autosteps autosteps1:entry.getValue()){
+                    if(autosteps1.getTsactiontype().equals("单击")){
+                        elementAction.click(autosteps1);
+                    }else if(autosteps1.getTsactiontype().equals("输入")){
+                        elementAction.sendKey(autosteps1,autosteps1.getTsactioncontent());
+                    }
+                    assertion.verityType(autosteps1);
+                }
+                assertion.writeReport();
+                extentReports.flush();
+                extentReports.endTest(extentTest);
+                if(!assertion.t){
+                    ExtentReportMap.autosteps.remove(Thread.currentThread().getName());
+                    break;
+                }
+            }
+            ExtentReportMap.autosteps.remove(Thread.currentThread().getName());
+        }
     }
 }

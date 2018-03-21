@@ -33,11 +33,11 @@ public class ElementAction{
     public WebElement findElement(final Autosteps autosteps){
         WebElement webElement = null;
         try{
-            /*webElement=(new WebDriverWait(driver,5).until(
+            webElement=(new WebDriverWait(driver,5).until(
                     new ExpectedCondition<WebElement>() {
                         public WebElement apply(WebDriver input) {
                             WebElement  element=getElement(autosteps);
-                            *//*int k=0;
+                            int k=0;
                             while(element==null) {
                                 if (k == 1) {
                                     if (element == null && autosteps.getTsframepath().split("/").length >= 1 && autosteps.getTsframepath().split("/")[0] != "") {
@@ -53,12 +53,12 @@ public class ElementAction{
                                     element=getElement(autosteps);
                                 }
                                 k++;
-                            }*//*
+                            }
                             return element;
                         }
                     }
-            ));*/
-            webElement=getElement(autosteps);
+            ));
+            /*webElement=getElement(autosteps);*/
         }catch(NoSuchElementException e){
             logger.info("无法定位页面元素");
         }
@@ -133,6 +133,13 @@ public class ElementAction{
             logger.info(autosteps.getTsremarks()+"输入: "+value);
         }catch(Exception e){
             logger.error("找不到元素："+autosteps.getTsremarks()+"-->输入失败");
+        }
+    }
+    public void sleepTime(long second){
+        try {
+            Thread.sleep(second);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
