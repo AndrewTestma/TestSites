@@ -1,16 +1,16 @@
 package com.controller;
 
 import com.pojo.OperatingEnv;
+import com.pojo.User;
 import com.service.OperatingEnvService;
+import com.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +22,14 @@ import java.util.Map;
  */
 @Controller("OperatingEnvController")
 @RequestMapping("/env")
+@SessionAttributes("tsoperatingenvid")
 public class OperatingEnvController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
 
-    @Resource(name = "OperatingEnvService")
+    @Autowired
     private OperatingEnvService operatingEnvService;
+    @Autowired
+    private UserService userService;
     /**
      * @Description:运行环境主视图
      * */
@@ -99,16 +102,17 @@ public class OperatingEnvController {
     @RequestMapping(value = "/apply",method = RequestMethod.POST)
     @ResponseBody
     /**
-    * @Description: 设置默认运行环境
-    * @Param: [apply] 0代表默认
-    * @return: int 是否成功
-    * @Date: 13:33 2018年03月01日
+     * @Description:设置用户默认的运行方式
+     * @param:[tsoperatingenvid, modelMap, username]:运行方式ID，获取用户
+     * @return:int
+     * @date:2018/3/21 10:18
      */
-    public int apply(String tsoperatingenvid){
-        OperatingEnv operatingEnv=new OperatingEnv();
-        operatingEnvService.updateByApply(Integer.valueOf(tsoperatingenvid));
-        operatingEnv.setTsoperatingenvid(Integer.valueOf(tsoperatingenvid));
-        operatingEnv.setApply(0);
-        return operatingEnvService.updateByPrimaryKeySelective(operatingEnv);
+    public int apply(String tsoperatingenvid, ModelMap modelMap,@ModelAttribute("username")String username){
+        User user=new User();
+        user.setTsname(username);
+        user.setTsoperatingenvid(tsoperatingenvid);
+        userService.updateByPrimaryKeySelective(user);
+        modelMap.addAttribute("tsoperatingenvid",tsoperatingenvid);
+        return userService.updateByPrimaryKeySelective(user);
     }
 }
