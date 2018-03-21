@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.User">
+    <id column="tsuserid" jdbcType="INTEGER" property="tsuserid" />
+    <result column="tsname" jdbcType="VARCHAR" property="tsname" />
+    <result column="tspassword" jdbcType="VARCHAR" property="tspassword" />
+    <result column="tsoperatingenvid" jdbcType="VARCHAR" property="tsoperatingenvid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tsuserid, tsname, tspassword, tsoperatingenvid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tsuser
+    where tsuserid = #{tsuserid,jdbcType=INTEGER}
+  </select>
+  <select id="selectCount" resultMap="BaseResultMap">
+    select *from tsuser where tsname = #{tsname} and tspassword = #{tspassword}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tsuser
+    where tsuserid = #{tsuserid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.User">
+    insert into tsuser (tsuserid, tsname, tspassword, 
+      tsoperatingenvid)
+    values (#{tsuserid,jdbcType=INTEGER}, #{tsname,jdbcType=VARCHAR}, #{tspassword,jdbcType=VARCHAR}, 
+      #{tsoperatingenvid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.User">
+    insert into tsuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tsuserid != null">
+        tsuserid,
+      </if>
+      <if test="tsname != null">
+        tsname,
+      </if>
+      <if test="tspassword != null">
+        tspassword,
+      </if>
+      <if test="tsoperatingenvid != null">
+        tsoperatingenvid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tsuserid != null">
+        #{tsuserid,jdbcType=INTEGER},
+      </if>
+      <if test="tsname != null">
+        #{tsname,jdbcType=VARCHAR},
+      </if>
+      <if test="tspassword != null">
+        #{tspassword,jdbcType=VARCHAR},
+      </if>
+      <if test="tsoperatingenvid != null">
+        #{tsoperatingenvid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.User">
+    update tsuser
+    <set>
+      <if test="tsname != null">
+        tsname = #{tsname,jdbcType=VARCHAR},
+      </if>
+      <if test="tspassword != null">
+        tspassword = #{tspassword,jdbcType=VARCHAR},
+      </if>
+      <if test="tsoperatingenvid != null">
+        tsoperatingenvid = #{tsoperatingenvid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tsuserid = #{tsuserid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.User">
+    update tsuser
+    set tsname = #{tsname,jdbcType=VARCHAR},
+      tspassword = #{tspassword,jdbcType=VARCHAR},
+      tsoperatingenvid = #{tsoperatingenvid,jdbcType=VARCHAR}
+    where tsuserid = #{tsuserid,jdbcType=INTEGER}
+  </update>
+</mapper>
