@@ -7,6 +7,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 
 /**
@@ -15,7 +18,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * @author: Mr.Andrew
  * @create: 2018-03-05 11:21
  **/
-public class ElementAction extends TestBaseCase {
+public class ElementAction{
+    public Logger logger= LoggerFactory.getLogger(this.getClass());
+    public WebDriver driver;
+    public ElementAction( WebDriver driver){
+        this.driver=driver;
+    }
    /**
    * @Description: 查找单个元素
    * @Param:[autosteps:存储元素的对象]
@@ -25,11 +33,11 @@ public class ElementAction extends TestBaseCase {
     public WebElement findElement(final Autosteps autosteps){
         WebElement webElement = null;
         try{
-            webElement=(new WebDriverWait(driver,5).until(
+            /*webElement=(new WebDriverWait(driver,5).until(
                     new ExpectedCondition<WebElement>() {
                         public WebElement apply(WebDriver input) {
                             WebElement  element=getElement(autosteps);
-                            /*int k=0;
+                            *//*int k=0;
                             while(element==null) {
                                 if (k == 1) {
                                     if (element == null && autosteps.getTsframepath().split("/").length >= 1 && autosteps.getTsframepath().split("/")[0] != "") {
@@ -45,13 +53,14 @@ public class ElementAction extends TestBaseCase {
                                     element=getElement(autosteps);
                                 }
                                 k++;
-                            }*/
+                            }*//*
                             return element;
                         }
                     }
-            ));
+            ));*/
+            webElement=getElement(autosteps);
         }catch(NoSuchElementException e){
-            logger.error("无法定位页面元素");
+            logger.info("无法定位页面元素");
         }
         return webElement;
     }
@@ -106,7 +115,7 @@ public class ElementAction extends TestBaseCase {
         try{
             webElement=findElement(autosteps);
             webElement.click();
-            logger.info("点击："+autosteps.getTsremarks()+"-->点击成功");
+            logger.error("点击："+autosteps.getTsremarks()+"-->点击成功");
         }catch (NoSuchElementException e){
             logger.error("找不到元素："+autosteps.getTsremarks()+"-->点击失败");
         }

@@ -17,25 +17,29 @@ import java.util.Set;
  */
 public class BaseTest extends TestBaseCase {
     public Logger logger= LoggerFactory.getLogger(this.getClass());
-    public ElementAction elementAction=new ElementAction();
+    public ElementAction elementAction=null;
+    public Assertion assertion=null;
+
     @Test()
     public void test(){
         logger.info("执行测试步骤");
-        for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
+       /* for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
             tstotalsteps=entry.getValue().size()+tstotalsteps;
-        }
+        }*/
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
             extentTest=extentReports.startTest(entry.getKey());
+            elementAction=new ElementAction(driver);
+            assertion=new Assertion(driver,extentReports,extentTest);
             for(Autosteps autosteps1:entry.getValue()){
                     if(autosteps1.getTsactiontype().equals("单击")){
                         elementAction.click(autosteps1);
                     }else if(autosteps1.getTsactiontype().equals("输入")){
                        elementAction.sendKey(autosteps1,autosteps1.getTsactioncontent());
                     }
-                    Assertion.verityType(autosteps1);
-                    tsrunsteps++;
+                assertion.verityType(autosteps1);
+                   /* tsrunsteps++;*/
                 }
-            Assertion.writeReport();
+            assertion.writeReport();
             extentReports.flush();
             extentReports.endTest(extentTest);
         }

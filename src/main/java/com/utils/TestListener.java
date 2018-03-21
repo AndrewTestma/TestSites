@@ -9,6 +9,9 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  * @program: TestSites
  * @description: 测试监听类
@@ -19,12 +22,17 @@ public class TestListener extends TestListenerAdapter {
     public Logger logger= LoggerFactory.getLogger(this.getClass().getName());
     ExtentReports extent;
     ExtentTest extentTest;
-
     @Override
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
         logger.info("测试用例:"+tr.getName()+"---start"+this.hashCode());
-        extent=TestBaseCase.getextent();
+        String ip= null;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        extent=ExtentReportMap.getMap(ip);
     }
 
     @Override

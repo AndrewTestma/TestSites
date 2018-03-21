@@ -1,9 +1,11 @@
 package com.utils;
 
 import com.pojo.Autosteps;
+import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -17,31 +19,38 @@ import java.util.Date;
  * @author: Mr.Andrew
  * @create: 2018-03-05 14:03
  **/
-public class Assertion  extends TestBaseCase {
-    private static Logger logger= LoggerFactory.getLogger(Assertion.class);
-    public static ExtentTest verification=null;
-    public static ExtentTest  parameter=null;
-    public static ExtentTest screenshot=null;
+public class Assertion{
+    private Logger logger= LoggerFactory.getLogger(Assertion.class);
+    public WebDriver driver;
+    public ExtentReports extentReports;
+    public ExtentTest extentTest;
+    public ExtentTest verification=null;
+    public ExtentTest  parameter=null;
+    public ExtentTest screenshot=null;
     public static String screenShotPath;//绝对路径，图片存放地址
     public static int i=0;//控制写入报告次数
-    public static ElementAction action=new ElementAction();
+    public Assertion(WebDriver driver, ExtentReports extentReports,ExtentTest extentTest){
+        this.driver=driver;
+        this.extentReports=extentReports;
+        this.extentTest=extentTest;
+    }
     public static String formatDate(Date date)
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HHmmssSSS");
         return formatter.format(date).toString();
     }
-    public static void snapshotInfo(){
+    public  void snapshotInfo(){
         ScreenShot screenShot=new ScreenShot(driver);
         Date nowDate=new Date();
         screenShot.setscreenName(Assertion.formatDate(nowDate));
         screenShotPath=screenShot.takeScreenshot();
     }
-    /*
+    /**
      * @Description:判断验证方式
      * @param:[autosteps]:实体对象
      * @date 2018/3/19 11:02
      */
-    public static void verityType(Autosteps autosteps){
+    public  void verityType(Autosteps autosteps){
         if(!autosteps.getTsverificationtype().equals("")){
            if(verification==null&parameter==null){
                verification=extentReports.startTest("验证点");
@@ -67,7 +76,7 @@ public class Assertion  extends TestBaseCase {
     * @Param:[url]:页面URL,[flag]:条件判断
     * @Date: 14:06 2018年03月05日
      */
-    public static void verityAssertLocation(Autosteps autosteps,String url,Boolean flag){
+    public  void verityAssertLocation(Autosteps autosteps,String url,Boolean flag){
         String verityStr="页面是否跳转至:"+url+"地址";
         logger.info(verityStr);
         Boolean f;
@@ -88,20 +97,19 @@ public class Assertion  extends TestBaseCase {
     * @Param:[text]:验证的文本,[flag]:条件判断
     * @Date: 14:34 2018年03月05日
      */
-    public static void verityAssertText(Autosteps autosteps,String text,Boolean flag){
+    public  void verityAssertText(Autosteps autosteps,String text,Boolean flag){
         String verityStr="页面是否存在当前:"+text;
         logger.info(verityStr);
         StringBuffer stringBuffer=new StringBuffer();
         Boolean f;
-        try{
-            stringBuffer.append("//*[text()='"+text+"'");
-           /* stringBuffer.append(text);
-            stringBuffer.append("\"]");*/
-            driver.findElements(By.xpath(stringBuffer.toString()));
+        stringBuffer.append("//*[text()='"+text+"']");
+        logger.info(stringBuffer.toString());
+        if(driver.findElements(By.xpath(stringBuffer.toString())).size()>0){
             f=true;
-        }catch(Exception e){
+        }else {
             f=false;
         }
+
         try{
             Assert.assertTrue(f);
             AssertPassLog(autosteps,text,flag);
@@ -113,7 +121,7 @@ public class Assertion  extends TestBaseCase {
     * @Description: 验证成功
     * @Date: 14:29 2018年03月05日
      */
-    public static void AssertPassLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
+    public  void AssertPassLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证成功");
         writeExtentReport(autosteps,verityStr,parameterStr,"PASS");
     }
@@ -121,7 +129,7 @@ public class Assertion  extends TestBaseCase {
     * @Description:验证失败
     * @Date: 14:30 2018年03月05日
      */
-    public static void AssertFailedLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
+    public  void AssertFailedLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证失败");
         snapshotInfo();
         writeExtentReport(autosteps,verityStr,parameterStr,"FAILED");
@@ -130,7 +138,7 @@ public class Assertion  extends TestBaseCase {
      * @将验证结果及测试数据写入测试报告中
      * @param status 验证状态
      * */
-    public static void writeExtentReport(Autosteps autosteps,String verityStr,Boolean parameterStr,String status){
+    public  void writeExtentReport(Autosteps autosteps,String verityStr,Boolean parameterStr,String status){
        try{
            parameter.log(LogStatus.INFO,autosteps.getTsactioncontent());
            if(status.equals("PASS")){
@@ -145,11 +153,11 @@ public class Assertion  extends TestBaseCase {
            logger.info("验证结果写入测试报告出错");
        }
     }
-    /*
+    /**
      * @Description:写入子表测试报告
      * @date 2018/3/19 13:26
      */
-    public static void writeReport(){
+    public  void writeReport(){
         try{
             extentTest.appendChild(parameter);
             extentTest.appendChild(verification);

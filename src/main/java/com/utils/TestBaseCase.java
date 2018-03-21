@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -23,17 +25,49 @@ import java.util.Map;
  * @Date 2018/2/28 0028
  */
 public class TestBaseCase {
-    public static WebDriver driver;
-    public static ExtentReports extentReports;
-    public static ExtentTest extentTest;
-    public String  reportLocation;
+    public String reportLocation;
     public Logger logger= LoggerFactory.getLogger(this.getClass());
-    public static Map<String,List<Autosteps>> autosteps=new HashMap<>();
-    public static int tstotaltime;//执行时长
+    public WebDriver driver;
+    public ExtentReports extentReports;
+    public ExtentTest extentTest;
+    public Map<String,List<Autosteps>> autosteps=new HashMap<>();
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public ExtentReports getExtentReports() {
+        return extentReports;
+    }
+
+    public void setExtentReports(ExtentReports extentReports) {
+        this.extentReports = extentReports;
+    }
+
+    public ExtentTest getExtentTest() {
+        return extentTest;
+    }
+
+    public void setExtentTest(ExtentTest extentTest) {
+        this.extentTest = extentTest;
+    }
+
+    public Map<String, List<Autosteps>> getAutosteps() {
+        return autosteps;
+    }
+
+    public void setAutosteps(Map<String, List<Autosteps>> autosteps) {
+        this.autosteps = autosteps;
+    }
+
+    /*public static int tstotaltime;//执行时长
     public static int tstotalsteps=0;//总步数
     public static int tsrunsteps=0;//执行步数
-    public long startTime;//开始时间
-    public long endTime;//结束时间
+    public long startTime;//开始时间e
+    public long endTime;//结束时间*/
     /** 
     * @Description: 获取当前路径，并截取
     * @Date: 19:20 2018年03月15日
@@ -47,8 +81,16 @@ public class TestBaseCase {
     public void initializationExtentReport(){
         reportLocation=getLocalPath()+"/resources/result/"+ExecuteController.business.getTsbusinessid()+".html";
         logger.info(reportLocation);
+        String ip=null;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+            logger.info(ip);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         extentReports=new ExtentReports(reportLocation,true, NetworkMode.OFFLINE,Locale.SIMPLIFIED_CHINESE);
         extentReports.addSystemInfo("Host Name", "Andrew");
+        ExtentReportMap.setMap(ip,extentReports);
     }
     /**
      * @Description:测试执行前操作
@@ -56,7 +98,7 @@ public class TestBaseCase {
     @BeforeTest
     public void startSetUp(){
         logger.info("---打开浏览器---");
-        startTime=System.currentTimeMillis();
+        /*startTime=System.currentTimeMillis();*/
         String driverType=ExecuteController.env.getTsdriver();
         String driverPath=ExecuteController.env.getTsdirverpath();
         String driverName=ExecuteController.env.getTsname();
@@ -88,8 +130,8 @@ public class TestBaseCase {
     public void endSetUp(){
         driver.close();
         driver.quit();
-        endTime=System.currentTimeMillis();
-        tstotaltime=(int)((endTime-startTime)/1000);
+        /*endTime=System.currentTimeMillis();
+        tstotaltime=(int)((endTime-startTime)/1000);*/
         logger.info("关闭退出浏览器");
         logger.info("---结束测试---");
     }
@@ -98,9 +140,4 @@ public class TestBaseCase {
         extentReports.endTest(extentTest);
         extentReports.close();
     }
-    public static ExtentReports getextent() {
-        return extentReports;
-    }
-
-
 }
