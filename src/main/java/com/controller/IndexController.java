@@ -29,6 +29,10 @@ public class IndexController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name="ProductService")
     private ProductService productService;
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String login(){
+        return "manage/login";
+    }
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String index(Model model){
         List<Product> list=productService.selectList(0,10);
