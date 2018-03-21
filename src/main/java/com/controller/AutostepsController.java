@@ -6,10 +6,7 @@ import com.service.CaseStepsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -29,6 +26,7 @@ import java.util.Map;
  */
 @Controller("AutostepsController")
 @RequestMapping("/autosteps")
+@SessionAttributes("username")
 public class AutostepsController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "AutostepsService")
@@ -85,12 +83,13 @@ public class AutostepsController {
      * */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public int add(Autosteps autosteps){
+    public int add(Autosteps autosteps,@ModelAttribute("username")String username){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         autosteps.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
         autosteps.setTsmodulename((String)session.getAttribute("module"));
         autosteps.setTscommon(0);//每次新增默认操作步骤为执行失败
+        autosteps.setTscreator(username);
         autostepsService.insert(autosteps);
         return autosteps.getTsautostepsid();
     }
