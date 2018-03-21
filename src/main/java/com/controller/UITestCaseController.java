@@ -10,10 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -28,6 +25,7 @@ import java.util.*;
  */
 @Controller("UITestCaseController")
 @RequestMapping("/ui")
+@SessionAttributes("username")
 public class UITestCaseController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "UITestCaseService")
@@ -71,11 +69,12 @@ public class UITestCaseController {
     }
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public int add(UITestCase uiTestCase,HttpServletRequest request){
+    public int add(UITestCase uiTestCase,HttpServletRequest request,@ModelAttribute("username")String username){
         HttpSession session = request.getSession();
         uiTestCase.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
         uiTestCase.setTsmodulename((String)session.getAttribute("module"));
         uiTestCase.setTscommon(0);
+        uiTestCase.setTscreator(username);
         uiTestCaseService.insert(uiTestCase);
         return uiTestCase.getTsuitestcaseid();
     }
