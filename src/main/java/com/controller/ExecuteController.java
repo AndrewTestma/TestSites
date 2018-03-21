@@ -25,7 +25,6 @@ import java.util.*;
 @Controller("ExecuteController")
 @RequestMapping("/exec")
 public class ExecuteController {
-
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     public static  Map<String,List<Autosteps>> listMap=null;
     public static Product pro=null;
@@ -62,15 +61,15 @@ public class ExecuteController {
         env=operatingEnvService.selectByPrimaryKey(0);
         business=businessService.selectByPrimaryKey(Integer.valueOf(tsbusinessid));
         List<Integer> uiIdList=businessCaseService.selectBytsbusinessid(Integer.valueOf(tsbusinessid));
-        Result result=new Result();
-        if(uiIdList.size()>0){
+        /*Result result=new Result();*/
+        if(uiIdList.size()>0) {
             execAutoSteps(uiIdList);
-            TestNG testNG=new TestNG();
-            TestListener testListener=new TestListener();
+            TestNG testNG = new TestNG();
+            TestListener testListener = new TestListener();
             testNG.addListener(testListener);
             testNG.setTestClasses(new Class[]{BaseTest.class});
             testNG.run();
-            result.setTsbusinessid(Integer.valueOf(tsbusinessid));
+            /*result.setTsbusinessid(Integer.valueOf(tsbusinessid));
             result.setTscount(1);
             result.setTstotalsteps(TestBaseCase.tstotalsteps);
             result.setTsrunsteps(TestBaseCase.tsrunsteps);
@@ -90,13 +89,14 @@ public class ExecuteController {
         }
         TestBaseCase.tstotalsteps=0;
         TestBaseCase.tsrunsteps=0;
-        TestBaseCase.tstotaltime=0;
+        TestBaseCase.tstotaltime=0;*/
+        }
         return tsresultid;
     }
     /**
      * @Description:执行的操作步骤
      * */
-    public void execAutoSteps(List<Integer> uiIdList){
+    public void execAutoSteps(List<Integer>uiIdList){
         for(int i:uiIdList){
             List<Autosteps> autosteps=new ArrayList<>();
             String tsname=uiTestCaseService.selectByPrimaryKey(i).getTsname();
