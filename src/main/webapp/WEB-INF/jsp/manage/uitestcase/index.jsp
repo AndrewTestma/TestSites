@@ -1,3 +1,4 @@
+<%@ page import="com.pojo.User" %>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>

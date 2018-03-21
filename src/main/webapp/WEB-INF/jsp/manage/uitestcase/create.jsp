@@ -69,13 +69,6 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-4">
-                        <label for="tscreator">创建人:</label>
-                        <input id="tscreator" type="text" class="form-control" name="tscreator"
-                               value="${uiTestCase.tscreator}" maxlength="50">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4">
                         <a id="addtc" onclick="adduitestcase()"  class="btn btn-primary" title="添加"><i
                                 class="glyphicon glyphicon-plus"></i> 新增用例
                         </a>

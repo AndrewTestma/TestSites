@@ -101,12 +101,6 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <label for="tscreator">创建人：</label>
-                    <input id="tscreator" type="text" class="form-control" name="tscreator" maxlength="50">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-12">
                     <a class="btn  btn-success" onclick="createAutoSteps();">保存</a>
                     <a class="btn btn-info"  onclick="addAutoStepsDialog.close();">取消</a>
                 </div>
