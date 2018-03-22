@@ -107,6 +107,7 @@ create table if not exists tsuser(
   tsuserid integer(11) auto_increment,
   tsname varchar(100) not null,
   tspassword varchar(100) not null,
+  tsoperatingenvid integer(11) default null,
   primary key(tsuserid)
 )engine=innodb;
 -- tsuserproduct
