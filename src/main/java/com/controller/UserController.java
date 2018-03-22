@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpSession;
+
 
 /**
  * @author Mr.Andrew
@@ -27,22 +29,21 @@ public class UserController {
     public Logger logger= LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserService userService;
-
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
     /**
      * @Description:验证用户是否存在
      * @param:[name, password]:用户名,密码
      * @return:java.lang.String
      * @date:2018/3/20 17:42
      */
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public int login(String name,String password,ModelMap model){
+    public int login(String name, String password, ModelMap model, HttpSession session){
         User user=userService.selectCount(name,password);
         if(user!=null){
             model.addAttribute("user",user);
+            session.setAttribute("user",user);
             return 1;
         }
-
         return 0;
     }
 

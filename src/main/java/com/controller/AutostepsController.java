@@ -4,6 +4,7 @@ import com.pojo.Autosteps;
 import com.pojo.User;
 import com.service.AutostepsService;
 import com.service.CaseStepsService;
+import com.utils.ExtentReportMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -43,8 +44,8 @@ public class AutostepsController {
      * */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(HttpServletRequest request){
-        Integer prodcutID=Integer.valueOf(request.getSession().getAttribute("product").toString());
+    public Object list(@ModelAttribute("user")User user){
+        Integer prodcutID= ExtentReportMap.productSession.get(user.getTsuserid());
         List<Autosteps> rows=autostepsService.selectList(prodcutID);
         long total=rows.size();
         Map<String,Object> result=new HashMap<>();
@@ -58,7 +59,6 @@ public class AutostepsController {
     @RequestMapping(value = "/tcstep",method = RequestMethod.GET)
     @ResponseBody
     public Object tcstep(String uitestcaseID){
-        System.out.println(uitestcaseID);
         List<Integer> list=caseStepsService.selectBytsuitestcaseid(Integer.valueOf(uitestcaseID));
         List<Autosteps> autosteps=new ArrayList<>();
         for(Integer i:list){
@@ -112,8 +112,8 @@ public class AutostepsController {
     * @return: java.util.Map<java.lang.String,java.lang.Object>：绑定在table的数据
     * @Date: 9:40 2018年03月13日
      */
-    public Map<String,Object> listByModule(@RequestParam("moduleName") String moduleName,HttpServletRequest request){
-        Integer prodcutID=Integer.valueOf(request.getSession().getAttribute("product").toString());
+    public Map<String,Object> listByModule(@RequestParam("moduleName") String moduleName,@ModelAttribute("user")User user){
+        Integer prodcutID= ExtentReportMap.productSession.get(user.getTsuserid());
         Map<String,Object> result=new HashMap<>();
         List<Autosteps> rows=autostepsService.selectByModule(moduleName,prodcutID);
         long total=rows.size();

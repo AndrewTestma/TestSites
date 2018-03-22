@@ -1,15 +1,14 @@
 package com.controller;
 
 import com.pojo.Module;
+import com.pojo.User;
 import com.service.ModuleService;
+import com.utils.ExtentReportMap;
 import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -27,6 +26,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/module")
+@SessionAttributes("user")
 public class ModuleController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "ModuleService")
@@ -37,9 +37,9 @@ public class ModuleController {
     }
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(HttpServletRequest request){
-
-        List<Module> list=moduleService.selectList(Integer.valueOf(request.getAttribute("product").toString()));
+    public Object list(@ModelAttribute("user")User user){
+        Integer productID= ExtentReportMap.productSession.get(user.getTsuserid());
+        List<Module> list=moduleService.selectList(productID);
         long total=list.size();
         Map<String ,Object> result=new HashMap<>();
         result.put("data",list);
@@ -48,8 +48,8 @@ public class ModuleController {
     }
     @RequestMapping(value = "/selectlist",method = RequestMethod.GET)
     @ResponseBody
-    public JSONArray selectList(HttpServletRequest request){
-        Integer productID=Integer.valueOf(request.getSession().getAttribute("product").toString());
+    public JSONArray selectList(@ModelAttribute("user")User user){
+        Integer productID=ExtentReportMap.productSession.get(user.getTsuserid());
         List<Module> list=moduleService.selectList(productID);
         JSONArray jsonArray=JSONArray.fromObject(list);
         return jsonArray;

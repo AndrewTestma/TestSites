@@ -1,7 +1,9 @@
 package com.controller;
 
 import com.pojo.Product;
+import com.pojo.User;
 import com.service.ProductService;
+import com.utils.ExtentReportMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/product")
+@SessionAttributes("user")
 public class ProductController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "ProductService")
@@ -58,12 +61,15 @@ public class ProductController {
     public int create(Product product){
        return productService.insert(product);
     }
+    /**
+     * @Description:
+     * @param:
+     * @return:
+     * @date:2018/3/22 15:00
+     */
     @RequestMapping("/save")
-    @ResponseBody
-    public String save(String product){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession();
-        session.setAttribute("product",product);
-        return (String) session.getAttribute("product");
+    public String save(String product,@ModelAttribute("user") User user){
+        ExtentReportMap.productSession.put(user.getTsuserid(),Integer.valueOf(product));
+        return "true";
     }
 }

@@ -4,6 +4,7 @@ import com.pojo.UITestCase;
 import com.pojo.User;
 import com.service.BusinessCaseService;
 import com.service.UITestCaseService;
+import com.utils.ExtentReportMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,9 @@ public class UITestCaseController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(@RequestParam(required = false)String module,HttpServletRequest request){
+    public Object list(@RequestParam(required = false)String module,@ModelAttribute("user")User user){
         List<UITestCase> rows;
-        Integer productID=Integer.valueOf(request.getSession().getAttribute("product").toString());
+        Integer productID=ExtentReportMap.productSession.get(user.getTsuserid());
         if(module==""){
             rows=uiTestCaseService.selectList(productID);
         }else{

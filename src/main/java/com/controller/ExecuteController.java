@@ -30,6 +30,7 @@ public class ExecuteController {
     public static Product pro=null;
     public static OperatingEnv env=null;
     public static Business business=null;
+    public User user;
     @Resource(name = "BusinessCaseService")
     private BusinessCaseService businessCaseService;
     @Resource(name = "UITestCaseService")
@@ -42,8 +43,8 @@ public class ExecuteController {
     private ProductService productService;
     @Resource(name = "OperatingEnvService")
     private OperatingEnvService operatingEnvService;
-    @Autowired
-    private ResultService resultService;
+    /*@Autowired
+    private ResultService resultService;*/
     @Autowired
     private BusinessService businessService;
     @RequestMapping(value = "/business",method = RequestMethod.GET)
@@ -61,6 +62,7 @@ public class ExecuteController {
         env=operatingEnvService.selectByPrimaryKey(Integer.valueOf(user.getTsoperatingenvid()));
         business=businessService.selectByPrimaryKey(Integer.valueOf(tsbusinessid));
         List<Integer> uiIdList=businessCaseService.selectBytsbusinessid(Integer.valueOf(tsbusinessid));
+        this.user=user;
         /*Result result=new Result();*/
         if(uiIdList.size()>0) {
             execAutoSteps(uiIdList);
@@ -105,7 +107,7 @@ public class ExecuteController {
                 autosteps.add(autostepsService.selectByPrimaryKey(n));
             }
              listMap.put(tsname,autosteps);
-             ExtentReportMap.autosteps.put(Thread.currentThread().getName(),listMap);
+             ExtentReportMap.autosteps.put(user.getTsuserid(),listMap);
             }
     }
 }

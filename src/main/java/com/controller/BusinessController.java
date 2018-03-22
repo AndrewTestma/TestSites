@@ -1,8 +1,10 @@
 package com.controller;
 
 import com.pojo.Business;
+import com.pojo.User;
 import com.service.BusinessCaseService;
 import com.service.BusinessService;
+import com.utils.ExtentReportMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import java.util.Map;
  */
 @Controller("BusinessController")
 @RequestMapping("/bus")
+@SessionAttributes("user")
 public class BusinessController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -49,8 +52,8 @@ public class BusinessController {
      * */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(HttpServletRequest request){
-        Integer productID=Integer.valueOf(request.getSession().getAttribute("product").toString());
+    public Object list(@ModelAttribute("user")User user){
+        Integer productID= ExtentReportMap.productSession.get(user.getTsuserid());
         List<Business> rows=businessService.selectList(productID);
         long total=rows.size();
         Map<String,Object> result=new HashMap<>();
