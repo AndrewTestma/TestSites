@@ -22,9 +22,7 @@
     select
     <include refid="Base_Column_List" />
     from tsbusiness
-    ORDER BY
-    tsbusinessid
-    LIMIT #{offset}, #{limit}
+    where tsproductid = #{tsproductid}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsbusiness

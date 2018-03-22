@@ -20,7 +20,7 @@ public interface BusinessService {
 
     Business selectByPrimaryKey(Integer tsbusinessid);
 
-    List<Business> selectList(@Param("offset")int offset, @Param("limit")int limit);
+    List<Business> selectList(Integer tsproductid);
 
     int updateByPrimaryKeySelective(Business record);
 

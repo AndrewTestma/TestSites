@@ -3,6 +3,7 @@ package com.service.impl;
 import com.dao.BusinessMapper;
 import com.pojo.Business;
 import com.service.BusinessService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Service("BusinessService")
 public class BusinessServiceImpl implements BusinessService {
-    @Resource(name = "BusinessMapper")
+    @Autowired
     private BusinessMapper businessMapper;
     @Override
     public int deleteByPrimaryKey(Integer tsbusinessid) {
@@ -38,8 +39,8 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public List<Business> selectList(int offset, int limit) {
-        return businessMapper.selectList(offset,limit);
+    public List<Business> selectList(Integer tsproductid) {
+        return businessMapper.selectList(tsproductid);
     }
 
     @Override
