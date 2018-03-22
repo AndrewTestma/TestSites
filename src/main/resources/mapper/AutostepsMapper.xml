@@ -35,15 +35,14 @@
     select
     <include refid="Base_Column_List" />
     from tsautosteps
-    ORDER BY
-    tsautostepsid
-    LIMIT #{offset}, #{limit}
+    where tsproductid = #{tsproductid}
   </select>
   <select id="selectByModule" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tsautosteps
-    where tsmodulename = #{tsmodulename,jdbcType=VARCHAR}
+    where tsmodulename = #{tsmodulename}
+    AND tsproductid = #{tsproductid}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsautosteps

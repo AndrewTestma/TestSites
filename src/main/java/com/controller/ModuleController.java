@@ -50,10 +50,9 @@ public class ModuleController {
     @ResponseBody
     public JSONArray selectList(HttpServletRequest request){
         Integer productID=Integer.valueOf(request.getSession().getAttribute("product").toString());
-        logger.info(productID.toString());
-               List<Module> list=moduleService.selectList(productID);
-               JSONArray jsonArray=JSONArray.fromObject(list);
-               return jsonArray;
+        List<Module> list=moduleService.selectList(productID);
+        JSONArray jsonArray=JSONArray.fromObject(list);
+        return jsonArray;
     }
     @RequestMapping(value = "/create",method = RequestMethod.GET)
     public String create(){

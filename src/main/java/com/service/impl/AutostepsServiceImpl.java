@@ -3,6 +3,7 @@ package com.service.impl;
 import com.dao.AutostepsMapper;
 import com.pojo.Autosteps;
 import com.service.AutostepsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Service("AutostepsService")
 public class AutostepsServiceImpl implements AutostepsService {
-    @Resource(name = "AutostepsMapper")
+    @Autowired
     private AutostepsMapper autostepsMapper;
     @Override
     public int deleteByPrimaryKey(Integer tsautostepsid) {
@@ -38,13 +39,13 @@ public class AutostepsServiceImpl implements AutostepsService {
     }
 
     @Override
-    public List<Autosteps> selectList(int offset, int limit) {
-        return autostepsMapper.selectList(offset,limit);
+    public List<Autosteps> selectList(Integer tsproductid) {
+        return autostepsMapper.selectList(tsproductid);
     }
 
     @Override
-    public List<Autosteps> selectByModule(String moduleName) {
-        return autostepsMapper.selectByModule(moduleName);
+    public List<Autosteps> selectByModule(String moduleName,Integer tsproductid) {
+        return autostepsMapper.selectByModule(moduleName,tsproductid);
     }
 
     @Override

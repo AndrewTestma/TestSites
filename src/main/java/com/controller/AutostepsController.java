@@ -43,14 +43,9 @@ public class AutostepsController {
      * */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(
-            @RequestParam(required = false, defaultValue = "0", value = "offset") int offset,
-            @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
-            @RequestParam(required = false, defaultValue = "", value = "search") String search,
-            @RequestParam(required = false, value = "sort") String sort,
-            @RequestParam(required = false, value = "order") String order,
-            @RequestParam(required = false)Integer uitestcaseid){
-        List<Autosteps> rows=autostepsService.selectList(offset,limit);
+    public Object list(HttpServletRequest request){
+        Integer prodcutID=Integer.valueOf(request.getSession().getAttribute("product").toString());
+        List<Autosteps> rows=autostepsService.selectList(prodcutID);
         long total=rows.size();
         Map<String,Object> result=new HashMap<>();
         result.put("data",rows);
@@ -117,9 +112,10 @@ public class AutostepsController {
     * @return: java.util.Map<java.lang.String,java.lang.Object>：绑定在table的数据
     * @Date: 9:40 2018年03月13日
      */
-    public Map<String,Object> listByModule(String moduleName){
+    public Map<String,Object> listByModule(@RequestParam("moduleName") String moduleName,HttpServletRequest request){
+        Integer prodcutID=Integer.valueOf(request.getSession().getAttribute("product").toString());
         Map<String,Object> result=new HashMap<>();
-        List<Autosteps> rows=autostepsService.selectByModule(moduleName);
+        List<Autosteps> rows=autostepsService.selectByModule(moduleName,prodcutID);
         long total=rows.size();
         result.put("data",rows);
         result.put("total",total);

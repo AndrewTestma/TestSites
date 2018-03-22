@@ -18,9 +18,9 @@ public interface AutostepsService {
 
     Autosteps selectByPrimaryKey(Integer tsautostepsid);
 
-    List<Autosteps> selectList(int offset, int limit);
+    List<Autosteps> selectList(Integer tsproductid);
 
-    List<Autosteps> selectByModule(String moduleName);
+    List<Autosteps> selectByModule(String moduleName,Integer tsproductid);
 
     int updateByPrimaryKeySelective(Autosteps record);
 

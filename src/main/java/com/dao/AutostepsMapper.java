@@ -16,9 +16,9 @@ public interface AutostepsMapper {
 
     Autosteps selectByPrimaryKey(Integer tsautostepsid);
 
-    List<Autosteps> selectList(@Param("offset") int offset,@Param("limit") int limit);
+    List<Autosteps> selectList(@Param("tsproductid") Integer tsproductid);
 
-    List<Autosteps> selectByModule(String moduleName);
+    List<Autosteps> selectByModule(@Param("tsmodulename") String moduleName,@Param("tsproductid") Integer tsproductid);
 
     int updateByPrimaryKeySelective(Autosteps record);
 
