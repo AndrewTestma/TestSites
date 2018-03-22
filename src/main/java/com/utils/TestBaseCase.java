@@ -10,12 +10,18 @@ import com.relevantcodes.extentreports.NetworkMode;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -28,6 +34,7 @@ import java.util.Map;
  * @Description:测试父类
  * @Date 2018/2/28 0028
  */
+@Component
 public class TestBaseCase {
     public String reportLocation;
     public Logger logger= LoggerFactory.getLogger(this.getClass());
@@ -36,6 +43,8 @@ public class TestBaseCase {
     public ExtentTest extentTest;
     public ElementAction elementAction=null;
     public Assertion assertion=null;
+    public User user;
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     /*public static int tstotaltime;//执行时长
     public static int tstotalsteps=0;//总步数
     public static int tsrunsteps=0;//执行步数
@@ -50,19 +59,20 @@ public class TestBaseCase {
         path = path.substring(0,path.indexOf("/WEB-INF"));
         return path;
     }
+
     @BeforeSuite
     public void initializationExtentReport(){
+        user=(User) request.getSession().getAttribute("user");
         reportLocation=getLocalPath()+"/resources/result/"+ExecuteController.business.getTsbusinessid()+".html";
         extentReports=new ExtentReports(reportLocation,true, NetworkMode.OFFLINE,Locale.SIMPLIFIED_CHINESE);
         extentReports.addSystemInfo("Host Name", "Andrew");
-        ExtentReportMap.map.put(Thread.currentThread().getName(),extentReports);
+        ExtentReportMap.map.put(user.getTsuserid(),extentReports);
     }
     /**
      * @Description:测试执行前操作
      * */
     @BeforeTest
     public void startSetUp(){
-        logger.info(Thread.currentThread().getName());
         logger.info("---打开浏览器---");
         /*startTime=System.currentTimeMillis();*/
         String driverType=ExecuteController.env.getTsdriver();
@@ -73,9 +83,6 @@ public class TestBaseCase {
         }else {
             driver=DriverManager.setRemoteDriver(driverType,driverPath);
         }
-        /*autosteps= ExecuteController.listMap;*/
-
-     /*   ExtentReportMap.autosteps.put(user.getTsuserid(),ExecuteController.listMap);*/
         String url=ExecuteController.pro.getTsurl();
         driver.navigate().to(url);
         driver.manage().window().maximize();
@@ -114,19 +121,8 @@ public class TestBaseCase {
     @Test()
     public void test(){
         logger.info("执行测试步骤");
-        /*String ip=null;
-        try {
-            ip = InetAddress.getLocalHost().getHostAddress();
-            logger.info(ip);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        Map<String,List<Autosteps>> autosteps=null;
-        if(ExtentReportMap.autosteps.get(ip)!=null){
-            autosteps=ExtentReportMap.autosteps.get(ip);
-        }*/
-        if(ExtentReportMap.autosteps.get(Thread.currentThread().getName())!=null){
-            for(Map.Entry<String,List<Autosteps>> entry:ExtentReportMap.autosteps.get(Thread.currentThread().getName()).entrySet()){
+        if(ExtentReportMap.autosteps.get(user.getTsuserid())!=null){
+            for(Map.Entry<String,List<Autosteps>> entry:ExtentReportMap.autosteps.get(user.getTsuserid()).entrySet()){
                 extentTest=extentReports.startTest(entry.getKey());
                 elementAction=new ElementAction(driver);
                 assertion=new Assertion(driver,extentReports,extentTest);
@@ -142,11 +138,11 @@ public class TestBaseCase {
                 extentReports.flush();
                 extentReports.endTest(extentTest);
                 if(!assertion.t){
-                    ExtentReportMap.autosteps.remove(Thread.currentThread().getName());
+                    ExtentReportMap.autosteps.remove(user.getTsuserid());
                     break;
                 }
             }
-            ExtentReportMap.autosteps.remove(Thread.currentThread().getName());
+            ExtentReportMap.autosteps.remove(user.getTsuserid());
         }
     }
 }

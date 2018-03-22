@@ -15,8 +15,8 @@ import java.util.Map;
  */
 public class ExtentReportMap {
 
-    public static Map<String,ExtentReports> map=new HashMap<>();//存储报告对象
-    public static Map<String,Map<String,List<Autosteps>>> autosteps=new HashMap<>();
+    public static Map<Integer,ExtentReports> map=new HashMap<>();//存储报告对象
+    public static Map<Integer,Map<String,List<Autosteps>>> autosteps=new HashMap<>();
     /**
      * @Description:在Map中添加或取出ExtentReport对象
      * @return:ExtentReport对象
