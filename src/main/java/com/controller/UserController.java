@@ -2,15 +2,13 @@ package com.controller;
 
 import com.pojo.User;
 import com.service.UserService;
+import com.utils.ExtentReportMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,11 +35,12 @@ public class UserController {
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public int login(String name, String password, ModelMap model, HttpSession session){
+    public int login(String name, String password, ModelMap model, HttpSession session, @RequestParam(value = "tsproductid",required = false,defaultValue = "1")Integer tsproductid){
         User user=userService.selectCount(name,password);
         if(user!=null){
             model.addAttribute("user",user);
             session.setAttribute("user",user);
+            ExtentReportMap.productSession.put(user.getTsuserid(),tsproductid);
             return 1;
         }
         return 0;
