@@ -16,9 +16,9 @@ public interface UITestCaseMapper {
     
     UITestCase selectByPrimaryKey(Integer tsuitestcaseid);
 
-    List<UITestCase> selectList(@Param("offset")int offset, @Param("limit")int limit);
+    List<UITestCase> selectList(@Param("tsproductid")Integer tsproductid);
 
-    List<UITestCase> selectListByModuel(@Param("module") String module);
+    List<UITestCase> selectListByModuel(@Param("module") String module,@Param("tsproductid")Integer tsproductid);
 
     int updateByPrimaryKeySelective(UITestCase record);
 

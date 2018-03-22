@@ -26,15 +26,14 @@
     select
     <include refid="Base_Column_List" />
     from tsuitestcase
-    ORDER BY
-    tsuitestcaseid
-    LIMIT #{offset}, #{limit}
+    where tsproductid = #{tsproductid}
   </select>
   <select id="selectListByModuel" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tsuitestcase
     WHERE tsmodulename = #{module}
+    and tsproductid = #{tsproductid}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsuitestcase

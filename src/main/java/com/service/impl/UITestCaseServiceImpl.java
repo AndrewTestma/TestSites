@@ -38,13 +38,13 @@ public class UITestCaseServiceImpl implements UITestCaseService {
     }
 
     @Override
-    public List<UITestCase> selectList(int offset, int limit) {
-        return uiTestCaseMapper.selectList(offset,limit);
+    public List<UITestCase> selectList(Integer tsproductid) {
+        return uiTestCaseMapper.selectList(tsproductid);
     }
 
     @Override
-    public List<UITestCase> selectListByModuel(String module) {
-        return uiTestCaseMapper.selectListByModuel(module);
+    public List<UITestCase> selectListByModuel(String module,Integer tsproductid) {
+        return uiTestCaseMapper.selectListByModuel(module,tsproductid);
     }
 
     @Override

@@ -19,9 +19,9 @@ public interface UITestCaseService {
 
     UITestCase selectByPrimaryKey(Integer tsuitestcaseid);
 
-    List<UITestCase> selectList(int offset, int limit);
+    List<UITestCase> selectList(Integer tsproductid);
 
-    List<UITestCase> selectListByModuel( String module);
+    List<UITestCase> selectListByModuel( String module,Integer tsproductid);
 
     int updateByPrimaryKeySelective(UITestCase record);
 
