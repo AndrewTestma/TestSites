@@ -19,7 +19,7 @@ public interface ModuleService {
 
     Module selectByPrimaryKey(Integer tsmoduleid);
 
-    List<Module> selectList(@Param("offset")int offset, @Param("limit")int limit);
+    List<Module> selectList(Integer tsproductid);
     int updateByPrimaryKeySelective(Module record);
 
     int updateByPrimaryKey(Module record);

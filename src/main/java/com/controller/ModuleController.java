@@ -37,13 +37,9 @@ public class ModuleController {
     }
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(
-            @RequestParam(required = false,defaultValue = "0",value = "offset")int offset,
-            @RequestParam(required = false,defaultValue = "10",value = "limit")int limit,
-            @RequestParam(required = false,defaultValue = "",value = "search")String search,
-            @RequestParam(required = false, value = "sort") String sort,
-            @RequestParam(required = false, value = "order") String order){
-        List<Module> list=moduleService.selectList(offset,limit);
+    public Object list(HttpServletRequest request){
+
+        List<Module> list=moduleService.selectList(Integer.valueOf(request.getAttribute("product").toString()));
         long total=list.size();
         Map<String ,Object> result=new HashMap<>();
         result.put("data",list);
@@ -52,8 +48,10 @@ public class ModuleController {
     }
     @RequestMapping(value = "/selectlist",method = RequestMethod.GET)
     @ResponseBody
-    public JSONArray selectList(){
-               List<Module> list=moduleService.selectList(0,100);
+    public JSONArray selectList(HttpServletRequest request){
+        Integer productID=Integer.valueOf(request.getSession().getAttribute("product").toString());
+        logger.info(productID.toString());
+               List<Module> list=moduleService.selectList(productID);
                JSONArray jsonArray=JSONArray.fromObject(list);
                return jsonArray;
     }

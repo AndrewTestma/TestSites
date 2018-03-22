@@ -19,9 +19,7 @@
     select
     <include refid="Base_Column_List" />
     from tsmodule
-    ORDER BY
-    tsmoduleid
-    LIMIT #{offset}, #{limit}
+    where tsproductid =#{tsproductid}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsmodule

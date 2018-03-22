@@ -3,6 +3,7 @@ package com.service.impl;
 import com.dao.ModuleMapper;
 import com.pojo.Module;
 import com.service.ModuleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Service("ModuleService")
 public class ModuleServiceImpl implements ModuleService {
-    @Resource(name = "ModuleMapper")
+    @Autowired
     private ModuleMapper moduleMapper;
     @Override
     public int deleteByPrimaryKey(Integer tsmoduleid) {
@@ -38,8 +39,8 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public List<Module> selectList(int offset, int limit) {
-        return moduleMapper.selectList(offset,limit);
+    public List<Module> selectList(Integer tsproductid) {
+        return moduleMapper.selectList(tsproductid);
     }
 
     @Override
