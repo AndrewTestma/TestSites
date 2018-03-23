@@ -43,7 +43,7 @@ public class UITestCaseController {
     @ResponseBody
     public Object list(@RequestParam(required = false)String module,@ModelAttribute("user")User user){
         List<UITestCase> rows;
-        Integer productID=ExtentReportMap.productSession.get(user.getTsuserid());
+        Integer productID=user.getTsproductid();
         if(module==""){
             rows=uiTestCaseService.selectList(productID);
         }else{
@@ -63,7 +63,7 @@ public class UITestCaseController {
     @ResponseBody
     public int add(UITestCase uiTestCase,HttpServletRequest request,@ModelAttribute("user")User user){
         HttpSession session = request.getSession();
-        uiTestCase.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
+        uiTestCase.setTsproductid(user.getTsproductid());
         uiTestCase.setTsmodulename((String)session.getAttribute("module"));
         uiTestCase.setTscommon(0);
         uiTestCase.setTscreator(user.getTsname());

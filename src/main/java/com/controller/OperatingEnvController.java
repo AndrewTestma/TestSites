@@ -109,7 +109,6 @@ public class OperatingEnvController {
      */
     public int apply(String tsoperatingenvid, ModelMap modelMap,@ModelAttribute("user")User user){
         user.setTsoperatingenvid(tsoperatingenvid);
-        userService.updateByPrimaryKeySelective(user);
         modelMap.addAttribute("tsoperatingenvid",tsoperatingenvid);
         return userService.updateByPrimaryKeySelective(user);
     }

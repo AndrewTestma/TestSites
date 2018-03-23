@@ -49,7 +49,7 @@ public class ModuleController {
     @RequestMapping(value = "/selectlist",method = RequestMethod.GET)
     @ResponseBody
     public JSONArray selectList(@ModelAttribute("user")User user){
-        Integer productID=ExtentReportMap.productSession.get(user.getTsuserid());
+        Integer productID=user.getTsproductid();
         List<Module> list=moduleService.selectList(productID);
         JSONArray jsonArray=JSONArray.fromObject(list);
         return jsonArray;
@@ -59,9 +59,10 @@ public class ModuleController {
                 return "/manage/module/create";
     }
     @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public int create(Module module){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        module.setTsproductid(Integer.valueOf((String) request.getSession().getAttribute("product")));
+    public int create(Module module,@ModelAttribute("user")User user){
+        Integer productID=user.getTsproductid();
+        logger.info(productID.toString());
+        module.setTsproductid(productID);
         return moduleService.insert(module);
     }
     /**

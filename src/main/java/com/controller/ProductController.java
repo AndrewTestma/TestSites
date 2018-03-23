@@ -3,18 +3,16 @@ package com.controller;
 import com.pojo.Product;
 import com.pojo.User;
 import com.service.ProductService;
+import com.service.UserService;
 import com.utils.ExtentReportMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +28,10 @@ import java.util.Map;
 @SessionAttributes("user")
 public class ProductController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
-    @Resource(name = "ProductService")
+    @Autowired
     private ProductService productService;
-
+    @Autowired
+    private UserService userService;
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(){
         return "manage/product/index";
@@ -68,8 +67,10 @@ public class ProductController {
      * @date:2018/3/22 15:00
      */
     @RequestMapping("/save")
+    @ResponseBody
     public String save(String product,@ModelAttribute("user") User user){
-        ExtentReportMap.productSession.put(user.getTsuserid(),Integer.valueOf(product));
-        return "true";
+        user.setTsproductid(Integer.valueOf(product));
+        userService.updateByPrimaryKeySelective(user);
+        return "";
     }
 }

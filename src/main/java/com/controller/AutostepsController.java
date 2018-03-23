@@ -82,7 +82,7 @@ public class AutostepsController {
     public int add(Autosteps autosteps,@ModelAttribute("user")User user){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
-        autosteps.setTsproductid(Integer.valueOf((String)session.getAttribute("product")));
+        autosteps.setTsproductid(user.getTsproductid());
         autosteps.setTsmodulename((String)session.getAttribute("module"));
         autosteps.setTscommon(0);//每次新增默认操作步骤为执行失败
         autosteps.setTscreator(user.getTsname());
@@ -113,7 +113,7 @@ public class AutostepsController {
     * @Date: 9:40 2018年03月13日
      */
     public Map<String,Object> listByModule(@RequestParam("moduleName") String moduleName,@ModelAttribute("user")User user){
-        Integer prodcutID= ExtentReportMap.productSession.get(user.getTsuserid());
+        Integer prodcutID= user.getTsuserid();
         Map<String,Object> result=new HashMap<>();
         List<Autosteps> rows=autostepsService.selectByModule(moduleName,prodcutID);
         long total=rows.size();

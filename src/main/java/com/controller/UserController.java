@@ -35,12 +35,11 @@ public class UserController {
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public int login(String name, String password, ModelMap model, HttpSession session, @RequestParam(value = "tsproductid",required = false,defaultValue = "1")Integer tsproductid){
+    public int login(String name, String password, ModelMap model, HttpSession session){
         User user=userService.selectCount(name,password);
         if(user!=null){
             model.addAttribute("user",user);
             session.setAttribute("user",user);
-            ExtentReportMap.productSession.put(user.getTsuserid(),tsproductid);
             return 1;
         }
         return 0;

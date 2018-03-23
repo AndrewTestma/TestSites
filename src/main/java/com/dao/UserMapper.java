@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("UserMapper")
 public interface UserMapper {
-
     int deleteByPrimaryKey(Integer tsuserid);
 
     int insert(User record);
