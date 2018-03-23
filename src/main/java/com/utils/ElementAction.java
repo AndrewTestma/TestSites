@@ -33,7 +33,32 @@ public class ElementAction{
     public WebElement findElement(final Autosteps autosteps){
         WebElement webElement = null;
         try{
+            if(autosteps.getTsframepath().equals("default")){
+                driver.switchTo().defaultContent();
+            }
+            else if(!autosteps.getTsframepath().split("/")[0].equals("")){
+                String[] array = autosteps.getTsframepath().split("/");
+                int i = 0;
+                driver.switchTo().defaultContent();
+                while (array.length > i) {
+                    driver.switchTo().frame(array[i]);
+                    i++;
+                }
+                logger.info("【当前Frame】:"+array[i-1]);
+            }
             webElement=(new WebDriverWait(driver,5).until(
+                    new ExpectedCondition<WebElement>() {
+                        public WebElement apply(WebDriver input) {
+                            WebElement  element=getElement(autosteps);
+                            while(element==null) {
+                                    element=getElement(autosteps);
+                                }
+                            return element;
+                            }
+                        }
+            ));
+
+       /*     webElement=(new WebDriverWait(driver,5).until(
                     new ExpectedCondition<WebElement>() {
                         public WebElement apply(WebDriver input) {
                             WebElement  element=getElement(autosteps);
@@ -57,7 +82,7 @@ public class ElementAction{
                             return element;
                         }
                     }
-            ));
+            ));*/
             /*webElement=getElement(autosteps);*/
         }catch(NoSuchElementException e){
             logger.info("无法定位页面元素");
@@ -126,9 +151,10 @@ public class ElementAction{
     * @Date: 11:43 2018年03月05日
      */
     public void sendKey(Autosteps autosteps,String value){
-        WebElement webElement=null;
+        WebElement webElement;
         try{
             webElement=findElement(autosteps);
+            webElement.click();
             webElement.sendKeys(value);
             logger.info(autosteps.getTsremarks()+"输入: "+value);
         }catch(Exception e){
