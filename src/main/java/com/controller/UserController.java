@@ -20,7 +20,6 @@ import javax.servlet.http.HttpSession;
  * @date 2018/3/2017:02
  */
 @Controller("UserController")
-@SessionAttributes({"user"})
 @RequestMapping("/user")
 public class UserController {
 
@@ -35,10 +34,9 @@ public class UserController {
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public int login(String name, String password, ModelMap model, HttpSession session){
+    public int login(String name, String password,HttpSession session){
         User user=userService.selectCount(name,password);
         if(user!=null){
-            model.addAttribute("user",user);
             session.setAttribute("user",user);
             return 1;
         }

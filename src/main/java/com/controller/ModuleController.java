@@ -26,7 +26,6 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/module")
-@SessionAttributes("user")
 public class ModuleController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "ModuleService")
@@ -37,7 +36,9 @@ public class ModuleController {
     }
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(@ModelAttribute("user")User user){
+    public Object list(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         Integer productID= user.getTsproductid();
         List<Module> list=moduleService.selectList(productID);
         long total=list.size();
@@ -48,7 +49,9 @@ public class ModuleController {
     }
     @RequestMapping(value = "/selectlist",method = RequestMethod.GET)
     @ResponseBody
-    public JSONArray selectList(@ModelAttribute("user")User user){
+    public JSONArray selectList(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         Integer productID=user.getTsproductid();
         List<Module> list=moduleService.selectList(productID);
         JSONArray jsonArray=JSONArray.fromObject(list);
@@ -59,7 +62,9 @@ public class ModuleController {
                 return "/manage/module/create";
     }
     @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public int create(Module module,@ModelAttribute("user")User user){
+    public int create(Module module,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         Integer productID=user.getTsproductid();
         logger.info(productID.toString());
         module.setTsproductid(productID);
@@ -70,8 +75,7 @@ public class ModuleController {
      * */
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
-    public String save(String module){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    public String save(String module,HttpServletRequest request){
         HttpSession session=request.getSession();
         session.setAttribute("module",module);
         return (String) session.getAttribute("module");

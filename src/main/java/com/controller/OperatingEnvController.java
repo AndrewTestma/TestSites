@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +24,6 @@ import java.util.Map;
  */
 @Controller("OperatingEnvController")
 @RequestMapping("/env")
-@SessionAttributes("user")
 public class OperatingEnvController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
 
@@ -68,7 +69,6 @@ public class OperatingEnvController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public int add(OperatingEnv operatingEnv){
-        operatingEnv.setApply(1);
         return operatingEnvService.insert(operatingEnv);
     }
 
@@ -107,7 +107,9 @@ public class OperatingEnvController {
      * @return:int
      * @date:2018/3/21 10:18
      */
-    public int apply(String tsoperatingenvid, ModelMap modelMap,@ModelAttribute("user")User user){
+    public int apply(String tsoperatingenvid, ModelMap modelMap, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         user.setTsoperatingenvid(tsoperatingenvid);
         modelMap.addAttribute("tsoperatingenvid",tsoperatingenvid);
         return userService.updateByPrimaryKeySelective(user);

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,6 @@ import java.util.Map;
  */
 @Controller("BusinessController")
 @RequestMapping("/bus")
-@SessionAttributes("user")
 public class BusinessController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -49,7 +50,9 @@ public class BusinessController {
      * */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(@ModelAttribute("user")User user){
+    public Object list(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         Integer productID= user.getTsproductid();
         List<Business> rows=businessService.selectList(productID);
         long total=rows.size();
@@ -66,7 +69,9 @@ public class BusinessController {
     * @return: int
     * @Date: 15:47 2018年03月14日
      */
-    public int add(Business business,@ModelAttribute("user")User user){
+    public int add(Business business,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         business.setTsproductid(user.getTsproductid());
         businessService.insert(business);
         return business.getTsbusinessid();

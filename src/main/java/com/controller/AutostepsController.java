@@ -28,7 +28,6 @@ import java.util.Map;
  */
 @Controller("AutostepsController")
 @RequestMapping("/autosteps")
-@SessionAttributes("user")
 public class AutostepsController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Resource(name = "AutostepsService")
@@ -44,9 +43,10 @@ public class AutostepsController {
      * */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(@ModelAttribute("user")User user){
-        Integer prodcutID= user.getTsproductid();
-        List<Autosteps> rows=autostepsService.selectList(prodcutID);
+    public Object list(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
+        List<Autosteps> rows=autostepsService.selectList(user.getTsproductid());
         long total=rows.size();
         Map<String,Object> result=new HashMap<>();
         result.put("data",rows);
@@ -79,9 +79,9 @@ public class AutostepsController {
      * */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public int add(Autosteps autosteps,@ModelAttribute("user")User user){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    public int add(Autosteps autosteps,HttpServletRequest request){
         HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         autosteps.setTsproductid(user.getTsproductid());
         autosteps.setTsmodulename((String)session.getAttribute("module"));
         autosteps.setTscommon(0);//每次新增默认操作步骤为执行失败
@@ -104,18 +104,19 @@ public class AutostepsController {
             return "error";
         }
     }
+    /**
+     * @Description: 返回某个模块下的所有操作步骤
+     * @Param: [moduleName]:模块名称
+     * @return: java.util.Map<java.lang.String,java.lang.Object>：绑定在table的数据
+     * @Date: 9:40 2018年03月13日
+     */
     @RequestMapping(value = "/listByModule",method = RequestMethod.GET)
     @ResponseBody
-    /**
-    * @Description: 返回某个模块下的所有操作步骤
-    * @Param: [moduleName]:模块名称
-    * @return: java.util.Map<java.lang.String,java.lang.Object>：绑定在table的数据
-    * @Date: 9:40 2018年03月13日
-     */
-    public Map<String,Object> listByModule(@RequestParam("moduleName") String moduleName,@ModelAttribute("user")User user){
-        Integer prodcutID= user.getTsuserid();
+    public Map<String,Object> listByModule(@RequestParam("moduleName") String moduleName,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         Map<String,Object> result=new HashMap<>();
-        List<Autosteps> rows=autostepsService.selectByModule(moduleName,prodcutID);
+        List<Autosteps> rows=autostepsService.selectByModule(moduleName,user.getTsproductid());
         long total=rows.size();
         result.put("data",rows);
         result.put("total",total);

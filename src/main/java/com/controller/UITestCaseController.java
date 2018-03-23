@@ -41,13 +41,14 @@ public class UITestCaseController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(@RequestParam(required = false)String module,@ModelAttribute("user")User user){
+    public Object list(@RequestParam(required = false)String module,HttpServletRequest request){
         List<UITestCase> rows;
-        Integer productID=user.getTsproductid();
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         if(module==""){
-            rows=uiTestCaseService.selectList(productID);
+            rows=uiTestCaseService.selectList(user.getTsproductid());
         }else{
-            rows=uiTestCaseService.selectListByModuel(module,productID);
+            rows=uiTestCaseService.selectListByModuel(module,user.getTsproductid());
         }
         long total=rows.size();
         Map<String,Object> result=new HashMap<>();
@@ -59,10 +60,17 @@ public class UITestCaseController {
     public String create(){
         return "/manage/uitestcase/create";
     }
+    /**
+     * @Description:添加测试用例
+     * @param:[uiTestCase, request, user]:用例实体，获取模块，用户实体
+     * @return:int:是否成功
+     * @date:2018/3/23 10:10
+     */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public int add(UITestCase uiTestCase,HttpServletRequest request,@ModelAttribute("user")User user){
+    public int add(UITestCase uiTestCase,HttpServletRequest request){
         HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         uiTestCase.setTsproductid(user.getTsproductid());
         uiTestCase.setTsmodulename((String)session.getAttribute("module"));
         uiTestCase.setTscommon(0);

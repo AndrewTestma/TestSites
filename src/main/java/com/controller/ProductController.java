@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,6 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/product")
-@SessionAttributes("user")
 public class ProductController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -68,7 +69,9 @@ public class ProductController {
      */
     @RequestMapping("/save")
     @ResponseBody
-    public String save(String product,@ModelAttribute("user") User user){
+    public String save(String product, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User)session.getAttribute("user");
         user.setTsproductid(Integer.valueOf(product));
         userService.updateByPrimaryKeySelective(user);
         return "";
