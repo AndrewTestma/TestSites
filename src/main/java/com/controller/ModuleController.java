@@ -38,7 +38,7 @@ public class ModuleController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
     public Object list(@ModelAttribute("user")User user){
-        Integer productID= ExtentReportMap.productSession.get(user.getTsuserid());
+        Integer productID= user.getTsproductid();
         List<Module> list=moduleService.selectList(productID);
         long total=list.size();
         Map<String ,Object> result=new HashMap<>();

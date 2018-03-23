@@ -45,7 +45,7 @@ public class AutostepsController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
     public Object list(@ModelAttribute("user")User user){
-        Integer prodcutID= ExtentReportMap.productSession.get(user.getTsuserid());
+        Integer prodcutID= user.getTsproductid();
         List<Autosteps> rows=autostepsService.selectList(prodcutID);
         long total=rows.size();
         Map<String,Object> result=new HashMap<>();

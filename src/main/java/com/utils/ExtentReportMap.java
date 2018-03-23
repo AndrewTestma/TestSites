@@ -17,5 +17,5 @@ public class ExtentReportMap {
 
     public static Map<Integer,ExtentReports> map=new HashMap<>();//存储报告对象
     public static Map<Integer,Map<String,List<Autosteps>>> autosteps=new HashMap<>();//存储业务线对应的操作步骤
-    public static Map<Integer,Integer>productSession=new HashMap<>();//存储产品ID
+    //public static Map<Integer,Integer>productSession=new HashMap<>();//存储产品ID
 }
