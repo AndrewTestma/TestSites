@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.testng.TestNG;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -23,7 +24,6 @@ import java.util.*;
  */
 @Controller("ExecuteController")
 @RequestMapping("/exec")
-@SessionAttributes("user")
 public class ExecuteController {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     public  Map<String,List<Autosteps>> listMap=null;
@@ -55,14 +55,14 @@ public class ExecuteController {
     * @return: java.lang.String
     * @Date: 10:52 2018年03月05日
      */
-    public int execBusiness(String tsbusinessid, String tsproductid, @ModelAttribute("user")User user){
+    public int execBusiness(String tsbusinessid, String tsproductid, HttpSession session){
         int tsresultid=0;
+        user=(User)session.getAttribute("user");
         listMap=new LinkedHashMap<>();
         pro=productService.selectByPrimaryKey(Integer.valueOf(tsproductid));
         env=operatingEnvService.selectByPrimaryKey(Integer.valueOf(user.getTsoperatingenvid()));
         business=businessService.selectByPrimaryKey(Integer.valueOf(tsbusinessid));
         List<Integer> uiIdList=businessCaseService.selectBytsbusinessid(Integer.valueOf(tsbusinessid));
-        this.user=user;
         /*Result result=new Result();*/
         if(uiIdList.size()>0) {
             execAutoSteps(uiIdList);
