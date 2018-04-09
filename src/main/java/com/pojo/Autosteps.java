@@ -28,6 +28,8 @@ public class Autosteps {
 
     private String tsverificationtype;
 
+    private String tsverficationframe;
+
     private String tsverificationcontent;
 
     private Integer tscommon;
@@ -128,6 +130,14 @@ public class Autosteps {
 
     public void setTsverificationtype(String tsverificationtype) {
         this.tsverificationtype = tsverificationtype;
+    }
+
+    public String getTsverficationframe() {
+        return tsverficationframe;
+    }
+
+    public void setTsverficationframe(String tsverficationframe) {
+        this.tsverficationframe = tsverficationframe;
     }
 
     public String getTsverificationcontent() {

@@ -130,7 +130,7 @@
                 <a class="waves-effect" href="javascript:Tab.addTab('用户管理', 'home');"><i class="zmdi zmdi-home"></i> 用户管理</a>
                 <ul>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('权限设置', '');">权限设置</a></li>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('用户信息', '');">用户信息</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('用户信息', '${basePath}/user/index');">用户信息</a></li>
                 </ul>
             </li>
             <li class="sub-menu system_menus system_1 3" >

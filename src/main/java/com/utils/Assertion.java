@@ -6,12 +6,14 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @program: TestSites
@@ -111,9 +113,18 @@ public class Assertion{
         StringBuffer stringBuffer=new StringBuffer();
         Boolean f;
         stringBuffer.append("//*[text()='"+text+"']");
-        logger.info(stringBuffer.toString());
+        if(autosteps.getTsverficationframe()!=null){
+            String[] array = autosteps.getTsverficationframe().split("/");
+            int i = 0;
+            while (array.length > i) {
+                driver.switchTo().frame(array[i]);
+                i++;
+            }
+            logger.info("【当前Frame】:"+array[i-1]);
+        }
         if(driver.findElements(By.xpath(stringBuffer.toString())).size()>0){
             f=true;
+            driver.switchTo().defaultContent();
         }else {
             f=false;
         }

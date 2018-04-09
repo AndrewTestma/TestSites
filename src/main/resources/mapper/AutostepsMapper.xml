@@ -13,6 +13,7 @@
     <result column="tsframepath" jdbcType="VARCHAR" property="tsframepath" />
     <result column="tswait" jdbcType="INTEGER" property="tswait" />
     <result column="tsverificationtype" jdbcType="VARCHAR" property="tsverificationtype" />
+    <result column="tsverficationframe" jdbcType="VARCHAR" property="tsverficationframe" />
     <result column="tsverificationcontent" jdbcType="VARCHAR" property="tsverificationcontent" />
     <result column="tscommon" jdbcType="INTEGER" property="tscommon" />
     <result column="tsremarks" jdbcType="VARCHAR" property="tsremarks" />
@@ -22,7 +23,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     tsautostepsid, tsautostepsname, tsproductid, tsmodulename, tsselecttype, tsselectcontent, 
-    tsactiontype, tsactioncontent, tsframepath, tswait, tsverificationtype, tsverificationcontent, 
+    tsactiontype, tsactioncontent, tsframepath, tswait, tsverificationtype,tsverficationframe, tsverificationcontent,
     tscommon, tsremarks, tscreatetime, tscreator, tssuccess
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -52,13 +53,13 @@
     insert into tsautosteps (tsautostepsid, tsautostepsname, tsproductid, 
       tsmodulename, tsselecttype, tsselectcontent, 
       tsactiontype, tsactioncontent, tsframepath, 
-      tswait, tsverificationtype, tsverificationcontent, 
+      tswait, tsverificationtype, tsverficationframe, tsverificationcontent,
       tscommon, tsremarks, tscreatetime, 
       tscreator, tssuccess)
     values (#{tsautostepsid,jdbcType=INTEGER}, #{tsautostepsname,jdbcType=VARCHAR}, #{tsproductid,jdbcType=INTEGER}, 
       #{tsmodulename,jdbcType=VARCHAR}, #{tsselecttype,jdbcType=VARCHAR}, #{tsselectcontent,jdbcType=VARCHAR}, 
       #{tsactiontype,jdbcType=VARCHAR}, #{tsactioncontent,jdbcType=VARCHAR}, #{tsframepath,jdbcType=VARCHAR}, 
-      #{tswait,jdbcType=INTEGER}, #{tsverificationtype,jdbcType=VARCHAR}, #{tsverificationcontent,jdbcType=VARCHAR}, 
+      #{tswait,jdbcType=INTEGER}, #{tsverificationtype,jdbcType=VARCHAR},#{tsverficationframe,jdbcType=VARCHAR}, #{tsverificationcontent,jdbcType=VARCHAR},
       #{tscommon,jdbcType=INTEGER}, #{tsremarks,jdbcType=VARCHAR}, #{tscreatetime,jdbcType=TIMESTAMP}, 
       #{tscreator,jdbcType=VARCHAR}, #{tssuccess,jdbcType=INTEGER})
   </insert>
@@ -97,6 +98,9 @@
       </if>
       <if test="tsverificationtype != null">
         tsverificationtype,
+      </if>
+      <if test="tsverficationframe != null">
+        tsverficationframe,
       </if>
       <if test="tsverificationcontent != null">
         tsverificationcontent,
@@ -151,6 +155,9 @@
       <if test="tsverificationtype != null">
         #{tsverificationtype,jdbcType=VARCHAR},
       </if>
+      <if test="tsverficationframe != null">
+        #{tsverficationframe,jdbcType=VARCHAR},
+      </if>
       <if test="tsverificationcontent != null">
         #{tsverificationcontent,jdbcType=VARCHAR},
       </if>
@@ -204,6 +211,9 @@
       <if test="tsverificationtype != null">
         tsverificationtype = #{tsverificationtype,jdbcType=VARCHAR},
       </if>
+      <if test="tsverficationframe != null">
+        tsverficationframe = #{tsverficationframe,jdbcType=VARCHAR},
+      </if>
       <if test="tsverificationcontent != null">
         tsverificationcontent = #{tsverificationcontent,jdbcType=VARCHAR},
       </if>
@@ -237,6 +247,7 @@
       tsframepath = #{tsframepath,jdbcType=VARCHAR},
       tswait = #{tswait,jdbcType=INTEGER},
       tsverificationtype = #{tsverificationtype,jdbcType=VARCHAR},
+      tsverficationframe = #{tsverficationframe,jdbcType=VARCHAR},
       tsverificationcontent = #{tsverificationcontent,jdbcType=VARCHAR},
       tscommon = #{tscommon,jdbcType=INTEGER},
       tsremarks = #{tsremarks,jdbcType=VARCHAR},

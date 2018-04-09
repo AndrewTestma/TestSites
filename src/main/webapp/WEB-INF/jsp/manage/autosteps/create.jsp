@@ -89,6 +89,12 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
+                    <label for="tsverficationframe">验证Frame：</label>
+                    <input id="tsverficationframe" type="text" class="form-control" name="tsverficationframe" maxlength="50">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
                     <label for="tsverificationcontent">验证内容：</label>
                     <input id="tsverificationcontent" type="text" class="form-control" name="tsverificationcontent" maxlength="50">
                 </div>

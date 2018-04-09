@@ -246,6 +246,14 @@
                     }
                 },
                 {
+                    field: 'tsverficationframe',
+                    title: '验证Frame',
+                    editable:{
+                        type:'text',
+                        title:'验证Frame'
+                    }
+                },
+                {
                     field: 'tsverificationcontent',
                     title: '验证内容',
                     editable:{
