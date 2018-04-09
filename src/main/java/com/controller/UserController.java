@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Mr.Andrew
- * @Title: ÓÃ»§¿ØÖÆÆ÷
+ * @Title: ç”¨æˆ·æ§åˆ¶å™¨
  * @Description: UserController
  * @date 2018/3/2017:02
  */
@@ -25,8 +25,8 @@ public class UserController {
     @Autowired
     private UserService userService;
     /**
-     * @Description:ÑéÖ¤ÓÃ»§ÊÇ·ñ´æÔÚ
-     * @param:[name, password]:ÓÃ»§Ãû,ÃÜÂë
+     * @Description:éªŒè¯ç”¨æˆ·æ˜¯å¦å­˜åœ¨
+     * @param:[name, password]:ç”¨æˆ·å,å¯†ç 
      * @return:java.lang.String
      * @date:2018/3/20 17:42
      */
@@ -41,9 +41,9 @@ public class UserController {
         return 0;
     }
     /**
-     * @Description:ÍË³öµÇÂ¼
-     * @param:Ò³Ãæsession
-     * @return:ÖØ¶¨ÏòÊÓÍ¼
+     * @Description:é€€å‡ºç™»å½•
+     * @param:é¡µé¢session
+     * @return:é‡å®šå‘è§†å›¾
      * @date:2018/4/9 14:39
      */
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
