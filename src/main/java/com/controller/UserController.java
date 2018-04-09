@@ -42,5 +42,15 @@ public class UserController {
         }
         return 0;
     }
-
+    /**
+     * @Description:退出登录
+     * @param:页面session
+     * @return:重定向视图
+     * @date:2018/4/9 14:39
+     */
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public String logout(HttpSession session)throws Exception{
+        session.invalidate();
+        return "redirect:/index/login";
+    }
 }
