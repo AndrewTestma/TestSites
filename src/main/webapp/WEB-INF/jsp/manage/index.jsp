@@ -92,7 +92,7 @@
                             <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-settings"></i> 系统设置</a>
                         </li>
                         <li>
-                            <a class="waves-effect" href="${basePath}/sso/logout"><i class="zmdi zmdi-run"></i> 退出登录</a>
+                            <a class="waves-effect" href="${basePath}/user/logout" onclick=""><i class="zmdi zmdi-run"></i> 退出登录</a>
                         </li>
                     </ul>
                 </li>
@@ -169,7 +169,6 @@
 </section>
 <footer id="footer"></footer>
 <script>
-    var BASE_PATH = '${basePath}';
     function addsession(product){
         //添加session 方法
         $.ajax({
@@ -179,8 +178,10 @@
             success:function (data) {
             },
             error:function (data) {
+
             }
         });
+        window.location.reload();
     }
 </script>
 <script src="${basePath}/resources/plugins/jquery-1.12.4.min.js"></script>
