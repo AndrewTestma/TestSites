@@ -20,5 +20,6 @@
 <link href="${basePath}/resources/plugins/select2/theme/select2-bootstrap.min.css" rel="stylesheet"/>
 <link href="${basePath}/resources/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet"/>
 <link href="${basePath}/resources/plugins/webuploader-0.1.5/webuploader.css" rel="stylesheet"/>
+<link href="${basePath}/resources/plugins/bootstrap-validator/css/bootstrapValidator.css" rel="stylesheet"/>
 <link href="${basePath}/resources/css/common.css" rel="stylesheet"/>
 

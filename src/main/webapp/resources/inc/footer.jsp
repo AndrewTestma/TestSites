@@ -21,3 +21,4 @@
 <script src="${basePath}/resources/plugins/webuploader-0.1.5/webuploader.min.js"></script>
 <script src="${basePath}/resources/js/common.js"></script>
 <script src="${basePath}/resources/plugins/jquery.cxselect.min.js"></script>
+<script src="${basePath}/resources/plugins/bootstrap-validator/js/validator.min.js"></script>
