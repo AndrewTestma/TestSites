@@ -18,7 +18,7 @@
 <body>
 <div id="main">
     <div id="toolbar">
-        <a class="btn btn-default" href="javascript:;" onclick="createAction()"><i class="glyphicon glyphicon-plus"></i> 添加产品</a>
+        <a class="btn btn-default" href="javascript:;" onclick="createAction(0)"><i class="glyphicon glyphicon-plus"></i> 添加产品</a>
     </div>
     <table id="table"></table>
 </div>
@@ -62,23 +62,34 @@
                 {field: 'tspassword', title: '登录密码', align: 'center'},
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id=row.tsproductid;
-                    var returnValue = '<a class="btn btn-default" href="javascript:;"  onclick="updateAction('+id+')" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
-                        +'  <a class="btn btn-default" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                    var returnValue = '<a class="btn btn-default"  onclick="createAction('+id+')"  data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
+                        +'  <a class="btn btn-default" href="javascript:;" onclick="delProduct('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
             ]
         });
     });
     var createDialog;
-    function createAction() {
-        createDialog = $.dialog({
-            animationSpeed: 300,
-            title: '新增产品',
-            content: 'url:/product/create',
-            onContentReady: function () {
-                initMaterialInput();
-            }
-        });
+    function createAction(i) {
+        if(i==0){
+            createDialog = $.dialog({
+                animationSpeed: 300,
+                title: '新增产品',
+                content: 'url:/product/create',
+                onContentReady: function () {
+                    initMaterialInput();
+                }
+            });
+        }else{
+            createDialog = $.dialog({
+                animationSpeed: 300,
+                title: '新增产品',
+                content: 'url:/product/edit?tsproductid='+i+'',
+                onContentReady: function () {
+                    initMaterialInput();
+                }
+            });
+        }
     }
     var redirectDialog;
     function redirectAction() {
@@ -91,6 +102,27 @@
                 initMaterialInput();
             }
         });
+    }
+    //删除产品
+    function delProduct(tsproductid) {
+        $.ajax({
+            type:'get',
+            url:'/product/del',
+            data:{"tsproductid":tsproductid},
+            success:function (data) {
+                if(data>0){
+                    var opt={
+                        url: '/product/list',
+                    };
+                    $table.bootstrapTable('refresh',opt);
+                }else{
+                    alert("删除失败");
+                }
+            },
+            error:function () {
+                alert("操作异常");
+            }
+        })
     }
 </script>
 </body>

@@ -53,14 +53,14 @@
             data:{"tsuitestcaseid":id},
             success:function (data) {
                 if(data>0){
-                    alert("删除成功");
+                    var opt={
+                        url: '/ui/list',
+                    };
+                    $tctable.bootstrapTable('refresh',opt);
                 }else{
                     alert("删除失败");
                 }
-                var opt={
-                    url: '/ui/list',
-                };
-                $tctable.bootstrapTable('refresh',opt);
+
             },
             error:function () {
                 alert("操作异常");
