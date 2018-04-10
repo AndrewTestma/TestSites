@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -62,9 +63,7 @@ public class ProductController {
        return productService.insert(product);
     }
     /**
-     * @Description:
-     * @param:
-     * @return:
+     * @Description:添加产品Session
      * @date:2018/3/22 15:00
      */
     @RequestMapping("/save")
@@ -75,5 +74,45 @@ public class ProductController {
         user.setTsproductid(Integer.valueOf(product));
         userService.updateByPrimaryKeySelective(user);
         return "";
+    }
+    /**
+     * @Description:删除产品
+     * @param:[tsproductid]:产品ID
+     * @return:int:删除是否成功
+     * @date:2018/4/10 13:40
+     */
+    @RequestMapping(value = "/del",method = RequestMethod.GET)
+    @ResponseBody
+    public int del(Integer tsproductid){
+        int i=0;
+        try{
+            i = productService.deleteByPrimaryKey(tsproductid);
+        }catch (Exception e){
+            logger.error("删除产品出错");
+        }
+        return i;
+    }
+    /**
+     * @Description:编辑产品
+     * @param:[tsproductid, model]:编辑的产品ID,编辑产品实体
+     * @return:java.lang.String
+     * @date:2018/4/10 13:54
+     */
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String edit(@RequestParam("tsproductid")Integer tsproductid, Model model){
+        Product product=productService.selectByPrimaryKey(tsproductid);
+        model.addAttribute("product",product);
+        return "/manage/product/create";
+    }
+    /**
+     * @Description:修改产品
+     * @param:[product]:产品实体
+     * @return:int
+     * @date:2018/4/10 14:23
+     */
+    @RequestMapping(value = "update",method = RequestMethod.POST)
+    @ResponseBody
+    public int update(Product product){
+        return productService.updateByPrimaryKey(product);
     }
 }
