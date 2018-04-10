@@ -1,0 +1,39 @@
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+	    background-color: #009688;
+    border-color: #009688;
+}
+.pagination > li > a, .pagination > li > span{
+	color: #009688;
+}
+.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus{
+	color: #009688;
+}
+.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus{
+	color: #009688;
+}
+.site-block {
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #eee;
+        text-align: center;
+}
+.site-text {
+    position: relative;
+}
+.form-control{
+	height: 38px;
+}
+body .modal-class .layui-layer-btn .layui-layer-btn0{
+	background:#009688;
+	border-color: #009688;
+}
+
+body .modal-class .layui-layer-btn .layui-layer-btn1{
+	background:#FF5722;
+	border-color: #FF5722;
+	color: white;
+}
+
+.layui-progress-bar{
+	background-color: #009688 !important;
+}
