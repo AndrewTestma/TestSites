@@ -21,13 +21,13 @@
         <fieldset>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <label for="tsautostepsname">步骤名称：</label>
+                    <label for="tsautostepsname" style="color: red">步骤名称：</label>
                     <input id="tsautostepsname" type="text" class="form-control" name="tsautostepsname"  maxlength="50" required>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <label for="tsselecttype">查找方式：</label>
+                    <label for="tsselecttype" style="color: red">查找方式：</label>
                     <select id="tsselecttype" name="tsselecttype" class="form-control " title="查找方式">
                         <option>id</option>
                         <option>name</option>
@@ -42,13 +42,13 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <label for="tsselectcontent">查找内容：</label>
+                    <label for="tsselectcontent" style="color: red">查找内容：</label>
                     <input id="tsselectcontent" type="text" class="form-control" name="tsselectcontent" maxlength="50" required>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <label for="tsactiontype">执行内容：</label>
+                    <label for="tsactiontype" style="color: red">执行内容：</label>
                     <select id="tsactiontype" name="tsactiontype" class="form-control " title="执行方式">
                         <option>单击</option>
                         <option>输入</option>

@@ -18,7 +18,7 @@
 <body>
 
 <div class="container">
-    <div class="row">
+    <%--<div class="row">
         <div class="span6">
             <ul class="breadcrumb">
                 <li>
@@ -27,14 +27,14 @@
                 <li class="active">新建用例</li>
             </ul>
         </div>
-    </div>
+    </div>--%>
     <div class="myform">
         <form class="form-horizontal" method="post" id="testcaseForm">
             <fieldset form="testcaseForm">
                 <legend>测试用例</legend>
                 <div class="form-group">
                     <div class="col-sm-4">
-                        <label for="tsname">用例名称:</label>
+                        <label for="tsname" style="color: red">用例名称:</label>
                         <input id="tsuitestcaseid"  type="hidden" class="form-control" name="tsuitestcaseid" value="${uiTestCase.tsuitestcaseid}" maxlength="50">
                         <input id="tsname" type="text" class="form-control" name="tsname" value="${uiTestCase.tsname}"
                                data-minlength="5" data-error="用例名称不能为空" required>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-4">
-                        <label for="tsmodulename">选择模块:</label>
+                        <label for="tsmodulename" style="color: red">选择模块:</label>
                         <select id="tsmodulename" name="tsmodulename" class="form-control selectpicker"></select>
                     </div>
                 </div>
