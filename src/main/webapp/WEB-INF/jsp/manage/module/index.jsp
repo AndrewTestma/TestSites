@@ -17,7 +17,7 @@
         </div>
     </form>
 </div>
-<table id="module"/>
+<table id="module"></table>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
     function createSubmit() {
@@ -34,7 +34,7 @@
             success: function(result) {
                 if (result == 1) {
                     redirectAction.close();
-                    $module.bootstrapTable('refresh');
+                    $('#module').bootstrapTable('refresh');
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {

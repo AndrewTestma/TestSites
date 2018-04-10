@@ -37,7 +37,7 @@
                         <label for="tsname">用例名称:</label>
                         <input id="tsuitestcaseid"  type="hidden" class="form-control" name="tsuitestcaseid" value="${uiTestCase.tsuitestcaseid}" maxlength="50">
                         <input id="tsname" type="text" class="form-control" name="tsname" value="${uiTestCase.tsname}"
-                               maxlength="50">
+                               data-minlength="5" data-error="用例名称不能为空" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -143,6 +143,8 @@
             $('#tscommon').val('${uiTestCase.tscommon}');
             autostepstable(0);
         }
+        //验证
+        $('#testcaseForm').validator();
     });
     //bootstrap select 选择值后触发事件
     $("#tsmodulename").on('changed.bs.select', function (e) {
@@ -163,12 +165,12 @@
             type: 'post',
             url: '/ui/add',
             data: $('#testcaseForm').serialize(),
-            beforeSend: function () {
+           /* beforeSend: function () {
                 if ($('#tsname').val() == '') {
                     $('#tsname').focus();
                     return false;
                 }
-            },
+            },*/
             success: function (data) {
                 if (data > 0) {
                     uitestcaseID = data;

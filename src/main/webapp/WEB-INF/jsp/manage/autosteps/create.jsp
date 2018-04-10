@@ -22,7 +22,7 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tsautostepsname">步骤名称：</label>
-                    <input id="tsautostepsname" type="text" class="form-control" name="tsautostepsname" maxlength="50">
+                    <input id="tsautostepsname" type="text" class="form-control" name="tsautostepsname"  maxlength="50" required>
                 </div>
             </div>
             <div class="form-group">
@@ -43,7 +43,7 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tsselectcontent">查找内容：</label>
-                    <input id="tsselectcontent" type="text" class="form-control" name="tsselectcontent" maxlength="50">
+                    <input id="tsselectcontent" type="text" class="form-control" name="tsselectcontent" maxlength="50" required>
                 </div>
             </div>
             <div class="form-group">
@@ -117,6 +117,9 @@
 </body>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
+    $(function () {
+        $('#autostepsForm').validator();
+    })
     //点击保存操作步骤
     var autoStespID;
     function createAutoSteps() {
