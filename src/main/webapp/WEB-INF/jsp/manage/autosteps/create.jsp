@@ -48,8 +48,8 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <label for="tsactiontype" style="color: red">执行内容：</label>
-                    <select id="tsactiontype" name="tsactiontype" class="form-control " title="执行方式">
+                    <label for="tsactiontype" style="color: red">执行方式：</label>
+                    <select id="tsactiontype" name="tsactiontype" class="form-control " title="执行方式" >
                         <option>单击</option>
                         <option>输入</option>
                         <option>双击</option>
@@ -59,9 +59,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-12">
+                <div class="col-sm-12"  id="tsactioncontentdiv" style="display: none">
                     <label for="tsactioncontent">执行内容：</label>
-                    <input id="tsactioncontent" type="text" class="form-control" name="tsactioncontent" maxlength="50">
+                    <input id="tsactioncontent"  type="text" class="form-control" name="tsactioncontent" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
@@ -78,31 +78,39 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <label for="tsverificationtype">验证方式：</label>
-                    <select id="tsverificationtype" name="tsverificationtype" class="form-control " title="验证方式">
-                        <option>验证方式</option>
-                        <option>文本验证</option>
-                        <option>url验证</option>
-                        <option>数据库验证</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <label for="tsverficationframe">验证Frame：</label>
-                    <input id="tsverficationframe" type="text" class="form-control" name="tsverficationframe" maxlength="50">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <label for="tsverificationcontent">验证内容：</label>
-                    <input id="tsverificationcontent" type="text" class="form-control" name="tsverificationcontent" maxlength="50">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-12">
                     <label for="tsremarks">备注：</label>
                     <input id="tsremarks" type="text" class="form-control" name="tsremarks" maxlength="50">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <label>是否验证:</label>
+                    <input type="checkbox" onchange="document.getElementById('verdiv').style.display='inline'">
+                </div>
+            </div>
+            <div id="verdiv" style="display: none">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label for="tsverificationtype">验证方式：</label>
+                        <select id="tsverificationtype" name="tsverificationtype" class="form-control " title="验证方式">
+                            <option>验证方式</option>
+                            <option>文本验证</option>
+                            <option>url验证</option>
+                            <option>数据库验证</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label for="tsverficationframe">verFrame：</label>
+                        <input id="tsverficationframe" type="text" class="form-control" name="tsverficationframe" maxlength="50">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label for="tsverificationcontent">验证内容：</label>
+                        <input id="tsverificationcontent" type="text" class="form-control" name="tsverificationcontent" maxlength="50">
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -159,5 +167,13 @@
             }
         })
     }
+    //选择输入展开执行内容
+    $('#tsactiontype').change(function () {
+        if(($(this).children('option:selected').val())=="输入"){
+            document.getElementById("tsactioncontentdiv").style.display="inline";
+        }else{
+            document.getElementById("tsactioncontentdiv").style.display="none";
+        }
+    })
 </script>
 </html>
