@@ -10,13 +10,13 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Mr.Andrew
- * @Description: µÇÂ¼À¹½ØÆ÷
+ * @Description:ç™»å½•æ‹¦æˆªå™¨
  * @date 2018/4/9 13:09
  */
 public class LoginInterceptor implements HandlerInterceptor{
 
     /**
-     * @Description:HandlerÖ´ĞĞÖ®Ç°µ÷ÓÃÕâ¸ö·½·¨
+     * @Description:Handleræ‰§è¡Œä¹‹å‰è°ƒç”¨è¿™ä¸ªæ–¹æ³•
      * @date:2018/4/9 13:12
      */
     @Override
@@ -34,7 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor{
         return false;
     }
     /**
-     * @Description:HandlerÖ´ĞĞÖ®ºó£¬ModelAndView·µ»ØÖ®Ç°µ÷ÓÃÕâ¸ö·½·¨
+     * @Description:Handleræ‰§è¡Œä¹‹åï¼ŒModelAndViewè¿”å›ä¹‹å‰è°ƒç”¨è¿™ä¸ªæ–¹æ³•
      * @date:2018/4/9 13:12
      */
     @Override
@@ -42,7 +42,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 
     }
     /** 
-     * @Description:HandlerÖ´ĞĞÍê³ÉÖ®ºóµ÷ÓÃÕâ¸ö·½·¨
+     * @Description:Handleræ‰§è¡Œå®Œæˆä¹‹åè°ƒç”¨è¿™ä¸ªæ–¹æ³•
      * @date:2018/4/9 13:12  
      */
     @Override
