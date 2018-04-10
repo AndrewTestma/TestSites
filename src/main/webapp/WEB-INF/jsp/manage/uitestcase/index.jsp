@@ -28,7 +28,7 @@
         <div id="select_div" class="form-group">
             <div class="col-sm-4">
                 <select id="module" class="btn btn-default moduleselect" data-url="/module/selectlist" data-first-title="请选择模块"
-                        data-first-value="" data-json-name="tsame" data-json-value="tsame" onchange="onChangeModule(this.options[this.options.selectedIndex].value)"></select>
+                        data-first-value="" data-json-name="tsame" data-json-value="tsame" onchange="onChangeModule(this.options[this.options.selectedIndex].value)" ></select>
             </div>
         </div>
     </div>
@@ -100,8 +100,9 @@
             toolbar: '#toolbar',
             columns: [
                 {field: 'tsuitestcaseid', title: '编号', sortable: true, align: 'center'},
-                {field: 'tsname', title: '用例名称'},
-                {field: 'tsgrade', title: '用例等级'},
+                {field: 'tsmodulename', title: '模块',align:'center'},
+                {field: 'tsname', title: '用例名称',align:'center'},
+                {field: 'tsgrade', title: '用例等级',align:'center'},
                 {
                     field:'tscommon',title:'公共步骤',align:'center',formatter:function (value,row,index) {
                     var value=row.tscommon;
@@ -114,12 +115,12 @@
                     return returnValue;
                 },events: 'actionEvents', clickToSelect: false
                 },
-                {field: 'tscreatetime', title: '创建时间'},
-                {field: 'tscreator', title: '创建人'},
+                {field: 'tscreatetime', title: '创建时间',align:'center'},
+                {field: 'tscreator', title: '创建人',align:'center'},
                 {
                     field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id = row.tsuitestcaseid;
-                    var returnValue = '<a class="btn btn-default" href="/ui/edit?tsuitestcaseid='+id+'"   data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
+                    var returnValue = '<a class="btn btn-default" href="/ui/edit?tsuitestcaseid='+id+'" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
                         + '  <a class="btn btn-default" href="javascript:;" onclick="deleteAction(' + id + ')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
@@ -141,7 +142,7 @@
             }
         });
     }
-    //父子表
+    //子表
     function initSubTable(index,row,$detail) {
         var id=row.tsuitestcaseid;
         var cur_table=$detail.html('<table></table>').find('table');

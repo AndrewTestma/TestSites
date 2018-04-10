@@ -121,6 +121,14 @@
     var autoStespID;
     function createAutoSteps() {
         $.ajax({
+            type:'post',
+            url:'/module/save',
+            data:{"module":tsmodulename.value},
+            success:function () {
+
+            }
+        })
+        $.ajax({
             type: 'post',
             url: '/autosteps/add',
             data: $('#autostepsForm').serialize(),
