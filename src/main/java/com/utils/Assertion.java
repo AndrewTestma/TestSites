@@ -113,7 +113,7 @@ public class Assertion{
         StringBuffer stringBuffer=new StringBuffer();
         Boolean f;
         stringBuffer.append("//*[text()='"+text+"']");
-        if(autosteps.getTsverficationframe()!=null){
+        if(autosteps.getTsverficationframe()!=null && !autosteps.getTsverficationframe().equals("")){
             String[] array = autosteps.getTsverficationframe().split("/");
             int i = 0;
             while (array.length > i) {
