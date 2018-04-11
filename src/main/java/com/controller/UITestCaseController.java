@@ -1,8 +1,10 @@
 package com.controller;
 
+import com.pojo.CaseSteps;
 import com.pojo.UITestCase;
 import com.pojo.User;
 import com.service.BusinessCaseService;
+import com.service.CaseStepsService;
 import com.service.UITestCaseService;
 import com.utils.ExtentReportMap;
 import org.slf4j.Logger;
@@ -31,6 +33,8 @@ public class UITestCaseController {
     private UITestCaseService uiTestCaseService;
     @Autowired
     private BusinessCaseService businessCaseService;
+    @Autowired
+    private CaseStepsService caseStepsService;
     /**
      * @Description:ui测试用例主页
      * */
@@ -111,18 +115,23 @@ public class UITestCaseController {
         result.put("total",total);
         return result;
     }
+    /**
+     * @Description: 删除测试用例,同时删除中间表
+     * @Param: [tsuitestcaseid]
+     * @return: int
+     * @Date: 16:23 2018年03月13日
+     */
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     @ResponseBody
-    /** 
-    * @Description: 删除测试用例
-    * @Param: [tsuitestcaseid] 
-    * @return: int
-    * @Date: 16:23 2018年03月13日
-     */ 
     public int delete(String tsuitestcaseid){
         int i=0;
         if(businessCaseService.selectBytsuitestcaseid(Integer.valueOf(tsuitestcaseid)).size()==0){
-            i=uiTestCaseService.deleteByPrimaryKey(Integer.valueOf(tsuitestcaseid));
+            if(uiTestCaseService.deleteByPrimaryKey(Integer.valueOf(tsuitestcaseid))>0){
+                i++;
+            }
+            if(caseStepsService.deleteBytsuitestcaseid(Integer.valueOf(tsuitestcaseid))>0){
+                i++;
+            }
         }
         return i;
     }

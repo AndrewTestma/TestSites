@@ -8,9 +8,12 @@ import java.util.Map;
 
 @Repository("CaseStepsMapper")
 public interface CaseStepsMapper {
+
     int deleteByPrimaryKey(Integer tscasestepsid);
 
     int deleteByMore(CaseSteps caseSteps);
+
+    int deleteBytsuitestcaseid(Integer tsuitestcaseid);
 
     int insert(CaseSteps record);
 

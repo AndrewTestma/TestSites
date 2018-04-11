@@ -35,6 +35,10 @@
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
     and tsautostepsid = #{tsautostepsid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteBytsuitestcaseid" parameterType="java.lang.Integer">
+    delete from tscasesteps
+    where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.pojo.CaseSteps">
     insert into tscasesteps (tscasestepsid, tsuitestcaseid, tsautostepsid, 
       tsorder)

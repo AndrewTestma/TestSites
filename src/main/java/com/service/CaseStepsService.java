@@ -13,6 +13,8 @@ import java.util.Map;
 public interface CaseStepsService {
     int deleteByPrimaryKey(Integer tscasestepsid);
 
+    int deleteBytsuitestcaseid(Integer tsuitestcaseid);
+
     int deleteByMore(CaseSteps caseSteps);
 
     int insert(CaseSteps record);

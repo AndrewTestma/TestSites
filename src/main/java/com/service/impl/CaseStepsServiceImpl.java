@@ -23,6 +23,16 @@ public class CaseStepsServiceImpl implements CaseStepsService {
     public int deleteByPrimaryKey(Integer tscasestepsid) {
         return caseStepsMapper.deleteByPrimaryKey(tscasestepsid);
     }
+    /**
+     * @Description:根据测试用例ID删除中间表关系
+     * @param:[tsuitestcaseid]:测试用例ID
+     * @return:执行结果
+     * @date:2018/4/11 13:44
+     */
+    @Override
+    public int deleteBytsuitestcaseid(Integer tsuitestcaseid) {
+        return caseStepsMapper.deleteBytsuitestcaseid(tsuitestcaseid);
+    }
 
     @Override
     public int deleteByMore(CaseSteps caseSteps) {
