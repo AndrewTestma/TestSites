@@ -57,6 +57,9 @@
                         url: '/ui/list',
                     };
                     $tctable.bootstrapTable('refresh',opt);
+                    if(data<2){
+                        alert("删除中间表失败");
+                    }
                 }else{
                     alert("删除失败");
                 }

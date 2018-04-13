@@ -23,41 +23,35 @@
     <jsp:include page="/resources/inc/head.jsp" flush="true"/>
 </head>
 <body>
-
-<%--<div id="main">
-    <div id="toolbar">
-        <table id="resultTable"></table>
+<div>
+    <button id="btn" onclick="log()">加载日志</button>
+    <div id="log">
     </div>
 
-    ${tsbusinessid}
-</div>--%>
-<iframe src="/resources/result/${tsbusinessid}.html" style="width: 100%;height: 100%"></iframe>
-<%--<iframe src="" style="width: 100%;height: 100%" id="myFrame"></iframe>--%>
-<%--<script>--%>
-    <%--var a=document.getElementById("myFrame").src = "/resources/result/${tsbusinessid}.html";--%>
-    <%--console.log(a);--%>
-
-<%--</script>--%>
+</div>
 </body>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
-    var $resultTable=$('#resultTable');
-   $(function () {
-       var tsbusinessid = '${tsbusinessid}';
-       $resultTable.bootstrapTable({
-           url: '/result/info?tsbusinessid='+tsbusinessid,
-           height: getHeight(),
-           columns: [
-               {field: 'tsresultid', title: '编号',  align: 'center'},
-               {field: 'tstotaltime', title: '执行时长',align: 'center'},
-               {field: 'tstotalsteps', title: '总步骤数',  align: 'center'},
-               {field: 'tsrunsteps', title: '执行步骤数',  align: 'center'},
-               {field: 'tsresult', title: '执行结果',  align: 'center'},
-               {field: 'tscount', title: '执行次数',  align: 'center'},
-               {field: 'tsexecutive', title: '执行人',  align: 'center'},
-               {field: 'tsexecutiontime', title: '执行时间',  align: 'center'}
-           ]
+    var init;
+    $(function () {
+        init = self.setInterval("log()",1000);
+    })
+    function log () {
+      $.ajax({
+           type:'get',
+           url: "/result/log",
+           dataType:'json',
+           success:function (data) {
+                   var content=data.content;
+                   var html = [];
+                   var txt1="<pre>"+content+"</pre>";
+                   html.push(txt1);
+                   $('#log').html(html.join(''));
+                   if(content.indexOf("END")>0){
+                       clearInterval(init);
+                   }
+           }
        })
-   })
+    }
 </script>
 </html>

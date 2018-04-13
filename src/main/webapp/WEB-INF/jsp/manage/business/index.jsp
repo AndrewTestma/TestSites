@@ -67,7 +67,7 @@
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                         var id=row.tsbusinessid;
                         var pid=row.tsproductid;
-                        var returnValue = '<a class="btn btn-default" href="javascript:;"  onclick="execBusiness('+id+','+pid+')" data-toggle="tooltip"  title="Start"><i class="glyphicon glyphicon-play-circle"></i></a>'
+                        var returnValue = '<a class="btn btn-default" href="/result/index?tsbusinessid='+id+'"  onclick="execBusiness('+id+','+pid+')" data-toggle="tooltip"  title="Start"><i class="glyphicon glyphicon-play-circle"></i></a>'
                             +'  <a class="btn btn-default" href="/bus/edit?tsbusinessid='+id+'"  data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>'
                             +'  <a class="btn btn-default" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                         return returnValue;
