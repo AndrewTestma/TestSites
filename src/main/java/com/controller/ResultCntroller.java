@@ -52,7 +52,6 @@ public class ResultCntroller {
     public LogInfo log( HttpServletRequest request){
         User user=(User)request.getSession().getAttribute("user");
         LogInfo logInfo=ExtentReportMap.log.get(user.getTsuserid());
-        logger.info(logInfo.getContent()+"--------");
         return logInfo;
     }
 
