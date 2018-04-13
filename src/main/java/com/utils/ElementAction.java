@@ -1,6 +1,7 @@
 package com.utils;
 
 import com.pojo.Autosteps;
+import com.pojo.LogInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -21,8 +22,12 @@ import org.slf4j.LoggerFactory;
 public class ElementAction{
     public Logger logger= LoggerFactory.getLogger(this.getClass());
     public WebDriver driver;
-    public ElementAction( WebDriver driver){
+    public LogInfo logInfo;
+    public LogOperating logOperating;
+    public ElementAction( WebDriver driver,LogInfo logInfo,LogOperating logOperating){
         this.driver=driver;
+        this.logInfo=logInfo;
+        this.logOperating=logOperating;
     }
    /**
    * @Description: 查找单个元素
@@ -45,6 +50,7 @@ public class ElementAction{
                     i++;
                 }
                 logger.info("【当前Frame】:"+array[i-1]);
+                logOperating.writeTxtFile("【当前Frame】:"+array[i-1],logInfo);
             }
             webElement=(new WebDriverWait(driver,5).until(
                     new ExpectedCondition<WebElement>() {
@@ -86,6 +92,7 @@ public class ElementAction{
             /*webElement=getElement(autosteps);*/
         }catch(NoSuchElementException e){
             logger.info("无法定位页面元素");
+            logOperating.writeTxtFile("无法定位页面元素",logInfo);
         }
         return webElement;
     }
@@ -97,6 +104,7 @@ public class ElementAction{
      */
     public WebElement getElement(Autosteps autosteps){
         logger.info("查找元素："+autosteps.getTsremarks()+"查找方式："+"[By."+autosteps.getTsselecttype()+":"+autosteps.getTsselectcontent()+"]");
+        logOperating.writeTxtFile("查找元素："+autosteps.getTsremarks()+"查找方式："+"[By."+autosteps.getTsselecttype()+":"+autosteps.getTsselectcontent()+"]",logInfo);
         WebElement webElement;
         switch (autosteps.getTsselecttype())
         {
@@ -157,8 +165,10 @@ public class ElementAction{
             webElement.click();
             webElement.sendKeys(value);
             logger.info(autosteps.getTsremarks()+"输入: "+value);
+            logOperating.writeTxtFile(autosteps.getTsremarks()+"输入: "+value,logInfo);
         }catch(Exception e){
             logger.error("找不到元素："+autosteps.getTsremarks()+"-->输入失败");
+            logOperating.writeTxtFile("找不到元素："+autosteps.getTsremarks()+"-->输入失败",logInfo);
         }
     }
     public void sleepTime(long second){

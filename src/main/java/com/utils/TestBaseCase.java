@@ -2,6 +2,7 @@ package com.utils;
 
 import com.controller.ExecuteController;
 import com.pojo.Autosteps;
+import com.pojo.LogInfo;
 import com.pojo.User;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -17,6 +18,8 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -37,11 +40,13 @@ public class TestBaseCase {
     public Assertion assertion=null;
     public User user;
     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    LogInfo logInfo=new LogInfo();
     /*public static int tstotaltime;//执行时长
     public static int tstotalsteps=0;//总步数
     public static int tsrunsteps=0;//执行步数
     public long startTime;//开始时间e
     public long endTime;//结束时间*/
+    LogOperating logOperating=new LogOperating();
     /** 
     * @Description: 获取当前路径，并截取
     * @Date: 19:20 2018年03月15日
@@ -59,6 +64,7 @@ public class TestBaseCase {
         extentReports=new ExtentReports(reportLocation,true, NetworkMode.OFFLINE,Locale.SIMPLIFIED_CHINESE);
         extentReports.addSystemInfo("Host Name", "Andrew");
         ExtentReportMap.map.put(user.getTsuserid(),extentReports);
+        ExtentReportMap.log.put(user.getTsuserid(),logInfo);
     }
     /**
      * @Description:测试执行前操作
@@ -66,6 +72,7 @@ public class TestBaseCase {
     @BeforeTest
     public void startSetUp(){
         logger.info("---打开浏览器---");
+        logOperating.writeTxtFile("打开浏览器",logInfo);
         /*startTime=System.currentTimeMillis();*/
         String driverType=ExecuteController.env.getTsdriver();
         String driverPath=ExecuteController.env.getTsdirverpath();
@@ -103,6 +110,9 @@ public class TestBaseCase {
         tstotaltime=(int)((endTime-startTime)/1000);*/
         logger.info("关闭退出浏览器");
         logger.info("---结束测试---");
+        logOperating.writeTxtFile("关闭退出浏览器",logInfo);
+        logOperating.writeTxtFile("结束测试",logInfo);
+        logOperating.writeTxtFile("END",logInfo);
     }
     @AfterSuite
     public void closeExtentReport(){
@@ -116,8 +126,8 @@ public class TestBaseCase {
         if(ExtentReportMap.autosteps.get(user.getTsuserid())!=null){
             for(Map.Entry<String,List<Autosteps>> entry:ExtentReportMap.autosteps.get(user.getTsuserid()).entrySet()){
                 extentTest=extentReports.startTest(entry.getKey());
-                elementAction=new ElementAction(driver);
-                assertion=new Assertion(driver,extentReports,extentTest);
+                elementAction=new ElementAction(driver,logInfo,logOperating);
+                assertion=new Assertion(driver,extentReports,extentTest,logInfo,logOperating);
                 for(Autosteps autosteps1:entry.getValue()){
                     if(autosteps1.getTsactiontype().equals("单击")){
                         elementAction.click(autosteps1);

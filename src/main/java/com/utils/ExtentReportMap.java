@@ -1,21 +1,23 @@
 package com.utils;
 
 import com.pojo.Autosteps;
+import com.pojo.LogInfo;
 import com.relevantcodes.extentreports.ExtentReports;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author Mr.Andrew
- * @Title: ´æ´¢ExtentReport¶ÔÏó
+ * @Title:ExtentReportæŠ¥å‘ŠMap
  * @Description: ExtentReportMap
  * @date 2018/3/2113:30
  */
 public class ExtentReportMap {
 
-    public static Map<Integer,ExtentReports> map=new HashMap<>();//´æ´¢±¨¸æ¶ÔÏó
-    public static Map<Integer,Map<String,List<Autosteps>>> autosteps=new HashMap<>();//´æ´¢ÒµÎñÏß¶ÔÓ¦µÄ²Ù×÷²½Öè
-    //public static Map<Integer,Integer>productSession=new HashMap<>();//´æ´¢²úÆ·ID
+    public static Map<Integer,ExtentReports> map=new HashMap<>();//å­˜å‚¨ä¸åŒçš„æŠ¥å‘Šå¯¹è±¡
+    public static Map<Integer,Map<String,List<Autosteps>>> autosteps=new HashMap<>();//å­˜å‚¨ä¸åŒçš„æ“ä½œæ­¥éª¤åˆ—è¡¨
+    public static Map<Integer,LogInfo> log=new HashMap<>();//å­˜å‚¨ä¸åŒçš„æ“ä½œæ—¥å¿—
 }

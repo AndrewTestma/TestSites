@@ -1,6 +1,7 @@
 package com.utils;
 
 import com.pojo.Autosteps;
+import com.pojo.LogInfo;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -29,13 +30,17 @@ public class Assertion{
     public ExtentTest verification=null;
     public ExtentTest  parameter=null;
     public ExtentTest screenshot=null;
+    public LogInfo logInfo;
+    public LogOperating logOperating;
     public Boolean t;
     public static String screenShotPath;//绝对路径，图片存放地址
     public static int i=0;//控制写入报告次数
-    public Assertion(WebDriver driver, ExtentReports extentReports,ExtentTest extentTest){
+    public Assertion(WebDriver driver, ExtentReports extentReports, ExtentTest extentTest, LogInfo logInfo,LogOperating logOperating){
         this.driver=driver;
         this.extentReports=extentReports;
         this.extentTest=extentTest;
+        this.logInfo=logInfo;
+        this.logOperating=logOperating;
     }
     public static String formatDate(Date date)
     {
@@ -70,6 +75,7 @@ public class Assertion{
                     break;
                 default :
                     logger.info("操作不需要验证");
+                    logOperating.writeTxtFile("操作不需要验证",logInfo);
                     t=true;
                     break;
             }
@@ -84,6 +90,7 @@ public class Assertion{
 
         String verityStr="页面是否跳转至:"+url+"地址";
         logger.info(verityStr);
+        logOperating.writeTxtFile(verityStr,logInfo);
         Boolean f;
         try{
             f=url.equals(driver.getCurrentUrl());
@@ -110,6 +117,7 @@ public class Assertion{
         }
         String verityStr="页面是否存在当前:"+text;
         logger.info(verityStr);
+        logOperating.writeTxtFile(verityStr,logInfo);
         StringBuffer stringBuffer=new StringBuffer();
         Boolean f;
         stringBuffer.append("//*[text()='"+text+"']");
@@ -121,6 +129,7 @@ public class Assertion{
                 i++;
             }
             logger.info("【当前Frame】:"+array[i-1]);
+            logOperating.writeTxtFile("【当前Frame】:"+array[i-1],logInfo);
         }
         if(driver.findElements(By.xpath(stringBuffer.toString())).size()>0){
             f=true;
@@ -142,6 +151,7 @@ public class Assertion{
      */
     public  void AssertPassLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证成功");
+        logOperating.writeTxtFile("验证成功",logInfo);
         t=true;
         writeExtentReport(autosteps,verityStr,parameterStr,"PASS");
     }
@@ -151,6 +161,7 @@ public class Assertion{
      */
     public  void AssertFailedLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证失败");
+        logOperating.writeTxtFile("验证失败",logInfo);
         t=false;
         snapshotInfo();
         writeExtentReport(autosteps,verityStr,parameterStr,"FAILED");
@@ -172,6 +183,7 @@ public class Assertion{
            extentReports.flush();
        }catch (Error e){
            logger.info("验证结果写入测试报告出错");
+           logOperating.writeTxtFile("验证结果写入测试报告出错",logInfo);
        }
     }
     /**
@@ -188,6 +200,7 @@ public class Assertion{
 
         }catch(Exception e){
             logger.info("添加子表出错");
+            logOperating.writeTxtFile("添加子表出错",logInfo);
         }finally {
             extentReports.endTest(parameter);
             extentReports.endTest(verification);

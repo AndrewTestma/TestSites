@@ -24,7 +24,6 @@
 </head>
 <body>
 <div>
-    <button id="btn" onclick="log()">加载日志</button>
     <div id="log">
     </div>
 
