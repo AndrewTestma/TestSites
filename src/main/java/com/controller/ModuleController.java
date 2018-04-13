@@ -66,7 +66,6 @@ public class ModuleController {
         HttpSession session = request.getSession();
         User user=(User)session.getAttribute("user");
         Integer productID=user.getTsproductid();
-        logger.info(productID.toString());
         module.setTsproductid(productID);
         return moduleService.insert(module);
     }
