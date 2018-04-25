@@ -13,7 +13,7 @@
         </div>
         <div class="form-group text-right dialog-buttons">
             <a class="waves-effect waves-button" href="javascript:;" onclick="createSubmit();">保存</a>
-            <a class="waves-effect waves-button" href="javascript:;" onclick="redirectAction.close();">取消</a>
+            <a class="waves-effect waves-button" href="javascript:;" onclick="redirectDialog.close();">取消</a>
         </div>
     </form>
 </div>
@@ -33,7 +33,7 @@
             },
             success: function(result) {
                 if (result == 1) {
-                    redirectAction.close();
+                    redirectDialog.close();
                     $('#module').bootstrapTable('refresh');
                 }
             },
@@ -60,12 +60,12 @@
             url: '/module/list',
             height: getHeight(),
             striped: true,
-            search: true,
-            showRefresh: true,
+            search: false,
+            showRefresh: false,
             showColumns: true,
             minimumCountColumns: 2,
             clickToSelect: true,
-            detailView: true,
+            detailView: false,
             detailFormatter: 'detailFormatter',
             pagination: true,
             paginationLoop: false,
@@ -76,18 +76,32 @@
             searchOnEnterKey: true,
             idField: 'tsmoduleid',
             maintainSelected: true,
-            toolbar: '#toolbar',
             columns: [
                 {field: 'tsmoduleid', title: '编号', sortable: true, align: 'center'},
                 {field: 'tsame', title: '模块名称'},
                 {field: 'action', title: '操作', align: 'center', formatter: function (value, row, index) {
                     var id=row.tsmoduleid;
-                    var returnValue = '<a class="update" href="javascript:;"  onclick="updateAction('+id+')" data-toggle="tooltip"  title="Edit"><i class="glyphicon glyphicon-edit"></i></a>'
-                        +'  <a class="delete" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
+                    var returnValue ='<a class="delete" href="javascript:;" onclick="deleteAction('+id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
             ]
         });
     });
-
+    function deleteAction(id) {
+        $.ajax({
+            type:'post',
+            url:'/module/del',
+            data:{"tsmoduleid":id},
+            success:function (data) {
+                if(data==0){
+                    alert("此模块被测试用例使用，请先删除测试用例");
+                }else {
+                    var opt={
+                        url: '/module/list',
+                    };
+                    $module.bootstrapTable('refresh',opt);
+                }
+            }
+        })
+    }
 </script>

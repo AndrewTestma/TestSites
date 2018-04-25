@@ -52,7 +52,7 @@
                 {field: 'tsproductid', title: '编号', sortable: true, align: 'center'},
                 {field: 'tsname', title: '产品名称', align: 'center'},
                 {field: 'action', title: '模块信息', align: 'center', formatter: function (value, row, index) {
-                    var returnModule = ' <a href="javascript:;" onclick="redirectAction()"> 显示详情</a>';
+                    var returnModule = ' <a class="btn btn-default" href="javascript:;" onclick="redirectAction()"> 显示详情</a>';
                     return returnModule;
                 }, events: 'actionEvents', clickToSelect: false},
                 {field: 'tsurl', title: '测试地址', align: 'center'},

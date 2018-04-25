@@ -26,7 +26,6 @@
 <div>
     <div id="log">
     </div>
-
 </div>
 </body>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
