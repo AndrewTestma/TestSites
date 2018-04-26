@@ -254,7 +254,7 @@
                         addStr = 'none';
                         delStr = "inline";
                     }
-                    var returnValue =' <a class="btn btn-default" style="display: '+delStr+'"   href="javascript:;" onclick="addAutoSteps(' + id + ')" data-toggle="tooltip" title="编辑"><i class="glyphicon glyphicon-pencil"></i></a>'
+                    var returnValue =' <a class="btn btn-default"  href="javascript:;" onclick="addAutoSteps(' + id + ')" data-toggle="tooltip" title="编辑"><i class="glyphicon glyphicon-pencil"></i></a>'
                         + '  <a id="' + id + '" class="btn btn-default" style="display: '+addStr+'"  href="javascript:;"  onclick="InsertCaseSteps(' + id + ')" data-toggle="tooltip"  title="添加"><i class="glyphicon glyphicon-plus"></i></a>'
                         + '  <a  id="' + id + '1" class="btn btn-default" style="display: '+delStr+'"   href="javascript:;" onclick="DelCaseSteps(' + id + ')" data-toggle="tooltip" title="取消"><i class="glyphicon glyphicon-minus"></i></a>';
                     return returnValue;

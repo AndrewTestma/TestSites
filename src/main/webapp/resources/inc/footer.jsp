@@ -8,6 +8,7 @@
 <c:set var="basePath" value="${pageContext.request.contextPath}"/>
 <script src="${basePath}/resources/plugins/jquery-2.0.0.min.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+<%--<script src="${basePath}/resources/plugins/bootstrap-select-1.12.4/js/bootstrap-select.min.js"></script>--%>
 <script src="${basePath}/resources/plugins/bootstrap-table-1.11.0/bootstrap-table.min.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap3-editable/js/bootstrap-editable.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap3-editable/js/bootstrap-table-editable.js"></script>
@@ -22,3 +23,5 @@
 <script src="${basePath}/resources/js/common.js"></script>
 <script src="${basePath}/resources/plugins/jquery.cxselect.min.js"></script>
 <script src="${basePath}/resources/plugins/bootstrap-validator/js/validator.min.js"></script>
+<script src="${basePath}/resources/plugins/TableDnD/jquery.tablednd.js"></script>
+<script src="${basePath}/resources/plugins/TableDnD/bootstrap-table-reorder-rows.js"></script>

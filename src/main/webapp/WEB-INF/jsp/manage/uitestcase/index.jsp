@@ -70,7 +70,6 @@
             }
         })
     }
-
     //更改模块触发事件
     function onChangeModule(module) {
         ModuleStr=module;
@@ -148,7 +147,7 @@
     //子表
     function initSubTable(index,row,$detail) {
         var id=row.tsuitestcaseid;
-        var cur_table=$detail.html('<table></table>').find('table');
+        var cur_table=$detail.html('<table  data-use-row-attr-func="true" data-reorderable-rows="true"></table>').find('table');
         $(cur_table).bootstrapTable({
             url: '/autosteps/tcstep',
             method:'get',
@@ -156,7 +155,7 @@
             idField: 'tsautostepsid',
             maintainSelected: true,
             columns: [
-                {field: 'tsautostepsid', title: '编号', sortable: true, align: 'center'},
+                {field: 'tsautostepsid', title: '编号', sortable: true, align: 'center',visible: false},
                 {
                     field: 'tsautostepsname',
                     title: '步骤名称',
@@ -299,6 +298,17 @@
                         }
                     }
                 })
+            },
+            onReorderRowsDrag: function (table, row) {
+                return false;
+            },
+            //拖拽完成后的这条数据，并且可以获取这行数据的上一行数据和下一行数据
+            onReorderRowsDrop: function (table, row) {
+                return false;
+            },
+            //当拖拽结束后，整个表格的数据
+            onReorderRow: function (newData) {
+                return false;
             }
         });
     }
