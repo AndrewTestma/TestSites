@@ -44,12 +44,9 @@ public class IndexController {
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String index(Model model, HttpSession session){
         User user=(User)session.getAttribute("user");
-        List<UserProc> userProcs=userProcService.selectListBytsuserid(user.getTsuserid());
-        List<Product> rows=new ArrayList<>();
-        for(UserProc i:userProcs){
-            rows.add(productService.selectByPrimaryKey(i.getTsproductid()));
-        }
+        List<Product> rows=productService.selectList(user.getTsuserid());
         model.addAttribute("list",rows);
+        session.setAttribute("list",rows);
         return "manage/index";
     }
     @RequestMapping(value = "/session",method = RequestMethod.POST)

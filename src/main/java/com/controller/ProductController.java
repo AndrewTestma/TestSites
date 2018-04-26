@@ -37,26 +37,14 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserProcService userProcService;
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(){
         return "manage/product/index";
     }
     @RequestMapping(value="/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(
-            @RequestParam(required = false, defaultValue = "0", value = "offset") int offset,
-            @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
-            @RequestParam(required = false, defaultValue = "", value = "search") String search,
-            @RequestParam(required = false, value = "sort") String sort,
-            @RequestParam(required = false, value = "order") String order,HttpSession session) {
-        User user=(User) session.getAttribute("user");
-        List<UserProc> userProcs=userProcService.selectListBytsuserid(user.getTsuserid());
-        List<Product> rows=new ArrayList<>();
-        for(UserProc i:userProcs){
-            rows.add(productService.selectByPrimaryKey(i.getTsproductid()));
-        }
+    public Object list(HttpSession session) {
+        List<Product> rows=(List<Product>)session.getAttribute("list");
         long total = rows.size();
         Map<String, Object> result = new HashMap<>();
         result.put("data", rows);

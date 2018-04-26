@@ -23,9 +23,7 @@
     select
     <include refid="Base_Column_List" />
     from tsproduct
-    ORDER BY
-    tsproductid
-    LIMIT #{offset}, #{limit}
+    where tsproductid=(select tsproductid from tsuserproc where tsuserid =${tsuserid})
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsproduct

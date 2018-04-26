@@ -39,8 +39,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> selectList(int offset, int limit) {
-        return productMapper.selectList(offset,limit);
+    public List<Product> selectList(Integer tsuserid) {
+        return productMapper.selectList(tsuserid);
     }
 
 

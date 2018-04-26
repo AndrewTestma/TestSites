@@ -18,7 +18,7 @@ public interface ProductService {
 
     Product selectByPrimaryKey(Integer tsproductid);
 
-    List<Product> selectList(int offset,int limit);
+    List<Product> selectList(Integer tsuserid);
 
     int updateByPrimaryKeySelective(Product record);
 

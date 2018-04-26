@@ -15,7 +15,7 @@ public interface ProductMapper {
 
     Product selectByPrimaryKey(Integer tsproductid);
 
-    List<Product> selectList(@Param("offset")int offset,@Param("limit")int limit);
+    List<Product> selectList(@Param("tsuserid") Integer tsuserid);
 
     int updateByPrimaryKeySelective(Product record);
 
