@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserProcMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.UserProc">
+    <id column="tsuserprocid" jdbcType="INTEGER" property="tsuserprocid" />
+    <result column="tsuserid" jdbcType="INTEGER" property="tsuserid" />
+    <result column="tsproductid" jdbcType="INTEGER" property="tsproductid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tsuserprocid, tsuserid, tsproductid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tsuserproc
+    where tsuserprocid = #{tsuserprocid,jdbcType=INTEGER}
+  </select>
+  <select id="selectListBytsuserid"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tsuserproc
+    where tsuserid = #{tsuserid}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tsuserproc
+    where tsuserprocid = #{tsuserprocid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.UserProc">
+    insert into tsuserproc (tsuserprocid, tsuserid, tsproductid
+      )
+    values (#{tsuserprocid,jdbcType=INTEGER}, #{tsuserid,jdbcType=INTEGER}, #{tsproductid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.UserProc">
+    insert into tsuserproc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tsuserprocid != null">
+        tsuserprocid,
+      </if>
+      <if test="tsuserid != null">
+        tsuserid,
+      </if>
+      <if test="tsproductid != null">
+        tsproductid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tsuserprocid != null">
+        #{tsuserprocid,jdbcType=INTEGER},
+      </if>
+      <if test="tsuserid != null">
+        #{tsuserid,jdbcType=INTEGER},
+      </if>
+      <if test="tsproductid != null">
+        #{tsproductid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.UserProc">
+    update tsuserproc
+    <set>
+      <if test="tsuserid != null">
+        tsuserid = #{tsuserid,jdbcType=INTEGER},
+      </if>
+      <if test="tsproductid != null">
+        tsproductid = #{tsproductid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tsuserprocid = #{tsuserprocid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.UserProc">
+    update tsuserproc
+    set tsuserid = #{tsuserid,jdbcType=INTEGER},
+      tsproductid = #{tsproductid,jdbcType=INTEGER}
+    where tsuserprocid = #{tsuserprocid,jdbcType=INTEGER}
+  </update>
+</mapper>
