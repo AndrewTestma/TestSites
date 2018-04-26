@@ -21,9 +21,8 @@
   </select>
   <select id="selectList" resultMap="BaseResultMap">
     select tsproduct.*
-    from tsuser,tsproduct,tsuserproc
-    where  tsuser.tsuserid=${tsuserid}
-    and tsuser.tsuserid=tsuserproc.tsuserid
+    from tsproduct,tsuserproc
+    where tsuserproc.tsuserid=${tsuserid}
     and tsuserproc.tsproductid = tsproduct.tsproductid
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
