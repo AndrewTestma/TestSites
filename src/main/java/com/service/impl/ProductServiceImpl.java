@@ -3,6 +3,7 @@ package com.service.impl;
 import com.dao.ProductMapper;
 import com.pojo.Product;
 import com.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Service("ProductService")
 public class ProductServiceImpl implements ProductService {
-    @Resource(name = "ProductMapper")
+    @Autowired
     private ProductMapper productMapper;
     @Override
     public int deleteByPrimaryKey(Integer tsproductid) {
