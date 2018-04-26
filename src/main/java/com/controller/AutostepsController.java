@@ -100,6 +100,7 @@ public class AutostepsController {
         if(i==1){
             logger.info("操作步骤更新成功");
             return "success";
+
         }else{
             logger.info("操作步骤更新失败");
             return "error";
