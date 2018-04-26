@@ -8,6 +8,7 @@ import com.utils.ExtentReportMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -121,5 +122,17 @@ public class AutostepsController {
         result.put("data",rows);
         result.put("total",total);
         return result;
+    }
+    /**
+     * @Description:返回实体对象到修改页面
+     * @param:[tsautostepsid]:操作步骤ID,[Model]:返回到前端的model对象
+     * @return:[String]:视图名称
+     * @date:2018/4/26 16:09
+     */
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    public String edit(@RequestParam("tsautostepsid")String tsautostepsid,Model model){
+        Autosteps autosteps = autostepsService.selectByPrimaryKey(Integer.valueOf(tsautostepsid));
+        model.addAttribute("autosteps",autosteps);
+        return "/manage/autosteps/create";
     }
 }
