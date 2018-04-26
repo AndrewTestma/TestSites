@@ -2,7 +2,9 @@ package com.controller;
 
 import com.pojo.Product;
 import com.pojo.User;
+import com.pojo.UserProc;
 import com.service.ProductService;
+import com.service.UserProcService;
 import com.service.UserService;
 import com.utils.ExtentReportMap;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,8 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserProcService userProcService;
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(){
         return "manage/product/index";
@@ -45,8 +50,13 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
             @RequestParam(required = false, defaultValue = "", value = "search") String search,
             @RequestParam(required = false, value = "sort") String sort,
-            @RequestParam(required = false, value = "order") String order) {
-        List<Product> rows = productService.selectList(offset,limit);
+            @RequestParam(required = false, value = "order") String order,HttpSession session) {
+        User user=(User) session.getAttribute("user");
+        List<UserProc> userProcs=userProcService.selectListBytsuserid(user.getTsuserid());
+        List<Product> rows=new ArrayList<>();
+        for(UserProc i:userProcs){
+            rows.add(productService.selectByPrimaryKey(i.getTsproductid()));
+        }
         long total = rows.size();
         Map<String, Object> result = new HashMap<>();
         result.put("data", rows);
