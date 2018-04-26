@@ -20,10 +20,11 @@
     where tsproductid = #{tsproductid,jdbcType=INTEGER}
   </select>
   <select id="selectList" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tsproduct
-    where tsproductid=(select tsproductid from tsuserproc where tsuserid =${tsuserid})
+    select tsproduct.*
+    from tsuser,tsproduct,tsuserproc
+    where  tsuser.tsuserid=${tsuserid}
+    and tsuser.tsuserid=tsuserproc.tsuserid
+    and tsuserproc.tsproductid = tsproduct.tsproductid
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsproduct
