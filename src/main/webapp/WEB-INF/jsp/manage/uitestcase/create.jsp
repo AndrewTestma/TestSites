@@ -18,16 +18,6 @@
 <body>
 
 <div class="container">
-    <%--<div class="row">
-        <div class="span6">
-            <ul class="breadcrumb">
-                <li>
-                    <a href="/ui/index">UI用例</a> <span class="divider">></span>
-                </li>
-                <li class="active">新建用例</li>
-            </ul>
-        </div>
-    </div>--%>
     <div class="myform">
         <form class="form-horizontal" method="post" id="testcaseForm">
             <fieldset form="testcaseForm">
@@ -102,14 +92,24 @@
     var addAutoStepsDialog;//新建步骤dialog
     var $autostepstable = $('#autostepstable');//步骤列表
     //打开新建步骤dialog
-    function addAutoSteps() {
-        addAutoStepsDialog = $.dialog({
-            title: '新建步骤',
-            content: 'url:/autosteps/create',
-            onContentReady: function () {
-                initMaterialInput();
-            }
-        });
+    function addAutoSteps(id) {
+        if(id==0){
+            addAutoStepsDialog = $.dialog({
+                title: '新建步骤',
+                content: 'url:/autosteps/create',
+                onContentReady: function () {
+                    initMaterialInput();
+                }
+            })
+        }else{
+            addAutoStepsDialog = $.dialog({
+                title: '编辑步骤',
+                content: 'url:/autosteps/edit?tsautostepsid='+id,
+                onContentReady: function () {
+                    initMaterialInput();
+                }
+            })
+        }
     }
     //动态加载模块
     $('#tsmodulename').append("<option>选择模块</option>");
@@ -233,7 +233,7 @@
             maintainSelected: true,
             toolbar: '#toolbar',
             columns: [
-                {field: 'tsautostepsid', title: '编号', sortable: true, align: 'center'},
+                {field: 'tsautostepsid', title: '编号', sortable: true, align: 'center',visible: false},
                 {field: 'tsautostepsname', title: '步骤名称'},
                 {field: 'tsselecttype', title: '查找方式'},
                 {field: 'tsselectcontent', title: '查找内容'},
@@ -254,8 +254,9 @@
                         addStr = 'none';
                         delStr = "inline";
                     }
-                    var returnValue =' <a id="' + id + '" class="btn btn-default" style="display: '+addStr+'"  href="javascript:;"  onclick="InsertCaseSteps(' + id + ')" data-toggle="tooltip"  title="添加"><i class="glyphicon glyphicon-plus"></i></a>'
-                    + '  <a  id="' + id + '1" class="btn btn-default" style="display: '+delStr+'"   href="javascript:;" onclick="DelCaseSteps(' + id + ')" data-toggle="tooltip" title="取消"><i class="glyphicon glyphicon-minus"></i></a>';
+                    var returnValue =' <a class="btn btn-default" style="display: '+delStr+'"   href="javascript:;" onclick="addAutoSteps(' + id + ')" data-toggle="tooltip" title="编辑"><i class="glyphicon glyphicon-pencil"></i></a>'
+                        + '  <a id="' + id + '" class="btn btn-default" style="display: '+addStr+'"  href="javascript:;"  onclick="InsertCaseSteps(' + id + ')" data-toggle="tooltip"  title="添加"><i class="glyphicon glyphicon-plus"></i></a>'
+                        + '  <a  id="' + id + '1" class="btn btn-default" style="display: '+delStr+'"   href="javascript:;" onclick="DelCaseSteps(' + id + ')" data-toggle="tooltip" title="取消"><i class="glyphicon glyphicon-minus"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false
                 }

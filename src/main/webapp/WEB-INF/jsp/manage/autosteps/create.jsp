@@ -22,13 +22,14 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tsautostepsname" style="color: red">步骤名称：</label>
-                    <input id="tsautostepsname" type="text" class="form-control" name="tsautostepsname"  maxlength="50" required>
+                    <input id="tsautostepsid"  type="hidden" class="form-control" name="tsautostepsid" value="${autosteps.tsautostepsid}">
+                    <input id="tsautostepsname" type="text" class="form-control" name="tsautostepsname" value="${autosteps.tsautostepsname}" maxlength="50" required>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tsselecttype" style="color: red">查找方式：</label>
-                    <select id="tsselecttype" name="tsselecttype" class="form-control " title="查找方式">
+                    <select id="tsselecttype" name="tsselecttype" class="form-control" title="查找方式">
                         <option>id</option>
                         <option>name</option>
                         <option>xpath</option>
@@ -43,13 +44,13 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tsselectcontent" style="color: red">查找内容：</label>
-                    <input id="tsselectcontent" type="text" class="form-control" name="tsselectcontent" maxlength="50" required>
+                    <input id="tsselectcontent" type="text" class="form-control" name="tsselectcontent" value="${autosteps.tsselectcontent}" maxlength="50" required>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tsactiontype" style="color: red">执行方式：</label>
-                    <select id="tsactiontype" name="tsactiontype" class="form-control " title="执行方式" >
+                    <select id="tsactiontype" name="tsactiontype" class="form-control" title="执行方式">
                         <option>单击</option>
                         <option>输入</option>
                         <option>双击</option>
@@ -61,25 +62,25 @@
             <div class="form-group">
                 <div class="col-sm-12"  id="tsactioncontentdiv" style="display: none">
                     <label for="tsactioncontent">执行内容：</label>
-                    <input id="tsactioncontent"  type="text" class="form-control" name="tsactioncontent" maxlength="50">
+                    <input id="tsactioncontent"  type="text" class="form-control" name="tsactioncontent" value="${autosteps.tsactioncontent}" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tsframepath">FramePath：</label>
-                    <input id="tsframepath" type="text" class="form-control" name="tsframepath" maxlength="50">
+                    <input id="tsframepath" type="text" class="form-control" name="tsframepath" value="${autosteps.tsframepath}" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tswait">等待时间：</label>
-                    <input id="tswait" type="text" class="form-control" name="tswait" maxlength="50">
+                    <input id="tswait" type="text" class="form-control" name="tswait" value="${autosteps.tswait}" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tsremarks">备注：</label>
-                    <input id="tsremarks" type="text" class="form-control" name="tsremarks" maxlength="50">
+                    <input id="tsremarks" type="text" class="form-control" name="tsremarks" value="${autosteps.tsremarks}" maxlength="50">
                 </div>
             </div>
             <div class="form-group">
@@ -94,7 +95,7 @@
                         <label for="tsverificationtype">验证方式：</label>
                         <select id="tsverificationtype" name="tsverificationtype" class="form-control " title="验证方式">
                             <option>验证方式</option>
-                            <option>文本验证</option>
+                            <option selected = selected">文本验证</option>
                             <option>url验证</option>
                             <option>数据库验证</option>
                         </select>
@@ -103,19 +104,20 @@
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label for="tsverficationframe">verFrame：</label>
-                        <input id="tsverficationframe" type="text" class="form-control" name="tsverficationframe" maxlength="50">
+                        <input id="tsverficationframe" type="text" class="form-control" name="tsverficationframe" value="${autosteps.tsverficationframe}" maxlength="50">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label for="tsverificationcontent">验证内容：</label>
-                        <input id="tsverificationcontent" type="text" class="form-control" name="tsverificationcontent" maxlength="50">
+                        <input id="tsverificationcontent" type="text" class="form-control" name="tsverificationcontent" value="${autosteps.tsverificationcontent}" maxlength="50">
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <a class="btn  btn-success" onclick="createAutoSteps();">保存</a>
+                    <a id="add" class="btn  btn-success" onclick="createAutoSteps();">保存</a>
+                    <a id="edit" class="btn  btn-success" onclick="updatetcAction();" style="display: none">修改</a>
                     <a class="btn btn-info"  onclick="addAutoStepsDialog.close();">取消</a>
                 </div>
             </div>
@@ -127,6 +129,29 @@
 <script>
     $(function () {
         $('#autostepsForm').validator();
+        var numbers;
+        var autostepsValue;
+        if('${autosteps}'!=''){
+            document.getElementById("edit").style.display="inline";
+            document.getElementById("add").style.display="none";
+            for(var n=0;n<3;n++){
+                if(n==0){
+                    numbers = $("#tsselecttype").find("option");
+                    autostepsValue='${autosteps.tsselecttype}';
+                }else if(n==1){
+                    numbers = $("#tsactiontype").find("option");
+                    autostepsValue='${autosteps.tsactiontype}';
+                }else{
+                    numbers = $("#tsverificationtype").find("option");
+                    autostepsValue='${autosteps.tsverificationtype}';
+                }
+                for(var i=0;i<numbers.length;i++){
+                    if($(numbers[i]).val()==autostepsValue){
+                        $(numbers[i]).attr("selected", "selected");
+                    }
+                }
+            }
+        }
     })
     //点击保存操作步骤
     var autoStespID;
@@ -156,6 +181,23 @@
             error:function (data) {
             }
         });
+    }
+    //点击修改操作步骤
+    function updatetcAction() {
+        $.ajax({
+            type:'post',
+            url:'/autosteps/update',
+            data:$('#autostepsForm').serialize(),
+            success:function (data) {
+                if(data=="success"){
+                    alert("更新成功");
+                    autostepstable(0);
+                    addAutoStepsDialog.close();
+                }else{
+                    alert("修改失败");
+                }
+            }
+        })
     }
     //添加测试用例与操作步骤中间表
     function addCaseSteps() {
