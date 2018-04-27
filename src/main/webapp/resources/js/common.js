@@ -66,7 +66,6 @@ function inputValidator_1(fromid,name) {
     })
 };
 //模块弹出框
-/*
 var redirectDialog;
 function redirectAction() {
     redirectDialog = $.dialog({
@@ -78,4 +77,4 @@ function redirectAction() {
             initMaterialInput();
         }
     })
-};*/
+};

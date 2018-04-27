@@ -91,18 +91,6 @@
             });
         }
     }
-    var redirectDialog;
-    function redirectAction() {
-        redirectDialog = $.dialog({
-            animationSpeed: 600,
-            width:900,
-            title: '模块信息',
-            content: 'url:/module/index',
-            onContentReady: function () {
-                initMaterialInput();
-            }
-        });
-    }
     //删除产品
     function delProduct(tsproductid) {
         $.ajax({
@@ -125,5 +113,6 @@
         })
     }
 </script>
+<script src="${basePath}/resources/js/commonDialog.js"></script>
 </body>
 </html>

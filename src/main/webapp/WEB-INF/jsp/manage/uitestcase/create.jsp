@@ -46,6 +46,7 @@
                     <div class="col-sm-4">
                         <label for="tsmodulename" style="color: red">选择模块:</label>
                         <select id="tsmodulename" name="tsmodulename" class="form-control selectpicker"></select>
+                        <a onclick="redirectAction()"><i  class="glyphicon glyphicon-plus"></i></a>
                     </div>
                 </div>
                 <div class="form-group">
@@ -59,8 +60,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-4">
-                        <a id="addtc" onclick="adduitestcase()"  class="btn btn-primary" title="添加"><i
-                                class="glyphicon glyphicon-plus"></i> 新增用例
+                        <a id="addtc" onclick="adduitestcase()"  class="btn btn-primary" title="添加">
+                            <i class="glyphicon glyphicon-plus"></i> 新增用例
                         </a>
                         <a id="updatetc" style="display: none"  onclick="updatetcAction()" class="btn btn-primary" title="修改">
                             <i class="glyphicon glyphicon-plus"></i> 修改用例
@@ -296,4 +297,5 @@
         })
     }
 </script>
+<script src="${basePath}/resources/js/commonDialog.js"></script>
 </html>
