@@ -129,6 +129,9 @@ public class TestBaseCase {
                 elementAction=new ElementAction(driver,logInfo,logOperating);
                 assertion=new Assertion(driver,extentReports,extentTest,logInfo,logOperating);
                 for(Autosteps autosteps1:entry.getValue()){
+                    if(autosteps1.getTswait()!=null){
+                        elementAction.sleepTime(autosteps1.getTswait());
+                    }
                     if(autosteps1.getTsactiontype().equals("单击")){
                         elementAction.click(autosteps1);
                     }else if(autosteps1.getTsactiontype().equals("输入")){
