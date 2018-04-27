@@ -45,6 +45,11 @@ public class CaseStepsServiceImpl implements CaseStepsService {
     }
 
     @Override
+    public int insertBatch(List<CaseSteps> sorts) {
+        return caseStepsMapper.insertBatch(sorts);
+    }
+
+    @Override
     public int insertSelective(CaseSteps record) {
         return caseStepsMapper.insertSelective(record);
     }

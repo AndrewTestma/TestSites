@@ -45,6 +45,14 @@
     values (#{tscasestepsid,jdbcType=INTEGER}, #{tsuitestcaseid,jdbcType=INTEGER}, #{tsautostepsid,jdbcType=INTEGER}, 
       #{tsorder,jdbcType=INTEGER})
   </insert>
+  <insert id="insertBatch" >
+    insert into tscasesteps (tsuitestcaseid, tsautostepsid,
+    tsorder)
+    values
+    <foreach collection="sorts" item="sort" separator=",">
+      (#{sort.tsuitestcaseid},#{sort.tsautostepsid},#{sort.tsorder})
+    </foreach>
+  </insert>
   <insert id="insertSelective" parameterType="com.pojo.CaseSteps">
     insert into tscasesteps
     <trim prefix="(" suffix=")" suffixOverrides=",">

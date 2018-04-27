@@ -1,7 +1,10 @@
 package com.controller;
 
+import com.pojo.Autosteps;
 import com.pojo.CaseSteps;
 import com.service.CaseStepsService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,7 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.sql.rowset.serial.SerialArray;
+import javax.sql.rowset.serial.SerialJavaObject;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,5 +56,27 @@ public class CaseStepsController {
        caseSteps.setTsuitestcaseid(Integer.valueOf(uitestcaseID));
        caseSteps.setTsautostepsid(Integer.valueOf(autostepsID));
         return caseStepsService.deleteByMore(caseSteps);
+    }
+    /**
+     * @Description:操作步骤排序
+     * @param:[tsuitestcaseid]:测试用例ID,[jsondata]:操作步骤json字符串
+     * @return:[int]：标识执行结果
+     * @date:2018/4/27 14:19
+     */
+    @RequestMapping(value = "/sort",method = RequestMethod.POST)
+    @ResponseBody
+    public int sort(String tsuitestcaseid,String jsondata){
+        JSONArray jsonArray = JSONArray.fromObject(jsondata);
+        List<Autosteps> list = JSONArray.toList(jsonArray, Autosteps.class);
+        caseStepsService.deleteBytsuitestcaseid(Integer.valueOf(tsuitestcaseid));
+        List<CaseSteps> caseStepsList= new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            CaseSteps caseSteps=new CaseSteps();
+            caseSteps.setTsautostepsid(list.get(i).getTsautostepsid());
+            caseSteps.setTsuitestcaseid(Integer.valueOf(tsuitestcaseid));
+            caseSteps.setTsorder(i+1);
+            caseStepsList.add(caseSteps);
+        }
+        return  caseStepsService.insertBatch(caseStepsList);
     }
 }

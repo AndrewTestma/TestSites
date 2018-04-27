@@ -1,10 +1,10 @@
 package com.dao;
 
 import com.pojo.CaseSteps;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository("CaseStepsMapper")
 public interface CaseStepsMapper {
@@ -18,6 +18,8 @@ public interface CaseStepsMapper {
     int insert(CaseSteps record);
 
     int insertSelective(CaseSteps record);
+
+    int insertBatch(@Param("sorts")List<CaseSteps> sorts);
 
     CaseSteps selectByPrimaryKey(Integer tscasestepsid);
 

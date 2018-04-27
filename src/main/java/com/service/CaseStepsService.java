@@ -19,6 +19,8 @@ public interface CaseStepsService {
 
     int insert(CaseSteps record);
 
+    int insertBatch(List<CaseSteps> sorts);
+
     int insertSelective(CaseSteps record);
 
     CaseSteps selectByPrimaryKey(Integer tscasestepsid);
