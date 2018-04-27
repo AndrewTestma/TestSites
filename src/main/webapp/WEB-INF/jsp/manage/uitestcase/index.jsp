@@ -300,14 +300,27 @@
                 })
             },
             onReorderRowsDrag: function (table, row) {
+                //alert($(row).attr("data-index"));
                 return false;
             },
             //拖拽完成后的这条数据，并且可以获取这行数据的上一行数据和下一行数据
             onReorderRowsDrop: function (table, row) {
+                //alert($(row).attr("data-index"));
                 return false;
             },
             //当拖拽结束后，整个表格的数据
             onReorderRow: function (newData) {
+                $.ajax({
+                    type:'post',
+                    url:'/casesteps/sort',
+                    data:{'tsuitestcaseid':id,'jsondata':JSON.stringify(newData)},
+                    success:function (data) {
+                        if(data<0){
+                            alert("排序失败");
+                        }
+                    }
+
+                })
                 return false;
             }
         });
