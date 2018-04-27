@@ -26,7 +26,7 @@
 <div class="container">
     <form class="form-horizontal" method="post" id="busForm">
         <fieldset form="busForm">
-            <legend>业务</legend>
+            <legend>业务<a onclick="history.go(-1);" style="float: right"><img src="${basePath}/resources/images/return.png"/></a></legend>
             <div class="form-group">
                 <div class="col-sm-4">
                     <label for="tsname">业务名称</label>

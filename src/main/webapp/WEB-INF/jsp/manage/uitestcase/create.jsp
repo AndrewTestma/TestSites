@@ -21,7 +21,7 @@
     <div class="myform">
         <form class="form-horizontal" method="post" id="testcaseForm">
             <fieldset form="testcaseForm">
-                <legend>测试用例</legend>
+                <legend>测试用例<a onclick="history.go(-1);" style="float: right"><img src="${basePath}/resources/images/return.png"/></a></legend>
                 <div class="form-group">
                     <div class="col-sm-4">
                         <label for="tsname" style="color: red">用例名称:</label>
