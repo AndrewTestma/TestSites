@@ -187,4 +187,28 @@ public class Autosteps {
     public void setTssuccess(Integer tssuccess) {
         this.tssuccess = tssuccess;
     }
+
+    @Override
+    public String toString() {
+        return "Autosteps{" +
+                "tsautostepsid=" + tsautostepsid +
+                ", tsautostepsname='" + tsautostepsname + '\'' +
+                ", tsproductid=" + tsproductid +
+                ", tsmodulename='" + tsmodulename + '\'' +
+                ", tsselecttype='" + tsselecttype + '\'' +
+                ", tsselectcontent='" + tsselectcontent + '\'' +
+                ", tsactiontype='" + tsactiontype + '\'' +
+                ", tsactioncontent='" + tsactioncontent + '\'' +
+                ", tsframepath='" + tsframepath + '\'' +
+                ", tswait=" + tswait +
+                ", tsverificationtype='" + tsverificationtype + '\'' +
+                ", tsverficationframe='" + tsverficationframe + '\'' +
+                ", tsverificationcontent='" + tsverificationcontent + '\'' +
+                ", tscommon=" + tscommon +
+                ", tsremarks='" + tsremarks + '\'' +
+                ", tscreatetime=" + tscreatetime +
+                ", tscreator='" + tscreator + '\'' +
+                ", tssuccess=" + tssuccess +
+                '}';
+    }
 }

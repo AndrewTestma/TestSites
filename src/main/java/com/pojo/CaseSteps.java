@@ -40,4 +40,14 @@ public class CaseSteps {
     public void setTsorder(Integer tsorder) {
         this.tsorder = tsorder;
     }
+
+    @Override
+    public String toString() {
+        return "CaseSteps{" +
+                "tscasestepsid=" + tscasestepsid +
+                ", tsuitestcaseid=" + tsuitestcaseid +
+                ", tsautostepsid=" + tsautostepsid +
+                ", tsorder=" + tsorder +
+                '}';
+    }
 }
