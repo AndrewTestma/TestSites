@@ -131,7 +131,7 @@
         $('#autostepsForm').validator();
         var numbers;
         var autostepsValue;
-        if('${autosteps}'!=''){
+        if('${autosteps.tsautostepsname}'!=''){
             document.getElementById("edit").style.display="inline";
             document.getElementById("add").style.display="none";
             for(var n=0;n<3;n++){
