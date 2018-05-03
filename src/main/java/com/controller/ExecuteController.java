@@ -99,6 +99,7 @@ public class ExecuteController {
      * @Description:执行的操作步骤
      * */
     public void execAutoSteps(List<Integer>uiIdList){
+        int k=0;
         for(int i:uiIdList){
             List<Autosteps> autosteps=new ArrayList<>();
             String tsname=uiTestCaseService.selectByPrimaryKey(i).getTsname();
@@ -106,8 +107,13 @@ public class ExecuteController {
             for(int n: caseStepsService.selectBytsuitestcaseid(i)){
                 autosteps.add(autostepsService.selectByPrimaryKey(n));
             }
-             listMap.put(tsname,autosteps);
-             ExtentReportMap.autosteps.put(user.getTsuserid(),listMap);
+            if(listMap.get(tsname)!=null){
+                listMap.put(tsname+k,autosteps);
+                k++;
+            }else{
+                listMap.put(tsname,autosteps);
             }
+             ExtentReportMap.autosteps.put(user.getTsuserid(),listMap);
+        }
     }
 }
