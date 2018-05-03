@@ -27,9 +27,10 @@
     where tsuitestcaseid = #{tsuitestcaseid,jdbcType=INTEGER}
   </select>
   <select id="selectBytsorder" parameterType="java.lang.Integer" resultType="Integer">
-    select count(*)
-    from tsbusinesscase
-    where tsbusinessid = #{tsbusinessid,jdbcType=INTEGER}
+    select  tsorder
+    from  tsbusinesscase
+    where  tsbusinessid= #{tsbusinessid,jdbcType=INTEGER}
+    order by tsorder desc limit 0,1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tsbusinesscase
@@ -39,6 +40,13 @@
     delete from tsbusinesscase
     where tsbusinessid = #{tsbusinessid}
     and  tsuitestcaseid= #{tsuitestcaseid}
+  </delete>
+  <delete id="deleteBytsorder">
+    delete from tsbusinesscase
+    where tsbusinessid=#{tsbusinessid}
+    and  tsuitestcaseid=#{tsuitestcaseid}
+    and  tsorder
+    in (select * from (select tsorder from  tsbusinesscase where  tsbusinessid=#{tsbusinessid} limit #{tsorder},1 ) as a)
   </delete>
   <delete id="deleteBytsbusinessid">
     delete from tsbusinesscase

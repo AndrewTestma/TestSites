@@ -34,11 +34,14 @@ public class BusinessCaseController {
      * @Date: 15:28 2018年03月14日
       */
      public int add(String  tsbusinessid ,String tsuitestcaseid ){
-         logger.debug("增加业务线与测试用例中间表数据");
+        logger.debug("增加业务线与测试用例中间表数据");
         BusinessCase businessCase=new BusinessCase();
         businessCase.setTsbusinessid(Integer.valueOf(tsbusinessid));
         businessCase.setTsuitestcaseid(Integer.valueOf(tsuitestcaseid));
-        int i=businessCaseService.selectBytsorder(Integer.valueOf(tsbusinessid));
+        int i=0;
+        if(businessCaseService.selectBytsorder(Integer.valueOf(tsbusinessid))!=null){
+             i=businessCaseService.selectBytsorder(Integer.valueOf(tsbusinessid));
+        }
         businessCase.setTsorder(i+1);
         return businessCaseService.insert(businessCase);
      }
@@ -50,8 +53,8 @@ public class BusinessCaseController {
      * @return: int
      * @Date: 15:28 2018年03月14日
       */ 
-     public int del(String  tsbusinessid ,String tsuitestcaseid ){
+     public int del(String  tsbusinessid ,String tsuitestcaseid,String tsorder){
          logger.debug("删除业务线与测试用例中间表数据");
-         return  businessCaseService.deleteByMore(Integer.valueOf(tsbusinessid),Integer.valueOf(tsuitestcaseid));
+         return  businessCaseService.deleteBytsorder(Integer.valueOf(tsbusinessid),Integer.valueOf(tsuitestcaseid),Integer.valueOf(tsorder));
      }
 }

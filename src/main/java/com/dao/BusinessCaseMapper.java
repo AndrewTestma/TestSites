@@ -14,6 +14,8 @@ public interface BusinessCaseMapper {
 
     int deleteByMore(@Param("tsbusinessid")Integer tsbusinessid,@Param("tsuitestcaseid")Integer tsuitestcaseid);
 
+    int deleteBytsorder(@Param("tsbusinessid")Integer tsbusinessid,@Param("tsuitestcaseid")Integer tsuitestcaseid,@Param("tsorder")Integer tsorder);
+
     int deleteBytsbusinessid(@Param("tsbusinessid") Integer tsbusinessid);
 
     int insert(BusinessCase record);

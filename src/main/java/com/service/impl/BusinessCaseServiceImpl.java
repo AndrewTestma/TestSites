@@ -30,6 +30,11 @@ public class BusinessCaseServiceImpl implements BusinessCaseService {
     }
 
     @Override
+    public int deleteBytsorder(Integer tsbusinessid, Integer tsuitestcaseid, Integer tsorder) {
+        return businessCaseMapper.deleteBytsorder(tsbusinessid,tsuitestcaseid,tsorder);
+    }
+
+    @Override
     public int deleteBytsbusinessid(Integer tsbusinessid) {
         return businessCaseMapper.deleteBytsbusinessid(tsbusinessid);
     }
