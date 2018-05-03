@@ -205,6 +205,8 @@ var Tab = {
 			});
 		} else {
 			$('#tab_' + index).trigger('click');
+            var $iframe = $('#iframe_' + index).find('iframe');
+            $iframe.attr('src', $iframe.attr('src'));
 		}
 		// 关闭侧边栏
 		$('#guide').trigger(click);
