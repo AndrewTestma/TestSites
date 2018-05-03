@@ -111,6 +111,13 @@ create table if not exists tsuser(
   tsproductid integer(11) DEFAULT NULL ,
   primary key(tsuserid)
 )engine=innodb;
+-- tsuserproc
+create table if not exists tsuserproc(
+  tsuserprocid integer(11) auto_increment,
+  tsuserid integer(11) not null,
+  tsproductid integer(11) not null,
+  primary key(tsuserprocid)
+)engine=innodb;
 -- tsuserproduct
 create table if not exists tsuserproduct(
   tsuserproductid integer(11) auto_increment,
