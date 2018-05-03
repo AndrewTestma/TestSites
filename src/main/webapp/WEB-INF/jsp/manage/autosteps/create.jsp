@@ -44,7 +44,7 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     <label for="tsselectcontent" style="color: red">查找内容：</label>
-                    <input id="tsselectcontent" type="text" class="form-control" name="tsselectcontent" value="${autosteps.tsselectcontent}" maxlength="50" required>
+                    <input id="tsselectcontent" type="text" class="form-control" name="tsselectcontent" value="${autosteps.tsselectcontent}" maxlength="100" required>
                 </div>
             </div>
             <div class="form-group">
@@ -95,7 +95,7 @@
                         <label for="tsverificationtype">验证方式：</label>
                         <select id="tsverificationtype" name="tsverificationtype" class="form-control " title="验证方式">
                             <option>验证方式</option>
-                            <option selected = selected">文本验证</option>
+                            <option>文本验证</option>
                             <option>url验证</option>
                             <option>数据库验证</option>
                         </select>

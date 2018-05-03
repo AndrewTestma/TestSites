@@ -24,6 +24,7 @@
 </head>
 <body>
 <div>
+    <legend>操作日志<a onclick="history.go(-1);" style="float: right"><img src="${basePath}/resources/images/return.png"/></a></legend>
     <div id="log">
     </div>
 </div>

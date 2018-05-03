@@ -176,7 +176,7 @@
                         delStr = "inline";
                     }
                     var returnValue =' <a id="' + id + '" style="display: '+addStr+'" class="btn btn-default"  href="javascript:;"  onclick="InsertBus(' + id + ')" data-toggle="tooltip"  title="添加"><i class="glyphicon glyphicon-plus"></i></a>'
-                        + '  <a  id="' + id + '1" style="display: '+delStr+'"  class="btn btn-default"  href="javascript:;" onclick="DelBus(' + id + ')" data-toggle="tooltip" title="取消"><i class="glyphicon glyphicon-minus"></i></a>';
+                        + '  <a  id="' + id + '1" style="display: '+delStr+'"  class="btn btn-default"  href="javascript:;" onclick="DelBus(' + id + ','+index+')" data-toggle="tooltip" title="取消"><i class="glyphicon glyphicon-minus"></i></a>';
                     return returnValue;
                 }, events: 'actionEvents', clickToSelect: false}
             ]
@@ -202,7 +202,7 @@
         })
     }
     //删除业务线与测试用例中间表数据
-    function DelBus(id) {
+    function DelBus(id,index) {
         var addid = id;
         var delid = id + "1";
         if('${business}'!=""){
@@ -211,9 +211,13 @@
         $.ajax({
             type:'post',
             url:'/buscase/del',
-            data:{'tsbusinessid':busID,'tsuitestcaseid':id},
+            data:{'tsbusinessid':busID,'tsuitestcaseid':id,'tsorder':index},
             success:function (data) {
                 if(data>0){
+                    url='/ui/buscase';
+                    queryParams={tsbusinessID:'${business.tsbusinessid}'};
+                    type=1;
+                    tableData(url,queryParams,type);
                     document.getElementById(delid).style.display = "none";
                     document.getElementById(addid).style.display = "inline";
                 }

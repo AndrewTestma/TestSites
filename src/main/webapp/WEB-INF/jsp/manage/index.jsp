@@ -20,8 +20,8 @@
     <link href="${basePath}/resources/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
     <link href="${basePath}/resources/css/admin.css" rel="stylesheet"/>
     <style>
-         #header {background: #29A176;}
-        .content_tab{background: #29A176;}
+         #header {background: rgba(14, 182, 182, 0.98);}
+        .content_tab{background: #0eb6b6;}
     </style>
 </head>
 <body>
@@ -36,7 +36,7 @@
         </li>
         <li id="logo" class="hidden-xs">
             <a href="${basePath}/manage/index">
-                <img src="${basePath}/resources/images/logo.png"/>
+                <img src="${basePath}/resources/images/partyconstruction.png"/>
             </a>
             <span id="system_title">自动化测试平台</span>
         </li>
@@ -122,8 +122,8 @@
                 <a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-lock-outline"></i> 场景管理</a>
                 <ul>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('业务管理', '${basePath}/bus/index');">业务管理</a></li>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('回归测试', '');">回归测试</a></li>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('冒烟测试', '');">冒烟测试</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('模块管理', '');">模块管理</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('测试管理', '');">测试管理</a></li>
                 </ul>
             </li>
             <li class="sub-menu system_menus system_1 3">
