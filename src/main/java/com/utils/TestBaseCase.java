@@ -9,17 +9,15 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.relevantcodes.extentreports.NetworkMode;
 import org.openqa.selenium.WebDriver;
+import org.sikuli.script.Screen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -29,14 +27,14 @@ import java.util.Map;
  * @Description:测试父类
  * @Date 2018/2/28 0028
  */
-@Component
+//@Component
 public class TestBaseCase {
     public String reportLocation;
     public Logger logger= LoggerFactory.getLogger(this.getClass());
     public WebDriver driver;
     public ExtentReports extentReports;
     public ExtentTest extentTest;
-    public ElementAction elementAction=null;
+    public ElementUtil elementAction=null;
     public Assertion assertion=null;
     public User user;
     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -126,7 +124,11 @@ public class TestBaseCase {
         if(ExtentReportMap.autosteps.get(user.getTsuserid())!=null){
             for(Map.Entry<String,List<Autosteps>> entry:ExtentReportMap.autosteps.get(user.getTsuserid()).entrySet()){
                 extentTest=extentReports.startTest(entry.getKey());
-                elementAction=new ElementAction(driver,logInfo,logOperating);
+                try{
+                    elementAction=new ElementUtil(driver,logInfo,logOperating);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 assertion=new Assertion(driver,extentReports,extentTest,logInfo,logOperating);
                 for(Autosteps autosteps1:entry.getValue()){
                     if(autosteps1.getTswait()!=null){
@@ -136,6 +138,10 @@ public class TestBaseCase {
                         elementAction.click(autosteps1);
                     }else if(autosteps1.getTsactiontype().equals("输入")){
                         elementAction.sendKey(autosteps1,autosteps1.getTsactioncontent());
+                    }else if(autosteps1.getTsactiontype().equals("上传")){
+                        elementAction.click(autosteps1);
+                        elementAction.sikuliUploadFile(autosteps1.getTsactioncontent());
+                        elementAction.sleepTime(5000);
                     }
                     assertion.verityType(autosteps1);
                 }

@@ -8,6 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Screen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,12 +22,12 @@ import org.slf4j.LoggerFactory;
  * @author: Mr.Andrew
  * @create: 2018-03-05 11:21
  **/
-public class ElementAction{
+public class ElementUtil {
     public Logger logger= LoggerFactory.getLogger(this.getClass());
     public WebDriver driver;
     public LogInfo logInfo;
     public LogOperating logOperating;
-    public ElementAction( WebDriver driver,LogInfo logInfo,LogOperating logOperating){
+    public ElementUtil(WebDriver driver, LogInfo logInfo, LogOperating logOperating){
         this.driver=driver;
         this.logInfo=logInfo;
         this.logOperating=logOperating;
@@ -171,11 +174,26 @@ public class ElementAction{
             logOperating.writeTxtFile("找不到元素："+autosteps.getTsremarks()+"-->输入失败",logInfo);
         }
     }
+    /**
+     * @Description:控件等待时间
+     * @param: [second]:毫秒
+     * @return:null
+     * @date:2018/5/4 14:12
+     */
     public void sleepTime(long second){
         try {
             Thread.sleep(second);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+    public  void sikuliUploadFile(String path){
+        Screen screen=new Screen();
+        screen.type("F:/TestSites/target/classes/images/filepath.jpg",path);
+        try {
+            screen.click("F:/TestSites/target/classes/images/confirm.jpg");
+        } catch (FindFailed findFailed) {
+            findFailed.printStackTrace();
         }
     }
 }
