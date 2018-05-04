@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class BaseTest extends TestBaseCase {
     public Logger logger= LoggerFactory.getLogger(this.getClass());
-   /* public ElementAction elementAction=null;
+   /* public ElementUtil elementAction=null;
     public Assertion assertion=null;
     @Test()
     public void test(){
@@ -39,7 +39,7 @@ public class BaseTest extends TestBaseCase {
         }
         for(Map.Entry<String,List<Autosteps>> entry:autosteps.entrySet()){
             extentTest=extentReports.startTest(entry.getKey());
-            elementAction=new ElementAction(driver);
+            elementAction=new ElementUtil(driver);
             assertion=new Assertion(driver,extentReports,extentTest);
             for(Autosteps autosteps1:entry.getValue()){
                     if(autosteps1.getTsactiontype().equals("单击")){
