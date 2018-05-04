@@ -205,7 +205,7 @@
                         source:[
                             {value:'单击',text:'单击'},
                             {value:'输入',text:'输入'},
-                            {value:'双击',text:'双击'},
+                            {value:'上传',text:'上传'},
                             {value:'悬浮',text:'悬浮'},
                             {value:'拖拽',text:'拖拽'}
                         ]
