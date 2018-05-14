@@ -2,10 +2,9 @@ package com.controller;
 
 import com.pojo.*;
 import com.service.*;
-import com.utils.BaseTest;
 import com.utils.ExtentReportMap;
-import com.utils.TestBaseCase;
-import com.utils.TestListener;
+import com.utils.TestBaseCaseUtil;
+import com.utils.TestListenerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,17 +66,17 @@ public class ExecuteController {
         if(uiIdList.size()>0) {
             execAutoSteps(uiIdList);
             TestNG testNG = new TestNG();
-            TestListener testListener = new TestListener();
-            testNG.addListener(testListener);
-            testNG.setTestClasses(new Class[]{TestBaseCase.class});
+            TestListenerUtil testListenerUtil = new TestListenerUtil();
+            testNG.addListener(testListenerUtil);
+            testNG.setTestClasses(new Class[]{TestBaseCaseUtil.class});
             testNG.run();
             /*result.setTsbusinessid(Integer.valueOf(tsbusinessid));
             result.setTscount(1);
-            result.setTstotalsteps(TestBaseCase.tstotalsteps);
-            result.setTsrunsteps(TestBaseCase.tsrunsteps);
-            result.setTstotaltime(TestBaseCase.tstotaltime);
-            if(TestBaseCase.tstotalsteps!=0){
-                result.setTsresult(TestBaseCase.tsrunsteps/TestBaseCase.tstotalsteps);
+            result.setTstotalsteps(TestBaseCaseUtil.tstotalsteps);
+            result.setTsrunsteps(TestBaseCaseUtil.tsrunsteps);
+            result.setTstotaltime(TestBaseCaseUtil.tstotaltime);
+            if(TestBaseCaseUtil.tstotalsteps!=0){
+                result.setTsresult(TestBaseCaseUtil.tsrunsteps/TestBaseCaseUtil.tstotalsteps);
             }
             result.setTsproductid(Integer.valueOf(tsproductid));
             result.setTsbusinessid(Integer.valueOf(tsbusinessid));
@@ -89,9 +88,9 @@ public class ExecuteController {
                tsresultid =resultService.updateByPrimaryKey(result);
             }
         }
-        TestBaseCase.tstotalsteps=0;
-        TestBaseCase.tsrunsteps=0;
-        TestBaseCase.tstotaltime=0;*/
+        TestBaseCaseUtil.tstotalsteps=0;
+        TestBaseCaseUtil.tsrunsteps=0;
+        TestBaseCaseUtil.tstotaltime=0;*/
         }
         return tsresultid;
     }
