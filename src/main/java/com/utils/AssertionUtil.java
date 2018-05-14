@@ -7,14 +7,12 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @program: TestSites
@@ -22,25 +20,25 @@ import java.util.List;
  * @author: Mr.Andrew
  * @create: 2018-03-05 14:03
  **/
-public class Assertion{
-    private Logger logger= LoggerFactory.getLogger(Assertion.class);
-    public WebDriver driver;
-    public ExtentReports extentReports;
-    public ExtentTest extentTest;
-    public ExtentTest verification=null;
-    public ExtentTest  parameter=null;
+public class AssertionUtil {
+    private Logger logger= LoggerFactory.getLogger(AssertionUtil.class);
+    private WebDriver driver;
+    private ExtentReports extentReports;
+    private ExtentTest extentTest;
+    private ExtentTest verification=null;
+    private ExtentTest  parameter=null;
     public ExtentTest screenshot=null;
-    public LogInfo logInfo;
-    public LogOperating logOperating;
+    private LogInfo logInfo;
+    private LogOperatingUtil logOperatingUtil;
     public Boolean t;
     public static String screenShotPath;//绝对路径，图片存放地址
     public static int i=0;//控制写入报告次数
-    public Assertion(WebDriver driver, ExtentReports extentReports, ExtentTest extentTest, LogInfo logInfo,LogOperating logOperating){
+    public AssertionUtil(WebDriver driver, ExtentReports extentReports, ExtentTest extentTest, LogInfo logInfo, LogOperatingUtil logOperatingUtil){
         this.driver=driver;
         this.extentReports=extentReports;
         this.extentTest=extentTest;
         this.logInfo=logInfo;
-        this.logOperating=logOperating;
+        this.logOperatingUtil = logOperatingUtil;
     }
     public static String formatDate(Date date)
     {
@@ -48,10 +46,10 @@ public class Assertion{
         return formatter.format(date).toString();
     }
     public  void snapshotInfo(){
-        ScreenShot screenShot=new ScreenShot(driver);
+        ScreenShotUtil screenShotUtil =new ScreenShotUtil(driver);
         Date nowDate=new Date();
-        screenShot.setscreenName(Assertion.formatDate(nowDate));
-        screenShotPath=screenShot.takeScreenshot();
+        screenShotUtil.setscreenName(AssertionUtil.formatDate(nowDate));
+        screenShotPath= screenShotUtil.takeScreenshot();
     }
     /**
      * @Description:判断验证方式
@@ -59,7 +57,7 @@ public class Assertion{
      * @date 2018/3/19 11:02
      */
     public  void verityType(Autosteps autosteps){
-        if(!autosteps.getTsverificationtype().equals("")){
+        if(!autosteps.getTsverificationtype().equals("验证方式")){
            if(verification==null&parameter==null){
                verification=extentReports.startTest("验证点");
                parameter=extentReports.startTest("参数");
@@ -75,7 +73,7 @@ public class Assertion{
                     break;
                 default :
                     logger.info("操作不需要验证");
-                    logOperating.writeTxtFile("操作不需要验证",logInfo);
+                    logOperatingUtil.writeTxtFile("操作不需要验证",logInfo);
                     t=true;
                     break;
             }
@@ -90,7 +88,7 @@ public class Assertion{
 
         String verityStr="页面是否跳转至:"+url+"地址";
         logger.info(verityStr);
-        logOperating.writeTxtFile(verityStr,logInfo);
+        logOperatingUtil.writeTxtFile(verityStr,logInfo);
         Boolean f;
         try{
             f=url.equals(driver.getCurrentUrl());
@@ -117,7 +115,7 @@ public class Assertion{
         }
         String verityStr="页面是否存在当前:"+text;
         logger.info(verityStr);
-        logOperating.writeTxtFile(verityStr,logInfo);
+        logOperatingUtil.writeTxtFile(verityStr,logInfo);
         StringBuffer stringBuffer=new StringBuffer();
         Boolean f;
         stringBuffer.append("//*[text()='"+text+"']");
@@ -129,7 +127,7 @@ public class Assertion{
                 i++;
             }
             logger.info("【当前Frame】:"+array[i-1]);
-            logOperating.writeTxtFile("【当前Frame】:"+array[i-1],logInfo);
+            logOperatingUtil.writeTxtFile("【当前Frame】:"+array[i-1],logInfo);
         }
         if(driver.findElements(By.xpath(stringBuffer.toString())).size()>0){
             f=true;
@@ -151,7 +149,7 @@ public class Assertion{
      */
     public  void AssertPassLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证成功");
-        logOperating.writeTxtFile("验证成功",logInfo);
+        logOperatingUtil.writeTxtFile("验证成功",logInfo);
         t=true;
         writeExtentReport(autosteps,verityStr,parameterStr,"PASS");
     }
@@ -161,7 +159,7 @@ public class Assertion{
      */
     public  void AssertFailedLog(Autosteps autosteps,String verityStr,Boolean parameterStr){
         logger.info("验证失败");
-        logOperating.writeTxtFile("验证失败",logInfo);
+        logOperatingUtil.writeTxtFile("验证失败",logInfo);
         t=false;
         snapshotInfo();
         writeExtentReport(autosteps,verityStr,parameterStr,"FAILED");
@@ -178,12 +176,12 @@ public class Assertion{
            }else{
                verification.log(LogStatus.FAIL,autosteps.getTsverificationcontent(),"FAILED");
                screenshot=extentReports.startTest("截图");
-               screenshot.log(LogStatus.FAIL,screenshot.addBase64ScreenShot(ScreenShot.screenPath));
+               screenshot.log(LogStatus.FAIL,screenshot.addBase64ScreenShot(ScreenShotUtil.screenPath));
            }
            extentReports.flush();
        }catch (Error e){
            logger.info("验证结果写入测试报告出错");
-           logOperating.writeTxtFile("验证结果写入测试报告出错",logInfo);
+           logOperatingUtil.writeTxtFile("验证结果写入测试报告出错",logInfo);
        }
     }
     /**
@@ -192,15 +190,17 @@ public class Assertion{
      */
     public  void writeReport(){
         try{
-            extentTest.appendChild(parameter);
-            extentTest.appendChild(verification);
-            if(screenshot!=null){
-                extentTest.appendChild(screenshot);
+            if(parameter!=null && verification!=null){
+                extentTest.appendChild(parameter);
+                extentTest.appendChild(verification);
+                if(screenshot!=null){
+                    extentTest.appendChild(screenshot);
+                }
             }
 
         }catch(Exception e){
             logger.info("添加子表出错");
-            logOperating.writeTxtFile("添加子表出错",logInfo);
+            logOperatingUtil.writeTxtFile("添加子表出错",logInfo);
         }finally {
             extentReports.endTest(parameter);
             extentReports.endTest(verification);

@@ -8,7 +8,7 @@ import java.util.Date;
  * @Description: 日志操作类
  * @date 2018/4/13 11:02
  */
-public class LogOperating {
+public class LogOperatingUtil {
     /**
      * @Description:写入日志
      * @param:写入内容

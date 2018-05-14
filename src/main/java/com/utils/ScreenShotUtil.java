@@ -15,12 +15,12 @@ import java.io.File;
  * @author: Mr.Andrew
  * @create: 2018-03-15 13:17
  **/
-public class ScreenShot {
+public class ScreenShotUtil {
     public WebDriver driver;
     public static String screenPath;//相对路径，图片引用地址
     private String screenName;
     Logger log= LoggerFactory.getLogger(this.getClass().getName());
-    public ScreenShot(WebDriver driver){
+    public ScreenShotUtil(WebDriver driver){
         this.driver=driver;
     }
     public void setscreenName(String screenName){

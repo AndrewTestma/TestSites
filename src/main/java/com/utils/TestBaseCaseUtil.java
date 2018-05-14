@@ -9,7 +9,8 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.relevantcodes.extentreports.NetworkMode;
 import org.openqa.selenium.WebDriver;
-import org.sikuli.script.Screen;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -18,6 +19,8 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -28,23 +31,30 @@ import java.util.Map;
  * @Date 2018/2/28 0028
  */
 //@Component
-public class TestBaseCase {
-    public String reportLocation;
-    public Logger logger= LoggerFactory.getLogger(this.getClass());
-    public WebDriver driver;
-    public ExtentReports extentReports;
-    public ExtentTest extentTest;
-    public ElementUtil elementAction=null;
-    public Assertion assertion=null;
+public class TestBaseCaseUtil {
+    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    /*1*/
+    private WebDriver driver;
+    private RemoteWebDriver webDriver=null;
+    private String host;
+    private String session;
+    /*2*/
+    private String reportLocation;
+    private ExtentReports extentReports;
+    private ExtentTest extentTest;
+    private ElementUtil elementAction=null;
+    /*3*/
+    private AssertionUtil assertionUtil =null;
+    private LogInfo logInfo=new LogInfo();
+    /*4*/
     public User user;
-    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-    LogInfo logInfo=new LogInfo();
+    public HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     /*public static int tstotaltime;//执行时长
     public static int tstotalsteps=0;//总步数
     public static int tsrunsteps=0;//执行步数
     public long startTime;//开始时间e
     public long endTime;//结束时间*/
-    LogOperating logOperating=new LogOperating();
+    public LogOperatingUtil logOperatingUtil =new LogOperatingUtil();
     /** 
     * @Description: 获取当前路径，并截取
     * @Date: 19:20 2018年03月15日
@@ -70,15 +80,22 @@ public class TestBaseCase {
     @BeforeTest
     public void startSetUp(){
         logger.info("---打开浏览器---");
-        logOperating.writeTxtFile("打开浏览器",logInfo);
+        logOperatingUtil.writeTxtFile("打开浏览器",logInfo);
         /*startTime=System.currentTimeMillis();*/
         String driverType=ExecuteController.env.getTsdriver();
         String driverPath=ExecuteController.env.getTsdirverpath();
         String driverName=ExecuteController.env.getTsname();
         if(driverName.equals("本地")){
-            driver=DriverManager.setLocalDriver(driverType,driverPath);
+            driver= DriverManagerUtil.setLocalDriver(driverType,driverPath);
         }else {
-            driver=DriverManager.setRemoteDriver(driverType,driverPath);
+            try {
+                webDriver=new RemoteWebDriver(new URL(driverPath), DriverManagerUtil.setRemoteDriver(driverType,driverPath));
+                host="192.168.140.3";
+                session=webDriver.getSessionId().toString();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            driver=new EventFiringWebDriver(webDriver);
         }
         String url=ExecuteController.pro.getTsurl();
         driver.navigate().to(url);
@@ -89,7 +106,7 @@ public class TestBaseCase {
     @AfterMethod
     public void ExtentResult(ITestResult result){
         if(result.getStatus()==ITestResult.FAILURE){
-            extentTest.log(LogStatus.FAIL,extentTest.addBase64ScreenShot(Assertion.screenShotPath),result.getThrowable());
+            extentTest.log(LogStatus.FAIL,extentTest.addBase64ScreenShot(AssertionUtil.screenShotPath),result.getThrowable());
         }else if(result.getStatus()==ITestResult.SKIP){
             extentTest.log(LogStatus.SKIP,result.getThrowable());
         }else{
@@ -108,9 +125,9 @@ public class TestBaseCase {
         tstotaltime=(int)((endTime-startTime)/1000);*/
         logger.info("关闭退出浏览器");
         logger.info("---结束测试---");
-        logOperating.writeTxtFile("关闭退出浏览器",logInfo);
-        logOperating.writeTxtFile("结束测试",logInfo);
-        logOperating.writeTxtFile("END",logInfo);
+        logOperatingUtil.writeTxtFile("关闭退出浏览器",logInfo);
+        logOperatingUtil.writeTxtFile("结束测试",logInfo);
+        logOperatingUtil.writeTxtFile("END",logInfo);
     }
     @AfterSuite
     public void closeExtentReport(){
@@ -125,11 +142,11 @@ public class TestBaseCase {
             for(Map.Entry<String,List<Autosteps>> entry:ExtentReportMap.autosteps.get(user.getTsuserid()).entrySet()){
                 extentTest=extentReports.startTest(entry.getKey());
                 try{
-                    elementAction=new ElementUtil(driver,logInfo,logOperating);
+                    elementAction=new ElementUtil(driver,logInfo, logOperatingUtil,host,session,extentReports,extentTest);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                assertion=new Assertion(driver,extentReports,extentTest,logInfo,logOperating);
+                assertionUtil =new AssertionUtil(driver,extentReports,extentTest,logInfo, logOperatingUtil);
                 for(Autosteps autosteps1:entry.getValue()){
                     if(autosteps1.getTswait()!=null){
                         elementAction.sleepTime(autosteps1.getTswait());
@@ -140,18 +157,18 @@ public class TestBaseCase {
                         elementAction.sendKey(autosteps1,autosteps1.getTsactioncontent());
                     }else if(autosteps1.getTsactiontype().equals("上传")){
                         elementAction.click(autosteps1);
-                        elementAction.sikuliUploadFile(autosteps1.getTsactioncontent());
+                        elementAction.sikuliUploadFile(autosteps1.getTsactioncontent(),autosteps1.getTsremarks());
                         elementAction.sleepTime(5000);
                     }
-                    assertion.verityType(autosteps1);
+                    assertionUtil.verityType(autosteps1);
                 }
-                assertion.writeReport();
+                assertionUtil.writeReport();
                 extentReports.flush();
                 extentReports.endTest(extentTest);
-                if(!assertion.t){
+              /*  if(!assertionUtil.t){
                     ExtentReportMap.autosteps.remove(user.getTsuserid());
                     break;
-                }
+                }*/
             }
             ExtentReportMap.autosteps.remove(user.getTsuserid());
         }

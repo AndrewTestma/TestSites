@@ -2,10 +2,10 @@ package com.utils;
 
 import com.pojo.Autosteps;
 import com.pojo.LogInfo;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,14 +23,28 @@ import org.slf4j.LoggerFactory;
  * @create: 2018-03-05 11:21
  **/
 public class ElementUtil {
-    public Logger logger= LoggerFactory.getLogger(this.getClass());
-    public WebDriver driver;
-    public LogInfo logInfo;
-    public LogOperating logOperating;
-    public ElementUtil(WebDriver driver, LogInfo logInfo, LogOperating logOperating){
+    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    private WebDriver driver;
+
+    private LogInfo logInfo;
+    private LogOperatingUtil logOperatingUtil;
+
+    private String host;
+    private String session;
+
+    private ExtentReports extentReports;
+    private ExtentTest extentTest;
+    private ExtentTest  exception=null;
+    public ExtentTest screenshot=null;
+
+    public ElementUtil(WebDriver driver, LogInfo logInfo, LogOperatingUtil logOperatingUtil, String host, String session, ExtentReports extentReports, ExtentTest extentTest){
         this.driver=driver;
         this.logInfo=logInfo;
-        this.logOperating=logOperating;
+        this.logOperatingUtil = logOperatingUtil;
+        this.host=host;
+        this.session=session;
+        this.extentReports=extentReports;
+        this.extentTest=extentTest;
     }
    /**
    * @Description: 查找单个元素
@@ -53,7 +67,7 @@ public class ElementUtil {
                     i++;
                 }
                 logger.info("【当前Frame】:"+array[i-1]);
-                logOperating.writeTxtFile("【当前Frame】:"+array[i-1],logInfo);
+                logOperatingUtil.writeTxtFile("【当前Frame】:"+array[i-1],logInfo);
             }
             webElement=(new WebDriverWait(driver,5).until(
                     new ExpectedCondition<WebElement>() {
@@ -65,7 +79,7 @@ public class ElementUtil {
                             return element;
                             }
                         }
-            ));
+                    ));
 
        /*     webElement=(new WebDriverWait(driver,5).until(
                     new ExpectedCondition<WebElement>() {
@@ -93,9 +107,14 @@ public class ElementUtil {
                     }
             ));*/
             /*webElement=getElement(autosteps);*/
+        }catch (TimeoutException e){
+            logger.info("定位页面元素超时");
+            logOperatingUtil.writeTxtFile("定位页面元素超时",logInfo);
+            execptionExtentReports(autosteps);
         }catch(NoSuchElementException e){
             logger.info("无法定位页面元素");
-            logOperating.writeTxtFile("无法定位页面元素",logInfo);
+            logOperatingUtil.writeTxtFile("无法定位页面元素",logInfo);
+            execptionExtentReports(autosteps);
         }
         return webElement;
     }
@@ -107,7 +126,7 @@ public class ElementUtil {
      */
     public WebElement getElement(Autosteps autosteps){
         logger.info("查找元素："+autosteps.getTsremarks()+"查找方式："+"[By."+autosteps.getTsselecttype()+":"+autosteps.getTsselectcontent()+"]");
-        logOperating.writeTxtFile("查找元素："+autosteps.getTsremarks()+"查找方式："+"[By."+autosteps.getTsselecttype()+":"+autosteps.getTsselectcontent()+"]",logInfo);
+        logOperatingUtil.writeTxtFile("查找元素："+autosteps.getTsremarks()+"查找方式："+"[By."+autosteps.getTsselecttype()+":"+autosteps.getTsselectcontent()+"]",logInfo);
         WebElement webElement;
         switch (autosteps.getTsselecttype())
         {
@@ -147,12 +166,11 @@ public class ElementUtil {
     * @Date: 11:40 2018年03月05日
      */
     public void click(Autosteps autosteps){
-        WebElement webElement=null;
+        WebElement webElement=findElement(autosteps);
         try{
-            webElement=findElement(autosteps);
             webElement.click();
             logger.error("点击："+autosteps.getTsremarks()+"-->点击成功");
-        }catch (NoSuchElementException e){
+        }catch (NullPointerException e){
             logger.error("找不到元素："+autosteps.getTsremarks()+"-->点击失败");
         }
     }
@@ -168,10 +186,10 @@ public class ElementUtil {
             webElement.click();
             webElement.sendKeys(value);
             logger.info(autosteps.getTsremarks()+"输入: "+value);
-            logOperating.writeTxtFile(autosteps.getTsremarks()+"输入: "+value,logInfo);
+            logOperatingUtil.writeTxtFile(autosteps.getTsremarks()+"输入: "+value,logInfo);
         }catch(Exception e){
             logger.error("找不到元素："+autosteps.getTsremarks()+"-->输入失败");
-            logOperating.writeTxtFile("找不到元素："+autosteps.getTsremarks()+"-->输入失败",logInfo);
+            logOperatingUtil.writeTxtFile("找不到元素："+autosteps.getTsremarks()+"-->输入失败",logInfo);
         }
     }
     /**
@@ -187,13 +205,56 @@ public class ElementUtil {
             e.printStackTrace();
         }
     }
-    public  void sikuliUploadFile(String path){
+
+    public  void sikuliUploadFile(String path,String OSInfo){
+        ClassLoader classLoader =Thread.currentThread().getContextClassLoader();
+        StringBuffer fileimage=new StringBuffer();
+        fileimage.append(classLoader.getResource("").getPath()+"serviceImg/");
+        StringBuffer confirmImage=new StringBuffer();
+        confirmImage.append(classLoader.getResource("").getPath()+"serviceImg/");
         Screen screen=new Screen();
-        screen.type("F:/TestSites/target/classes/images/filepath.jpg",path);
         try {
-            screen.click("F:/TestSites/target/classes/images/confirm.jpg");
+            if(OSInfo.equals("win10")){
+                fileimage.append("filepath.jpg");
+                confirmImage.append("confirm.jpg");
+            }
+            screen.type(fileimage.toString(),path);
+            screen.click(confirmImage.toString());
         } catch (FindFailed findFailed) {
             findFailed.printStackTrace();
+        }
+        /*SikuliExtensionClient sikuli=new SikuliExtensionClient(host,5555,session);
+        sikuli.uploadResourceBundle("serviceImg");
+
+        TargetFactory targetFactory = sikuli.getTargetFactory();
+        ImageTarget imageTarget = targetFactory.createImageTarget("filepath.jpg");
+
+        DesktopScreenRegion desktop = sikuli.getDesktop();
+        ScreenRegion screenRegion = desktop.find(imageTarget);
+
+        Mouse mouse = sikuli.getMouse();
+        mouse.click(screenRegion.getCenter());*/
+    }
+    /**
+     * @Description:查找元素失败，添加进报告
+     * @param:[autosteps]：操作步骤元素
+     * @return:void
+     * @date:2018/5/11 16:52
+     */
+    public void execptionExtentReports(Autosteps autosteps){
+        try{
+            if(exception==null ){
+                exception=extentReports.startTest("元素异常");
+            }
+            exception.log(LogStatus.FAIL,autosteps.getTsautostepsname()+":定位失败","FAILED");
+            extentReports.flush();
+        }catch (Exception e){
+            logger.info("ElementUtil:写入子表测试报告错误");
+        }finally {
+            extentTest.appendChild(exception);
+            extentReports.endTest(exception);
+            exception=null;
+            screenshot=null;
         }
     }
 }

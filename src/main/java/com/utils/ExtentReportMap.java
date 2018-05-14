@@ -16,7 +16,6 @@ import java.util.Map;
  * @date 2018/3/2113:30
  */
 public class ExtentReportMap {
-
     public static Map<Integer,ExtentReports> map=new HashMap<>();//存储不同的报告对象
     public static Map<Integer,Map<String,List<Autosteps>>> autosteps=new HashMap<>();//存储不同的操作步骤列表
     public static Map<Integer,LogInfo> log=new HashMap<>();//存储不同的操作日志

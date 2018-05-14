@@ -5,7 +5,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -18,7 +17,7 @@ import java.net.URL;
  * @Description:driver管理
  * @Date 2017/12/26 0026
  */
-public class DriverManager {
+public class DriverManagerUtil {
 
     public static WebDriver driver=null;
     /**
@@ -33,8 +32,9 @@ public class DriverManager {
         {
 
             case "FirefoxDriver" :
-                System.setProperty("webdriver.firefox.bin", "");
-                FirefoxProfile firefoxProfile=new FirefoxProfile();
+                //System.setProperty("webdriver.firefox.bin", driverPath);
+                System.setProperty("webdriver.gecko.driver", driverPath);
+                 /* FirefoxProfile firefoxProfile=new FirefoxProfile();
                 //设置默认下载路径
                 firefoxProfile.setPreference("browser.download.folderList", 2);
                 firefoxProfile.setPreference("browser.download.dir", "D:\\自动化测试下载文件");
@@ -43,8 +43,8 @@ public class DriverManager {
                 firefoxProfile.setPreference("extensions.firebug.allPagesActivation", "none");
                 //加载firepath插件
                 firefoxProfile.setPreference("extensions.firepath.currentVersion", "0.9.7.1.1");
-                firefoxProfile.setPreference("extensions.firepath.allPagesActivation", "on");
-                driver=new FirefoxDriver(firefoxProfile);
+                firefoxProfile.setPreference("extensions.firepath.allPagesActivation", "on");*/
+                driver=new FirefoxDriver();
                 break;
             case "ChromeDriver":
                 System.setProperty("webdriver.chrome.driver", driverPath);
@@ -60,7 +60,7 @@ public class DriverManager {
                 driver=new InternetExplorerDriver();*/
                 break;
             case "HtmlUnitDriver":
-                driver=new HtmlUnitDriver();
+                //driver=new HtmlUnitDriver();
                 break;
             default:
                 driver=new FirefoxDriver();
@@ -74,23 +74,14 @@ public class DriverManager {
      * @return:driver
      * @date:2018/3/20 11:38
      */
-    public static WebDriver setRemoteDriver(String string,String driverPath)
+    public static DesiredCapabilities setRemoteDriver(String string,String driverPath)
     {
+        DesiredCapabilities dc=null;
         if (string.equals("ChromeDriver")) {
-            DesiredCapabilities dc = DesiredCapabilities.chrome();
-            try {
-                driver =new EventFiringWebDriver(new RemoteWebDriver(new URL(driverPath), dc));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+             dc = DesiredCapabilities.chrome();
         } else if (string.equals("ie")) {
-            DesiredCapabilities dc = DesiredCapabilities.internetExplorer();
-            try {
-                driver =new EventFiringWebDriver(new RemoteWebDriver(new URL(driverPath), dc));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+             dc = DesiredCapabilities.internetExplorer();
         }
-        return driver;
+        return dc;
     }
 }
